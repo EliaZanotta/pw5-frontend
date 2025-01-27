@@ -1,0 +1,299 @@
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    line-height: 1.6;
+  }
+  
+  h1, h2 {
+    color: #F29C11;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  button {
+    background-color: #F29C11;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #d88a0c;
+  }
+  
+  /* Hero Section */
+  .heroSection {
+    position: relative;
+    background-image: url('https://www.laramind.com/blog/wp-content/uploads/2020/09/montegrappa-varese.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .heroSection::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  .heroContent {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .heroContent h1 {
+    font-size: 3rem;
+  }
+  
+  .heroContent p {
+    font-size: 1.5rem;
+    margin: 20px 0;
+  }
+  
+  /* About Section */
+  .aboutSection {
+    padding: 60px 20px;
+    background: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  .aboutContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 50px;
+  }
+  
+  .aboutImages {
+    flex: 1;
+    margin-right: 50px;
+  }
+  
+  .aboutImages img {
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .aboutImages:hover {
+    transform: scale(1.08) translateY(-5px);
+    transition: transform 0.4s ease, box-shadow 0.4s ease; 
+  }
+  
+  
+  .aboutText {
+    flex: 1;
+    text-align: left;
+    margin-bottom: 100px;
+    font-size: 17px;
+  }
+  
+  .aboutText h2 {
+    margin-bottom: 20px;
+    font-size: 2.5rem;
+  }
+  
+  .aboutText p {
+    margin-bottom: 15px;
+  }
+  
+  /* Events Section */
+  .eventsSection {
+    padding: 60px 20px;
+    text-align: center;
+    background: linear-gradient(to bottom right, #f9f6f0, #ffffff);
+  }
+
+  .h1-eventsection{
+    font-size: 2.5rem;
+    color: #F29C11;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .eventsGrid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+  }
+  
+  .eventCard {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  
+  .eventCard:hover {
+    transform: scale(1.05);
+  }
+  
+  .eventCard h3 {
+    color: #F29C11;
+    margin-bottom: 15px;
+  }
+  
+  /* Contact Section */
+  .contactSection {
+    padding: 60px 20px;
+    text-align: center;
+    background: #f9f9f9;
+  }
+  
+  .contactSection h2 {
+    margin-bottom: 20px;
+    font-size: 2.5rem;
+  }
+  
+  .contactSection p {
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+  }
+  
+
+  /* --- Responsiveness --- */
+
+/* About Section - Mobile-specific adjustments */
+@media (max-width: 480px) {
+    .aboutSection {
+      flex-direction: column; 
+      align-items: center; 
+      padding: 20px 10px;
+    }
+  
+    .aboutImages {
+      margin-bottom: 20px; 
+      width: 100%; 
+    }
+  
+    .aboutImages img {
+      width: 90%; 
+      height: auto; 
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      display: block;
+      margin: 0 auto; 
+    }
+  
+    .aboutText {
+      text-align: center; 
+      padding: 0 15px; 
+    }
+  
+    .aboutText h2 {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+    }
+  
+    .aboutText p {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+  
+    .aboutText button {
+      margin-top: 15px;
+    }
+  }
+  
+  
+  /* Tablet (481px - 768px) */
+  @media (min-width: 481px) and (max-width: 768px) {
+    .heroSection {
+      height: 500px;
+    }
+  
+    .heroContent h1 {
+      font-size: 2.5rem;
+    }
+  
+    .heroContent p {
+      font-size: 1.2rem;
+    }
+  
+    .aboutSection {
+      flex-direction: column;
+      padding: 50px 20px;
+    }
+  
+    .aboutText h2 {
+      font-size: 2rem;
+    }
+  
+    .eventsGrid {
+      gap: 15px;
+    }
+  
+    .eventCard {
+      width: 80%;
+    }
+  }
+  
+  /* Laptop (769px - 1024px) */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .heroSection {
+      height: 550px;
+    }
+  
+    .aboutSection {
+      padding: 60px 20px;
+    }
+  
+    .aboutText h2 {
+      font-size: 2.2rem;
+    }
+  
+    .eventCard {
+      width: 45%;
+    }
+  }
+  
+  /* Desktop (1025px and above) */
+  @media (min-width: 1025px) {
+    .heroSection {
+      height: 600px;
+    }
+  
+    .aboutSection {
+      flex-direction: row;
+      padding: 70px 40px;
+    }
+  
+    .aboutText h2 {
+      font-size: 2.5rem;
+    }
+  
+    .eventsGrid {
+      gap: 20px;
+    }
+  
+    .eventCard {
+      width: 300px;
+    }
+  }
