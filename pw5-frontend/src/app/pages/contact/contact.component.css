@@ -1,7 +1,7 @@
 .contatti-container {
   display: flex;
   padding: 40px;
-  background: url("/assets/contactImage.jpg") no-repeat center center;
+  background: url("/assets/contactImage2.jpg") no-repeat center center;
   background-size: cover;
   height: 100vh;
 }
@@ -10,7 +10,7 @@
 .contatti-right {
   flex: 1;
   margin: 20px;
-  background-color: #ffffffd6;
+  background-color: #ffffffac;
   padding: 30px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -72,11 +72,11 @@ p {
   margin: auto;
 }
 
-/* Icone social posizionate sotto la mappa */
+
 .social-icons {
   display: flex;
   gap: 10px;
-  justify-content: center; /* Centrare le icone sotto la mappa */
+  justify-content: center; 
   margin-top: 20px;
 }
 
@@ -132,6 +132,7 @@ textarea {
   transition: border-color 0.3s;
   text-align: center;
   outline: none;
+  background-color: #ffffff;
 }
 
 textarea {
