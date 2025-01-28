@@ -96,11 +96,7 @@
     color: #0056b3;
   }
   
-  .register-link a:focus {
-    outline: 2px solid #007bff;
-    outline-offset: 2px;
-  }
-  
+ 
   
   /* Media Queries */
   /* @media (max-width: 768px) {
