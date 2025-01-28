@@ -1,0 +1,144 @@
+.contatti-container {
+  display: flex;
+  padding: 40px;
+  background: url("/assets/contactImage.jpg") no-repeat center center;
+  background-size: cover;
+  height: 100vh;
+}
+
+.contatti-left,
+.contatti-right {
+  flex: 1;
+  margin: 20px;
+  background-color: #ffffffd6;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.contatti-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.contatti-right {
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+}
+
+h2 {
+  font-size: 2rem;
+  color: #333;
+  font-weight: 400;
+}
+
+h3 {
+  font-size: 1.5rem;
+  color: #444;
+  font-weight: 400;
+  text-align: center;
+}
+
+p {
+  color: #666;
+}
+
+.detail-item {
+  margin-bottom: 10px;
+}
+
+/* Stile per la mappa */
+.map-container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.map-container h3 {
+  font-size: 1rem;
+  color: #333;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  font-weight: 400;
+}
+
+.map-container iframe {
+  width: 70%;
+  height: 250px;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: auto;
+}
+
+/* Icone social posizionate sotto la mappa */
+.social-icons {
+  display: flex;
+  gap: 10px;
+  justify-content: center; /* Centrare le icone sotto la mappa */
+  margin-top: 20px;
+}
+
+.social-icons a {
+  width: 40px;
+  height: 40px;
+  background-color: #f4f4f4;
+  border-radius: 20%;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.social-icons a:hover {
+  transform: scale(1.1);
+}
+
+.social-icons svg {
+  margin: auto;
+  height: 20px;
+  fill: #555;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #ce2424cc;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: block;
+  margin: 20px auto 0 auto;
+}
+
+button:hover {
+  background-color: #ad1919;
+}
+
+.form-group {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+input,
+textarea {
+  width: 50%;
+  padding: 15px;
+  font-size: 1rem;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  transition: border-color 0.3s;
+  text-align: center;
+  outline: none;
+}
+
+textarea {
+  resize: vertical;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #848484;
+}
