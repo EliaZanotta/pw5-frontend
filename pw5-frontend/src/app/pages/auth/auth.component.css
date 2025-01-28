@@ -70,7 +70,7 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     width: 30%;
-    margin: 20px auto 10px;
+    margin: 20px auto 20px;
     font-size: 0.9rem;
   }
   
@@ -78,10 +78,7 @@
     background-color: #ad1919;
   }
   
-  button:focus {
-    outline: 2px solid #ad1919;
-    outline-offset: 2px;
-  }
+  
   
   /* Register Link */
   .register-link {
