@@ -3,7 +3,7 @@
   padding: 40px;
   background: url("/assets/contactImage2.jpg") no-repeat center center;
   background-size: cover;
-  height: 100vh;
+  height: 110vh;
 }
 
 .contatti-left,
@@ -24,7 +24,7 @@
 .contatti-right {
   display: flex;
   flex-direction: column;
-  height: 500px;
+  height: 400px;
 }
 
 h2 {
@@ -64,7 +64,7 @@ p {
 }
 
 .map-container iframe {
-  width: 70%;
+  width: 80%;
   height: 250px;
   border: none;
   border-radius: 8px;

@@ -43,11 +43,12 @@
   /* Form Group */
   .form-group {
     margin-bottom: 15px;
+    
   }
   
   /* Input Fields */
   input {
-    padding: 0.75rem;
+    padding: 1rem;
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #f7f7f7;
