@@ -1,0 +1,96 @@
+/* Fullscreen hero image */
+.hero {
+    position: relative;
+    height: 100vh;
+    background-color: #3a001e;
+    /* Colore di sfondo scuro per il tema */
+    background: url('/img/pynight_techtalks_2.png') no-repeat center center/cover;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(206, 36, 36, 0.1);
+    /* Accent color con trasparenza */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-title {
+    color: #fff6f4;
+    /* Testo chiaro per contrastare lo sfondo */
+    font-size: 4rem;
+    font-weight: bold;
+    text-align: center;
+    font-family: 'Fira Code', monospace;
+    /* Font stile coding */
+    text-shadow: 2px 2px 0 #ce2424,
+        -2px -2px 0 #ce2424,
+        -2px 2px 0 #ce2424,
+        2px -2px 0 #ce2424;
+    /* Alone rosso intorno al testo */
+}
+
+/* Description section */
+.description {
+    padding: 2rem;
+    font-size: 1.2rem;
+    text-align: center;
+    background-color: #fff6f4;
+    /* Sfondi chiari per la leggibilità */
+    color: #3a001e;
+    /* Testo scuro per contrasto */
+    border-left: 5px solid #ce2424;
+    /* Linea decorativa per il layout */
+    border-right: 5px solid #ce2424;
+}
+
+.h2 {
+    color: #ce2424;
+    /* Font stile coding */
+    margin-left: 2rem;
+}
+
+.filter-container {
+    margin: 1rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Events grid */
+.event-grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    padding: 2rem;
+
+}
+
+mat-card {
+    color: #ce2424;
+    border-radius: 8px;
+    background: none;
+    /* border: solid 1px #0000008e;
+    box-shadow: none; */
+}
+
+mat-card-title {
+    color: #000000;
+    font-weight: bold;
+
+}
+
+mat-card-subtitle {
+    color: #000000;
+}
+
+.mdc-card__media {
+    position: relative;
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    max-height: 165px;
+}

@@ -1,1 +1,100 @@
-<p>events works!</p>
+<!-- Fullscreen image with overlay -->
+<div class="hero">
+    <div class="hero-overlay">
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+        <h1 class="hero-title">EVENTI</h1>
+    </div>
+</div>
+
+<!-- Short description -->
+<section class="description">
+    <p>
+        Scopri il calendario dei nostri eventi dal vivo e online: talk tecnici, workshop e incontri informali con
+        esperti e professionisti del settore.
+        Conferma la tua partecipazione direttamente dal sito!
+    </p>
+</section>
+
+<!-- Filtro per Data -->
+<div class="filter-container">
+    <mat-form-field appearance="outline">
+        <mat-label>Eventi a partire dalla Data</mat-label>
+        <input matInput [matDatepicker]="picker" (dateChange)="onDateFilterChange($event)" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+</div>
+
+<!-- Filtered Events Section -->
+
+<!-- @if (filteredFutureEvents.length > 0) {
+<section>
+    <h2 class="h2">Eventi Filtrati</h2>
+    <div class="event-grid">
+        <ng-container>
+            @for (event of filteredFutureEvents; track event) {
+            <mat-card (click)="goToEvent(event.id)">
+                <mat-card-header>
+                    <mat-card-title>{{ event.title }}</mat-card-title>
+                    <mat-card-subtitle>{{ event.date }}</mat-card-subtitle>
+                    <mat-card-subtitle>{{ event.time }}</mat-card-subtitle>
+                    <mat-card-subtitle>{{ event.location }}</mat-card-subtitle>
+                </mat-card-header>
+                <img mat-card-image [src]="event.image" alt="{{ event.title }}" />
+            </mat-card>
+            }
+        </ng-container>
+    </div>
+</section>
+} -->
+
+<!-- Future Events Section -->
+<section>
+    <h2 class="h2" style="display: flex; justify-content: space-between; align-items: center;">
+        Eventi Futuri
+        <a [routerLink]="['/']"
+            style="text-decoration: none; color: #CE2424; margin-right: 40px; font-size:medium;">Tutti i prossimi
+            eventi</a>
+    </h2>
+    <div class="event-grid">
+        @for (event of futureEvents; track event) {
+        <mat-card (click)="goToEvent(event.id)">
+            <!-- Angular Material Card -->
+            <img mat-card-image [src]="event.image" alt="{{ event.title }}" />
+            <mat-card-header>
+                <mat-card-title>{{ event.title }}</mat-card-title>
+                <mat-card-subtitle>{{ event.date }}</mat-card-subtitle>
+                <!--                 <mat-card-content>
+                    <p>{{ event.time }}</p>
+                </mat-card-content -->
+                <mat-card-subtitle>{{ event.time }}</mat-card-subtitle>
+                <mat-card-subtitle>{{ event.location }}</mat-card-subtitle>
+            </mat-card-header>
+
+        </mat-card>}
+    </div>
+</section>
+
+<!-- Past Events Section -->
+<section>
+    <h2 class="h2" style="display: flex; justify-content: space-between; align-items: center;">
+        Eventi Passati
+        <a [routerLink]="['/']"
+            style="text-decoration: none; color: #CE2424; margin-right: 40px; font-size:medium;">Tutti i passati eventi
+            eventi</a>
+    </h2>
+    <div class="event-grid">
+        @for (event of pastEvents; track event) {
+        <mat-card (click)="goToEvent(event.id)">
+            <!-- Angular Material Card -->
+            <img mat-card-image [src]="event.image" alt="{{ event.title }}" />
+            <mat-card-header>
+                <mat-card-title>{{ event.title }}</mat-card-title>
+                <mat-card-subtitle>{{ event.date }}</mat-card-subtitle>
+                <mat-card-subtitle>{{ event.time }}</mat-card-subtitle>
+                <mat-card-subtitle>{{ event.location }}</mat-card-subtitle>
+            </mat-card-header>
+        </mat-card>
+        }
+    </div>
+</section>
