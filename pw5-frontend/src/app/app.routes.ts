@@ -11,7 +11,7 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { AuthComponent } from './pages/auth/auth.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { UserEventsBookingComponent } from './pages/user-events-booking/user-events-booking.component';
-import { UserEventParticipationsComponent } from './user-event-participations/user-event-participations.component';
+import { UserEventParticipationsComponent } from './pages/user-event-participations/user-event-participations.component';
 
 
 export const routes: Routes = [
