@@ -1,1 +1,23 @@
-<p>future-events works!</p>
+<div class="future-events-container">
+    <h1 class="page-title">Eventi Futuri</h1>
+
+    <div class="events-list">
+        @for (event of futureEvents; track event) {
+            <div class="event-card">
+                <!-- Immagine Evento -->
+                <div class="event-image">
+                    <img [src]="event.image" alt="{{ event.title }}">
+                </div>
+
+                <!-- Dettagli Evento -->
+                <div class="event-info">
+                    <h2>{{ event.title }}</h2>
+                    <p><strong>📅 Data:</strong> {{ event.date }}</p>
+                    <p><strong>📍 Luogo:</strong> {{ event.location }}</p>
+                    <p class="description">{{ event.description }}</p>
+                    <button class="details-button">Prenota Ora!</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
