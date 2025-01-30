@@ -1,108 +1,134 @@
+/* Stile generale per l'area utente */
 .user-area-container {
   max-width: 900px;
   margin: auto;
-  padding: 20px;
-  margin-top: 30px;
-  margin-bottom: 30px;
+  padding: 24px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  background: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
   text-align: center;
-  font-weight: 400;
-  font-size: 28px;
-  color: #333;
+  font-weight: 500;
+  font-size: 30px;
+  color: #222;
   background-color: #ffffffc7;
+  padding: 12px;
+  border-radius: 8px;
 }
 
 h3 {
-  font-weight: 400;
-  color: #333;
+  font-weight: 500;
+  color: #222;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
-  margin-top: 20px;
+  margin-bottom: 24px;
+  margin-top: 24px;
 }
 
-
-
+/* Pulsante Mostra Tutto */
 .show-all-btn {
-  font-size: 14px;
+  font-size: 15px;
   color: #007bff;
   text-decoration: none;
-  font-weight: 400;
+  font-weight: 500;
+  transition: color 0.3s;
 }
 
 .show-all-btn:hover {
   text-decoration: underline;
+  color: #0056b3;
 }
 
 .events-section,
 .history-section {
-  margin-top: 30px;
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 .events-grid,
 .history-grid {
   display: flex;
-  gap: 20px;
-  justify-content: space-between;
+  gap: 24px;
+
+  
 }
 
 .event-card,
 .history-card {
   background: white;
-  padding: 20px;
+  padding: 24px;
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  flex: 1 1 calc(33.33% - 20px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex: 1 1 calc(33.33% - 24px);
   margin: 10px;
-
+  display: flex;
+  flex-direction: column;
 }
 
 .event-card:hover,
 .history-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-6px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
 }
 
 .event-image {
   background-color: #e0e0e0;
-  height: 150px;
-  border-radius: 8px;
- background-image: url("https://via.placeholder.com/150"); /* Placeholder image */
+  height: 180px;
+  border-radius: 10px;
+  background-image: url("https://via.placeholder.com/160");
   background-size: cover;
   background-position: center;
+  margin-bottom: 16px;
 }
 
 .event-info h4 {
-  font-size: 18px;
-  color: #333;
-  font-weight: 400;
+  font-size: 20px;
+  color: #222;
+  font-weight: 500;
   
 }
 
 .event-info p {
-  font-size: 14px;
+  font-size: 15px;
   color: #555;
-  margin: 5px 0;
-  
+  margin: 6px 0;
 }
 
 .event-info p strong {
-  color: #333;
+  color: #222;
 }
 
 .history-card .event-info p {
-  font-size: 13px;
+  font-size: 14px;
 }
+
+/* Header utente migliorato */
 .user-header {
-  width: 80%;
+  width: 85%;
   margin: auto;
   height: 600px;
-  background-image: url("/assets/user-area-image.jpg"); /* Cambia con il percorso della tua immagine */
+  background-image: url("/assets/user-area-image.jpg");
   background-size: cover;
   background-position: center;
-  border-radius: 8px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.user-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
 }
