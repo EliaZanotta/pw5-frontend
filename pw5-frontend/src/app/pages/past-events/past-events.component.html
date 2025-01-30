@@ -1,1 +1,22 @@
-<p>past-events works!</p>
+<div class="past-events-container">
+    <h1 class="page-title">Eventi Passati</h1>
+
+    <div class="events-list">
+        @for (event of pastEvents; track event) {
+            <div class="event-card">
+                <!-- Immagine Evento -->
+                <div class="event-image">
+                    <img [src]="event.image" alt="{{ event.title }}">
+                </div>
+
+                <!-- Dettagli Evento -->
+                <div class="event-info">
+                    <h2>{{ event.title }}</h2>
+                    <p><strong>📅 Data:</strong> {{ event.date }}</p>
+                    <p><strong>📍 Luogo:</strong> {{ event.location }}</p>
+                    <p class="description">{{ event.description }}</p>
+                </div>
+            </div>
+        }
+    </div>
+</div>
