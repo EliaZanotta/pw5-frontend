@@ -1,14 +1,12 @@
 /* Contenitore principale */
 .company-container {
-    max-width: 1200px;
-    margin: 40px auto;
-    background: #ffffff;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: center;
 }
 
-/* Immagine di copertina */
+/* Immagine di copertina - Full Width */
 .company-banner {
     width: 100%;
     height: 300px;
@@ -19,125 +17,90 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: brightness(90%);
 }
 
-/* Sezione informazioni */
-.company-info {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding: 40px;
-    background: #f9f9f9;
-    border-radius: 0 0 12px 12px;
-}
-
-/* Colonna sinistra (Logo e dettagli) */
-.company-left {
-    flex: 1;
-    max-width: 35%;
+/* Profilo aziendale */
+.company-profile {
+    margin-top: -60px;
     text-align: center;
-    padding: 20px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .company-logo {
-    width: 140px;
-    height: 140px;
-    object-fit: cover;
+    width: 130px;
+    height: 130px;
     border-radius: 50%;
     border: 5px solid white;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-.company-left h1 {
-    font-size: 24px;
-    margin: 15px 0;
-    color: #333;
-}
-
-.company-left p {
-    font-size: 16px;
-    color: #555;
-    margin: 5px 0;
-}
-
-.company-left a {
-    color: #007bff;
-    text-decoration: none;
+.company-name {
+    font-size: 26px;
     font-weight: bold;
-}
-
-.company-left a:hover {
-    text-decoration: underline;
-}
-
-/* Colonna destra (Descrizione) */
-.company-right {
-    flex: 1;
-    max-width: 60%;
-    padding: 20px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.company-right h2 {
-    font-size: 22px;
-    margin-bottom: 15px;
-    color: #222;
+    margin-top: 15px;
 }
 
 .company-description {
-    font-size: 16px;
+    font-size: 18px;
     color: #555;
-    line-height: 1.6;
 }
 
-/* Sezione pulsante indietro */
-.back-section {
-    text-align: center;
+/* Menu */
+.company-menu {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 20px 0;
+}
+
+.company-menu button {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 20px;
+    transition: background 0.3s;
+}
+
+.company-menu .active {
+    background: #f0f0f0;
+    font-weight: bold;
+}
+
+/* Riga divisoria */
+.divider {
+    width: 90%;
+    height: 1px;
+    background: #ddd;
+    margin: 10px auto;
+}
+
+/* Contenuti */
+.company-content {
+    max-width: 80%;
+    margin: auto;
     padding: 20px;
-    background-color: #f9f9f9;
+    background: #ffffff;
+    border-radius: 8px;
+    text-align: left;
+}
+
+/* Pulsante indietro */
+.back-section {
+    margin-top: 30px;
 }
 
 .back-button {
-    display: inline-block;
-    background: linear-gradient(45deg, #ff9800, #ff5722);
+    background: #ff5722;
     color: white;
     border: none;
-    padding: 14px 30px;
+    padding: 14px 25px;
     border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
-    font-weight: bold;
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s;
 }
 
 .back-button:hover {
-    background: linear-gradient(45deg, #ff5722, #e65100);
-    transform: scale(1.05);
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
-}
-
-/* Responsive: Adattamento per schermi più piccoli */
-@media (max-width: 900px) {
-    .company-info {
-        flex-direction: column;
-        padding: 20px;
-    }
-
-    .company-left,
-    .company-right {
-        max-width: 100%;
-        margin-bottom: 20px;
-    }
-
-    .company-logo {
-        width: 120px;
-        height: 120px;
-    }
+    background: #e65100;
 }

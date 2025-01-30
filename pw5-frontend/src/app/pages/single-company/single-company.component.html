@@ -1,30 +1,65 @@
-@if (company) {
-    <div class="company-container">
-        <!-- Immagine di copertina -->
-        <div class="company-banner">
-            <img class="banner-image" src="https://www.supero.com.mt/wp-content/uploads/2015/05/azienda-1024x682.jpg" alt="Cover Image">
-        </div>
-
-        <!-- Sezione principale con logo e informazioni -->
-        <div class="company-info">
-            <div class="company-left">
-                <img class="company-logo" [src]="company.logoUrl" alt="{{ company.name }}">
-                <h1>{{ company.name }}</h1>
-                <p class="company-address"><strong>📍 Indirizzo:</strong> {{ company.address }}</p>
-                <p class="company-website"><strong>🌐 Sito Web:</strong> <a [href]="company.website" target="_blank">{{ company.website }}</a></p>
-                <p class="company-email"><strong>📧 Email:</strong> <a [href]="'mailto:' + company.email">{{ company.email }}</a></p>
-            </div>
-            
-            <div class="company-right">
-                <h2>Chi siamo</h2>
-                <p class="company-description">{{ company.description }}</p>
-            </div>
-        </div>
-
-        <!-- Pulsante per tornare indietro -->
-        <div class="back-section">
-            <button class="back-button" (click)="goBack()">⬅ Torna alla lista</button>
-        </div>
-        
+<div class="company-container">
+    <!-- Immagine di copertina full-width -->
+    <div class="company-banner">
+        <img class="banner-image" src="https://www.supero.com.mt/wp-content/uploads/2015/05/azienda-1024x682.jpg" alt="Cover Image">
     </div>
-}
+
+    <!-- Sezione profilo aziendale -->
+    <div class="company-profile">
+        <img class="company-logo" src="https://www.supero.com.mt/wp-content/uploads/2015/05/azienda-1024x682.jpg" alt="{{ company.name }}">
+        <h1 class="company-name">{{ company.name }}</h1>
+        <p class="company-description">{{ company.description }}</p>
+    </div>
+
+    <!-- Menu di navigazione -->
+    <div class="company-menu">
+        <button [class.active]="selectedTab === 'social'" (click)="setTab('social')">Social</button>
+        <button [class.active]="selectedTab === 'events'" (click)="setTab('events')">Eventi Ospitati</button>
+        <button [class.active]="selectedTab === 'about'" (click)="setTab('about')">About</button>
+    </div>
+
+    <!-- Riga divisoria -->
+    <div class="divider"></div>
+
+    <!-- Contenuto dinamico -->
+    <div class="company-content">
+        @if (selectedTab === 'social') {
+            <h2>Social</h2>
+            <p>📌 Segui {{ company.name }} sui social:</p>
+            <ul>
+                @if (company.social?.facebook) {
+                    <li><a [href]="company.social.facebook" target="_blank">Facebook</a></li>
+                }
+                @if (company.social?.instagram) {
+                    <li><a [href]="company.social.instagram" target="_blank">Instagram</a></li>
+                }
+                @if (company.social?.linkedin) {
+                    <li><a [href]="company.social.linkedin" target="_blank">LinkedIn</a></li>
+                }
+            </ul>
+        }
+
+        @if (selectedTab === 'events') {
+            <h2>Eventi Ospitati</h2>
+            <p>📅 Eventi passati e futuri organizzati da {{ company.name }}:</p>
+            <ul>
+                @for (event of company.events; track event) {
+                    <li>{{ event.name }} - {{ event.date }}</li>
+                }
+            </ul>
+        }
+
+        @if (selectedTab === 'about') {
+            <h2>About</h2>
+            <p>{{ company.about }}</p>
+            <p><strong>📍 Indirizzo:</strong> {{ company.address }}</p>
+            <p><strong>🌐 Sito Web:</strong> <a [href]="company.website" target="_blank">{{ company.website }}</a></p>
+            <p><strong>📧 Email:</strong> <a [href]="'mailto:' + company.email">{{ company.email }}</a></p>
+        }
+    </div>
+
+    <!-- Pulsante per tornare indietro -->
+    <div class="back-section">
+        <button class="back-button" (click)="goBack()">⬅ Torna alla lista</button>
+    </div>
+</div>
