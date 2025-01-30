@@ -1,37 +1,16 @@
-import { Injectable } from '@angular/core';
+// import { HttpClient } from '@angular/common/http';
+// import { Injectable } from '@angular/core';
+// import { Observable } from 'rxjs';
 
-interface RegisterRequest {
-  firstName?: string;
-  lastName?: string;
-  email: string;
-  password: string;
-  companyName?: string;
-}
+// @Injectable({
+//   providedIn: 'root'
+// })
+// export class AuthService {
+//   private registerUrl = 'http://localhost:8080/auth/register';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class AuthService {
-  private apiUrl = 'http://localhost:8080/auth/register'; // URL dell'API di registrazione
+//   constructor(private http: HttpClient) { }
 
-  async register(userData: RegisterRequest): Promise<any> {
-    try {
-      const response = await fetch(this.apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Errore HTTP: ${response.status}`);
-      }
-
-      return response.json(); 
-    } catch (error) {
-      console.error('Errore durante la registrazione:', error);
-      throw error;
-    }
-  }
-}
+//   register(userData: any): Observable<any> {
+//     return this.http.post<any>(this.registerUrl, userData);
+//   }
+// }
