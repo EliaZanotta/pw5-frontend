@@ -1,12 +1,16 @@
+.container {
+  background: rgb(206,36,36);
+  background: radial-gradient(circle, rgba(206,36,36,1) 0%, rgba(58,0,30,1) 100%);
+}
+
 .confirmation-box {
-  width: 300px;
+  width: 500px;
   padding: 25px;
   text-align: center;
-  background-color: #f9f9f9;
+  background-color: #fff6f4;
   border: 1px solid #ccc;
   border-radius: 8px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out;
 }
 
 .container {
@@ -14,10 +18,6 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-}
-
-.confirmation-box:hover {
-  transform: scale(1.02);
 }
 
 .confirmation-box p {
@@ -30,10 +30,11 @@
   background-color: #ce2424;
   color: white;
   border: none;
-  border-radius: 25px;
   cursor: pointer;
   text-decoration: none;
   transition: background-color 0.3s ease;
+  font-size: 1.2rem;
+  font-weight: 400;
 }
 
 .btn-login:hover {
