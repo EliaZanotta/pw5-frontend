@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-interface Event {
+export interface Event {
   id: string;
   startDate: string;
   endDate: string;
@@ -17,6 +18,13 @@ interface Event {
   registeredParticipants: number;
   ticketIds: string[];
   eventSubscription: string;
+  image?: string;
+  description?: string;
+}
+
+export interface CategorizedEvents {
+  future: Event[];
+  past: Event[];
 }
 
 interface Speaker {
@@ -48,5 +56,18 @@ export class EventsService {
 
   getEvents(): Observable<any> {
     return this.http.get(this.apiUrl);
+  }
+  // New method to get categorized events
+  getCategorizedEvents(): Observable<CategorizedEvents> {
+    return this.getEvents().pipe(
+      map((events: Event[]) => this.categorizeEvents(events))
+    );
+  }
+
+  // Private helper method to categorize events
+  private categorizeEvents(events: Event[]): CategorizedEvents {
+    const futureEvents = events.filter(event => event.status === 'CONFIRMED');
+    const pastEvents = events.filter(event => event.status === 'ARCHIVED');
+    return { future: futureEvents, past: pastEvents };
   }
 }

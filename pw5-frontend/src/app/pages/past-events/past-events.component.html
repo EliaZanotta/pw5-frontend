@@ -1,1 +1,33 @@
-<p>past-events works!</p>
+<div class="past-events-container">
+  <h1 class="page-title">Eventi Passati</h1>
+  <p class="page-subtitle">Rivedi gli eventi che hanno avuto luogo e scopri quali esperienze si sono già svolte!</p>
+
+  <!-- Loading Indicator -->
+  <div *ngIf="isLoading" class="loading">
+    <p>Caricamento eventi passati...</p>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="error">
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <!-- Events List -->
+  <div class="events-list" *ngIf="!isLoading && !errorMessage">
+    <div class="event-card" *ngFor="let event of pastEvents">
+      <!-- Immagine Evento -->
+      <div class="event-image">
+        <img [src]="event.image || 'https://eosmarketing.it/upload/img/c/1000x667-Eventi-aziendali-guida-alle-tipologie-e-a-come-organizzarli-post-Coronavirus.jpg'" alt="{{ event.title }}">
+      </div>
+
+      <!-- Dettagli Evento -->
+      <div class="event-info">
+        <h2>{{ event.title }}</h2>
+        <p><strong>📅 Data:</strong> {{ formatDate(event.startDate) }}</p>
+        <p><strong>📍 Luogo:</strong> {{ event.place }}</p>
+        <p class="description">{{ event.description }}</p>
+        <button class="details-button" (click)="bookEvent(event.id)">Scopri di più</button>
+      </div>
+    </div>
+  </div>
+</div>
