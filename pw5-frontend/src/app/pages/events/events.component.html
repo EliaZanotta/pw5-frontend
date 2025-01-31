@@ -3,7 +3,7 @@
   <p class="hero-description">
     Unisciti a noi per scoprire nuove esperienze e conoscere nuove persone.
   </p>
-  <a routerLink="#" class="browse-button">Scopri tutti</a>
+  <a routerLink="/future-events" class="browse-button">Scopri tutti</a>
 </div>
 
 <section *ngFor="let category of ['future', 'past']" class="event-container">
@@ -11,7 +11,7 @@
     <h2>
       {{ category === 'future' ? 'Eventi Futuri' : 'Eventi Passati' }}
     </h2>
-    <a routerLink="#" class="see-more-button">Vedi tutto</a>
+    <a routerLink="/{{category}}-events" class="browse-button">Scopri tutti</a>
   </div>
   <div class="event-grid">
     <a *ngFor="let event of eventsByCategory[category]"
