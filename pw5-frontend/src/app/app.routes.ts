@@ -26,6 +26,8 @@ export const routes: Routes = [
   { path: 'auth', component: AuthComponent },
   { path: 'past-events', component: PastEventsComponent },
   { path: 'future-events', component: FutureEventsComponent },
-  {path: 'register', component: RegisterComponent}
+  {path: 'register', component: RegisterComponent},
+  {path:'future-events', component: FutureEventsComponent},
+  {path:'past-event', component: PastEventsComponent}
 
 ];
