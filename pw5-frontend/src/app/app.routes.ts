@@ -8,8 +8,8 @@ import { PartnerCompaniesComponent } from './pages/partner-companies/partner-com
 import { UserAreaComponent } from './pages/user-area/user-area.component';
 import { SingleCompanyComponent } from './pages/single-company/single-company.component';
 import { ContactComponent } from './pages/contact/contact.component';
-import { AuthComponent } from './pages/auth/auth.component';
-import { RegisterComponent } from './pages/register/register.component';
+import { AuthComponent } from './auth/auth.component';
+import { RegisterComponent } from './auth/register/register.component';
 
 export const routes: Routes = [
   { path: '', component: HomepageComponent },
