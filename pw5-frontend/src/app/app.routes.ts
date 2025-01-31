@@ -10,6 +10,7 @@ import { SingleCompanyComponent } from './pages/single-company/single-company.co
 import { ContactComponent } from './pages/contact/contact.component';
 import { AuthComponent } from './pages/auth/auth.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { ConfirmEmailComponent } from './pages/confirm-email/confirm-email.component';
 
 export const routes: Routes = [
   { path: '', component: HomepageComponent },
@@ -22,6 +23,7 @@ export const routes: Routes = [
   { path: 'user-area', component: UserAreaComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'auth', component: AuthComponent },
-  {path: 'register', component: RegisterComponent}
+  {path: 'register', component: RegisterComponent},
+  {path:'confirm-email', component: ConfirmEmailComponent}
 
 ];
