@@ -1,5 +1,5 @@
 <div class="hero">
-  <h1>Scopri i nostri eventi</h1>
+    <h1>Scopri i nostri eventi</h1>
   <p class="hero-description">
     Unisciti a noi per scoprire nuove esperienze e conoscere nuove persone.
   </p>
@@ -23,7 +23,7 @@
         </div>
         <div class="card-content">
           <h3 class="event-title">{{ event.title }}</h3>
-          <p class="event-date">{{ event.startDate | date }}</p>
+          <p class="event-date">{{ event.startDate | date:'dd MMMM yyyy, HH:mm' }}</p>
           <p class="event-location">{{ event.place }}</p>
           <div class="card-bottom-content">
             <p class="event-host">{{ event.host }}</p>
