@@ -1,9 +1,9 @@
 import {EventsService} from './events.service';
 import {Component, OnInit, LOCALE_ID, NgModule} from '@angular/core';
 import {RouterLink} from '@angular/router';
-import {DatePipe, NgForOf, NgIf, registerLocaleData} from '@angular/common';
+import {DatePipe, NgForOf, NgIf, registerLocaleData, SlicePipe} from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faEuroSign } from '@fortawesome/free-solid-svg-icons';
+import {faEuroSign, faSackDollar} from '@fortawesome/free-solid-svg-icons';
 import localeIt from '@angular/common/locales/it';
 
 registerLocaleData(localeIt);
@@ -28,7 +28,8 @@ export interface Event {
     NgForOf,
     DatePipe,
     NgIf,
-    FontAwesomeModule
+    FontAwesomeModule,
+    SlicePipe
   ],
   standalone: true,
   providers: [{provide: LOCALE_ID, useValue: 'it-IT'}]
@@ -57,5 +58,7 @@ export class EventsComponent implements OnInit {
 
     return {future: futureEvents, past: pastEvents};
   }
+
+  protected readonly faSackDollar = faSackDollar;
 }
 
