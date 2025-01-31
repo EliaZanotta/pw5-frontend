@@ -23,6 +23,9 @@
 .footerLinks {
 cursor: pointer;
 }
+.footerLinks h4 {
+  cursor: default;
+}
   .footerAbout h3 {
     font-size: 1.8rem;
     color: #F29C11;
