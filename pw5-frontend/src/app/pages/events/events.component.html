@@ -6,20 +6,29 @@
   <a routerLink="#" class="browse-button">Scopri tutti</a>
 </div>
 
-<section *ngFor="let category of eventCategories" class="event-container">
+<section *ngFor="let category of ['future', 'past']" class="event-container">
   <div class="category-header">
-    <h2 class="section-title">{{ category.title }}</h2>
+    <h2>
+      {{ category === 'future' ? 'Eventi Futuri' : 'Eventi Passati' }}
+    </h2>
     <a routerLink="#" class="see-more-button">Vedi tutto</a>
   </div>
   <div class="event-grid">
-    <a *ngFor="let event of category.events" [routerLink]="['/event', event.id]" class="event-card">
+    <a *ngFor="let event of eventsByCategory[category]"
+       routerLink="/events/{{ event.id }}"
+       class="event-card">
       <div class="card">
         <div class="image-container">
-          <img [src]="event.image || '/assets/placeholder.svg'" [alt]="event.title" class="event-image"/>
+          <img [src]="'img/code_cheers.png'" [alt]="event.title" class="event-image"/>
         </div>
         <div class="card-content">
           <h3 class="event-title">{{ event.title }}</h3>
-          <p class="event-date">{{ event.date | date }}</p>
+          <p class="event-date">{{ event.startDate | date }}</p>
+          <p class="event-location">{{ event.place }}</p>
+          <div class="card-bottom-content">
+            <p class="event-host">{{ event.host }}</p>
+            <fa-icon [icon]="faEuroSign" *ngIf="event.eventSubscription === 'PAID'" class="event-subType"></fa-icon>
+          </div>
         </div>
       </div>
     </a>

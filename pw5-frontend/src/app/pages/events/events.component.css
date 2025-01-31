@@ -29,10 +29,11 @@
 }
 
 .event-title {
-  font-size: 1.25rem;
   font-weight: bold;
   margin-top: 8px;
   color: black;
+  display: flex;
+  justify-content: space-between;
 }
 
 .event-title:hover {
@@ -43,11 +44,31 @@
   color: rgb(128, 128, 128);
 }
 
+.event-location {
+  color: rgb(128, 128, 128);
+}
+
+.card-bottom-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.event-host {
+  color: black;
+}
+
+.event-subType {
+  color: #ce2424;
+}
+
 .event-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
 }
+
+
 
 .hero {
   background: radial-gradient(circle, rgba(58,0,30,1) 0%, rgba(206,36,36,1) 100%);
