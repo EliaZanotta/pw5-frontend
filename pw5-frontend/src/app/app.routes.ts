@@ -11,6 +11,7 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { AuthComponent } from './pages/auth/auth.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ConfirmEmailComponent } from './pages/confirm-email/confirm-email.component';
+import {NotFoundComponent} from './pages/not-found/not-found.component';
 
 export const routes: Routes = [
   { path: '', component: HomepageComponent },
@@ -24,6 +25,7 @@ export const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'auth', component: AuthComponent },
   {path: 'register', component: RegisterComponent},
-  {path:'confirm-email', component: ConfirmEmailComponent}
+  {path:'confirm-email', component: ConfirmEmailComponent},
+  {path:'**', component: NotFoundComponent}
 
 ];
