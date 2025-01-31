@@ -14,7 +14,7 @@
     <a routerLink="/{{category}}-events" class="browse-button">Scopri tutti</a>
   </div>
   <div class="event-grid">
-    <a *ngFor="let event of eventsByCategory[category]"
+    <a *ngFor="let event of eventsByCategory[category] | slice:0:4"
        routerLink="/events/{{ event.id }}"
        class="event-card">
       <div class="card">
@@ -22,12 +22,19 @@
           <img [src]="'img/code_cheers.png'" [alt]="event.title" class="event-image"/>
         </div>
         <div class="card-content">
-          <h3 class="event-title">{{ event.title }}</h3>
+          <h3 class="event-title">{{ event.title }}
+            <fa-icon
+              [icon]="faSackDollar"
+              *ngIf="event.eventSubscription === 'PAID'"
+              style="color: black;">
+
+            class="event-subType">
+            </fa-icon>
+          </h3>
           <p class="event-date">{{ event.startDate | date:'dd MMMM yyyy, HH:mm' }}</p>
           <p class="event-location">{{ event.place }}</p>
           <div class="card-bottom-content">
             <p class="event-host">{{ event.host }}</p>
-            <fa-icon [icon]="faEuroSign" *ngIf="event.eventSubscription === 'PAID'" class="event-subType"></fa-icon>
           </div>
         </div>
       </div>
