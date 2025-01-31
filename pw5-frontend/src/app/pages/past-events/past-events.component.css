@@ -79,7 +79,7 @@
 
 /* Bottone dettagli */
 .details-button {
-    background: #007bff; /* Blu per differenziarlo da eventi futuri */
+  background: #ce2424;
     color: white;
     border: none;
     padding: 10px 15px;
@@ -91,7 +91,7 @@
 }
 
 .details-button:hover {
-    background: #0056b3;
+  background: #3a001e;
 }
 
 /* Responsività */
