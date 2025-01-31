@@ -19,9 +19,10 @@
   .footerSocial {
     flex: 1;
     min-width: 250px;
-    cursor: pointer;
   }
-
+.footerLinks {
+cursor: pointer;
+}
   .footerAbout h3 {
     font-size: 1.8rem;
     color: #F29C11;
