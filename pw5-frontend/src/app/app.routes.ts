@@ -13,6 +13,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { PastEventsComponent } from './pages/past-events/past-events.component';
 import { FutureEventsComponent } from './pages/future-events/future-events.component';
 import { ConfirmEmailComponent } from './pages/confirm-email/confirm-email.component';
+import {NotFoundComponent} from './pages/not-found/not-found.component';
 
 export const routes: Routes = [
   { path: '', component: HomepageComponent },
@@ -28,6 +29,7 @@ export const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path:'confirm-email', component: ConfirmEmailComponent},
   { path: 'past-events', component: PastEventsComponent },
-  { path: 'future-events', component: FutureEventsComponent }
+  { path: 'future-events', component: FutureEventsComponent },
+  {path:'**', component: NotFoundComponent}
 
 ];
