@@ -12,6 +12,7 @@ import { AuthComponent } from './pages/auth/auth.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { PastEventsComponent } from './pages/past-events/past-events.component';
 import { FutureEventsComponent } from './pages/future-events/future-events.component';
+import { ConfirmEmailComponent } from './pages/confirm-email/confirm-email.component';
 
 export const routes: Routes = [
   { path: '', component: HomepageComponent },
@@ -24,10 +25,9 @@ export const routes: Routes = [
   { path: 'user-area', component: UserAreaComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'auth', component: AuthComponent },
-  { path: 'past-events', component: PastEventsComponent },
-  { path: 'future-events', component: FutureEventsComponent },
   {path: 'register', component: RegisterComponent},
-  {path:'future-events', component: FutureEventsComponent},
-  {path:'past-event', component: PastEventsComponent}
+  {path:'confirm-email', component: ConfirmEmailComponent},
+  { path: 'past-events', component: PastEventsComponent },
+  { path: 'future-events', component: FutureEventsComponent }
 
 ];

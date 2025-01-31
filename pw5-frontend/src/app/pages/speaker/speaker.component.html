@@ -1,1 +1,17 @@
-<p>speaker works!</p>
+@if (speaker) {
+<div class="speaker-page">
+    <div class="speaker-info">
+        <div class="speaker-details">
+            <h2>{{ speaker.name }}</h2>
+            <h4 class="subtitle">Ospite speciale</h4>
+            <p class="bio">Bio: {{ speaker.bio }}</p>
+            <button class="btn" (click)="goBack()">Torna indietro</button>
+        </div>
+        <img [src]="speaker.image" alt="{{ speaker.name }}" class="speaker-image" />
+    </div>
+</div>
+}
+
+@if (!speaker) {
+<p>Relatore non trovato.</p>
+}
