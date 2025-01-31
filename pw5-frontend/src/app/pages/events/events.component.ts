@@ -8,7 +8,7 @@ import localeIt from '@angular/common/locales/it';
 
 registerLocaleData(localeIt);
 
-interface Event {
+export interface Event {
   id: number;
   title: string;
   startDate: string;
