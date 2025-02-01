@@ -43,7 +43,7 @@ export class LoginComponent {
     }
 
     try {
-      await firstValueFrom(this.authService.login(payload));
+        await this.authService.login(payload);
       await this.router.navigate(['/']);
     } catch (error) {
       // // if response is a 401 error, add an error message
@@ -67,7 +67,7 @@ export class LoginComponent {
     }
 
     try {
-      await firstValueFrom(this.authService.loginHost(payload));
+      await this.authService.loginHost(payload);
       await this.router.navigate(['/']);
     } catch (error) {
       // if response is a 401 error, add an error message

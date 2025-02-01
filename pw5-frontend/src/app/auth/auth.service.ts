@@ -1,6 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {lastValueFrom} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,35 +11,31 @@ export class AuthService {
   constructor(private http: HttpClient) {
   }
 
-  register(userData: any): Observable<any> {
-    return this.http.post<any>(this.baseUrl + 'register', userData);
+  async register(userData: { firstName: string; lastName: string; email: string; hashedPsw: string; }): Promise<any> {
+    return await lastValueFrom(this.http.post<any>(`${this.baseUrl}register`, userData));
   }
 
-  registerHost(userData: any): Observable<any> {
-    return this.http.post<any>(this.baseUrl + 'register-host', userData);
+  async registerHost(userData: { name: string; email: string; }): Promise<any> {
+    return await lastValueFrom(this.http.post<any>(`${this.baseUrl}register-host`, userData));
   }
 
-  login(userData: any): Observable<any> {
-    return this.http.post<any>(this.baseUrl + 'login', userData, {
-      withCredentials: true
-    });
+  async login(userData: { email: string; hashedPsw: string }): Promise<any> {
+    return await lastValueFrom(this.http.post<any>(`${this.baseUrl}login`, userData, {withCredentials: true}));
   }
 
-  loginHost(userData: any): Observable<any> {
-    return this.http.post<any>(this.baseUrl + 'login-host', userData, {
-      withCredentials: true
-    });
+  async loginHost(userData: { email: string; hashedPsw: string }): Promise<any> {
+    return await lastValueFrom(this.http.post<any>(`${this.baseUrl}login-host`, userData, {withCredentials: true}));
   }
 
-  confirmEmail(token: string): Observable<any> {
-    return this.http.put<any>(this.baseUrl + 'confirm-email', {token});
+  async confirmEmail(token: string): Promise<any> {
+    return await lastValueFrom(this.http.put<any>(`${this.baseUrl}confirm-email`, {token}));
   }
 
-  sendConfirmationMail(email: string): Observable<any> {
-    return this.http.get<any>(this.baseUrl + 'send-confirmation-mail');
+  async sendConfirmationMail(email: string): Promise<any> {
+    return await lastValueFrom(this.http.get<any>(`${this.baseUrl}send-confirmation-mail`, {params: {email}}));
   }
 
-  logout(): Observable<any> {
-    return this.http.delete<any>(this.baseUrl + 'logout');
+  async logout(): Promise<any> {
+    return await lastValueFrom(this.http.delete<any>(`${this.baseUrl}logout`, {withCredentials: true}));
   }
 }

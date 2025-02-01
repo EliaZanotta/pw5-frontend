@@ -1,0 +1,66 @@
+.wizard-nav {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  position: relative;
+}
+
+.wizard-nav-container {
+  display: flex;
+  gap: 20px;
+  position: relative;
+}
+
+.wizard-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+.wizard-nav-item::before {
+  content: '';
+  position: absolute;
+  top: 20px; /* Adjust this value to align with the center of the circles */
+  left: -50%; /* Adjust this value to control the length of the line */
+  width: 150%;
+  height: 2px;
+  background-color: #ce2424;
+  z-index: -1;
+}
+
+.wizard-nav-item.active::before {
+  background-color: #28a745; /* Colore per la linea attiva */
+}
+
+.wizard-nav-item:first-child::before {
+  display: none; /* Hide the line for the first item */
+}
+
+.wizard-nav-item:last-child::before {
+  width: 100%; /* Adjust this value to control the length of the line */
+}
+
+.wizard-nav-item-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ce2424;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.wizard-nav-item.active .wizard-nav-item-circle {
+  background-color: #28a745; /* Colore per lo stato attivo */
+}
+
+.wizard-nav-item p {
+  margin: 0;
+  font-size: 14px;
+  color: #333;
+}

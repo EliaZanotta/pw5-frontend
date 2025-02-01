@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
-import {faUser, faHandshake, faArrowLeft} from '@fortawesome/free-solid-svg-icons';
-import {RouterLink} from "@angular/router";
+import {faUser, faHandshake} from '@fortawesome/free-solid-svg-icons';
+import {Router, RouterLink} from "@angular/router";
+import {WizardService} from "./wizard.service";
 
 @Component({
   selector: 'app-register',
@@ -15,5 +16,13 @@ import {RouterLink} from "@angular/router";
 export class RegisterComponent {
     faUser = faUser;
     faHandshake = faHandshake;
-    faArrowLeft = faArrowLeft;
+
+    constructor(private wizardService: WizardService) {
+
+    }
+
+    setUserChoice(choice: string) {
+        this.wizardService.setUserChoice(choice);
+        this.wizardService.setStep(1);
+    }
 }

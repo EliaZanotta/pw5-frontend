@@ -11,7 +11,7 @@ import {ContactComponent} from './pages/contact/contact.component';
 import {RegisterComponent} from './auth/register/register.component';
 import {PastEventsComponent} from './pages/past-events/past-events.component';
 import {FutureEventsComponent} from './pages/future-events/future-events.component';
-import {ConfirmEmailComponent} from './pages/confirm-email/confirm-email.component';
+import {ConfirmEmailComponent} from './auth/confirm-email/confirm-email.component';
 import {NotFoundComponent} from './pages/not-found/not-found.component';
 import {LoginComponent} from './auth/login/login.component';
 import {Step1Component} from './auth/register/step-1/step-1.component';
@@ -37,7 +37,7 @@ export const routes: Routes = [
   {path: 'auth/register/step-3', component: Step3Component},
   {path: 'auth/register/step-4', component: Step4Component},
   {path: 'auth/register/step-5', component: Step5Component},
-  {path: 'confirm-email', component: ConfirmEmailComponent},
+  {path: 'auth/confirm-email/:token', component: ConfirmEmailComponent},
   {path: 'past-events', component: PastEventsComponent},
   {path: 'future-events', component: FutureEventsComponent},
   {path: '**', component: NotFoundComponent}
