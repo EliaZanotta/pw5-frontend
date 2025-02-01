@@ -1,1 +1,94 @@
-<p>single-event works!</p>
+<!-- <div class="single-event">
+    @if (event) {
+    <div class="event-container">
+        <img class="event-background" [src]="event.image" alt="{{ event.title }}" />
+
+        <mat-card class="event-details">
+            <mat-card-header>
+                <mat-card-title> {{ event.title }}</mat-card-title>
+                <mat-card-subtitle>Data: {{ event.date }}</mat-card-subtitle>
+                <mat-card-subtitle>Ora: {{ event.time }}</mat-card-subtitle>
+                <mat-card-subtitle>Luogo: {{ event.location }}</mat-card-subtitle>
+                <mat-card-subtitle>Partecipanti: {{ event.participants }}</mat-card-subtitle>
+                <mat-card-subtitle>
+                    Relatori:
+                    <a [routerLink]="['/speaker', event.speakerId]" class="speaker-link">
+                        {{ event.speaker }}
+                    </a>
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <p>
+                    Benvenuti all'evento "{{ event.title }}". Ulteriori dettagli saranno disponibili qui!
+                </p>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button color="primary" (click)="goBooking()">Prenota il tuo posto</button>
+                <button mat-raised-button color="primary" (click)="goBack()">Torna indietro</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+    }
+
+    @if (!event) {
+    <p>Evento non trovato.</p>
+    }
+</div>
+ -->
+
+<div class="container">
+    <div class="hero-section">
+        <img [src]="event.image" alt="{{ event.title }}" class="hero-image" />
+        <div class="overlay"></div>
+    </div>
+
+    <main class="content">
+        <div class="event-card">
+            <h1 class="event-title">{{ event.title }}</h1>
+
+            <div class="event-info">
+
+                <span>Luogo: {{ event.location }}</span>
+            </div>
+
+            <div class="event-info">
+
+                <span>Data: {{ event.date }} Ora: {{ event.time }} </span>
+            </div>
+
+            <div class="event-info">
+
+                <span>Partecipanti: {{ event.participants }}</span>
+            </div>
+
+            <div class="event-info">
+                <span>
+
+                    Relatori:
+                    <a [routerLink]="['/speaker', event.speakerId]">
+                        {{ event.speaker }}
+                    </a>
+                </span>
+
+            </div>
+
+            <div class="event-info">
+                <span>Partecipanti: {{ event.participants }}</span>
+            </div>
+
+            <div class="event-info">
+                <span>Status: {{ event.status }}</span>
+            </div>
+
+            <p class="event-description">
+                Benvenuti all'evento "{{ event.title }}". Ulteriori dettagli saranno disponibili qui!
+            </p>
+
+            <mat-card-actions class="button-group">
+                <button class="btn" (click)="goBooking()">Prenota il tuo posto</button>
+                <!-- se l'evento è passato non si può prenotare -->
+                <button class="btn" (click)="goBack()">Torna indietro</button>
+            </mat-card-actions>
+        </div>
+    </main>
+</div>
