@@ -1,0 +1,140 @@
+/* Auth Container */
+.auth-container {
+    display: flex;
+    gap: 15px;
+    padding: 10px;
+    justify-content: center;
+  }
+  
+  /* Auth Image */
+  .auth-image {
+    max-width: 70%;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    height: auto;
+  }
+  
+  /* Auth Form Wrapper */
+  .auth-form-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border-radius: 8px;
+    padding: 20px;
+  }
+  
+  /* Form */
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Headings */
+  h2 {
+    color: #444;
+    font-size: 25px;
+    font-weight: 300;
+    margin: 0 auto 30px;
+  }
+  
+  /* Form Group */
+  .form-group {
+    margin-bottom: 15px;
+    
+  }
+  
+  /* Input Fields */
+  input {
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f7f7f7;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+  }
+  
+  input:focus {
+    outline: none;
+    border-color: #848484;
+  }
+  
+  /* Button */
+  button {
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    background-color: #ce2424;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 30%;
+    margin: 20px auto 20px;
+    font-size: 0.9rem;
+  }
+  
+  button:hover {
+    background-color: #ad1919;
+  }
+  
+  
+  
+  /* Register Link */
+  .register-link {
+    font-size: 0.8rem;
+    color: #444;
+  }
+  
+  .register-link a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .register-link a:hover {
+    color: #0056b3;
+  }
+  
+ 
+  
+  /* Media Queries */
+  /* @media (max-width: 768px) {
+    .auth-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .auth-image {
+      max-width: 100%;
+    }
+  
+    .auth-form-wrapper {
+      width: 90%;
+    }
+  
+    button {
+      width: 70%;
+    }
+  } */
+  
+  /* @media (max-width: 480px) {
+    .auth-container {
+      padding: 5px;
+    }
+  
+    h2 {
+      font-size: 20px;
+    }
+  
+    input {
+      font-size: 0.9rem;
+    }
+  
+    button {
+      font-size: 0.8rem;
+      padding: 8px;
+    }
+  } */
+  

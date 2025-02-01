@@ -1,0 +1,42 @@
+.container {
+  background: rgb(206,36,36);
+  background: radial-gradient(circle, rgba(206,36,36,1) 0%, rgba(58,0,30,1) 100%);
+}
+
+.confirmation-box {
+  width: 500px;
+  padding: 25px;
+  text-align: center;
+  background-color: #fff6f4;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.confirmation-box p {
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.btn-login {
+  padding: 10px;
+  background-color: #ce2424;
+  color: white;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.btn-login:hover {
+  background-color: #ad1919;
+}

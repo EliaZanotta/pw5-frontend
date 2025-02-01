@@ -1,1 +1,43 @@
-<p>events works!</p>
+<div class="hero">
+    <h1>Scopri i nostri eventi</h1>
+  <p class="hero-description">
+    Unisciti a noi per scoprire nuove esperienze e conoscere nuove persone.
+  </p>
+  <a routerLink="/future-events" class="browse-button">Scopri tutti</a>
+</div>
+
+<section *ngFor="let category of ['future', 'past']" class="event-container">
+  <div class="category-header">
+    <h2>
+      {{ category === 'future' ? 'Eventi Futuri' : 'Eventi Passati' }}
+    </h2>
+    <a routerLink="/{{category}}-events" class="browse-button">Scopri tutti</a>
+  </div>
+  <div class="event-grid">
+    <a *ngFor="let event of eventsByCategory[category] | slice:0:4"
+       routerLink="/events/{{ event.id }}"
+       class="event-card">
+      <div class="card">
+        <div class="image-container">
+          <img [src]="'img/code_cheers.png'" [alt]="event.title" class="event-image"/>
+        </div>
+        <div class="card-content">
+          <h3 class="event-title">{{ event.title }}
+            <fa-icon
+              [icon]="faSackDollar"
+              *ngIf="event.eventSubscription === 'PAID'"
+              style="color: black;">
+
+            class="event-subType">
+            </fa-icon>
+          </h3>
+          <p class="event-date">{{ event.startDate | date:'dd MMMM yyyy, HH:mm' }}</p>
+          <p class="event-location">{{ event.place }}</p>
+          <div class="card-bottom-content">
+            <p class="event-host">{{ event.host }}</p>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>

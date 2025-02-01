@@ -1,0 +1,47 @@
+
+<div class="register-container">
+  <!-- Form user -->
+  <div class="register-half" *ngIf="showUserForm">
+    <h2>Registrazione utente</h2>
+    <form class="register">
+      <div class="form-group">
+        <input type="text" id="user-firstname" placeholder="Nome" required />
+      </div>
+      <div class="form-group">
+        <input type="text" id="user-lastname" placeholder="Cognome" required />
+      </div>
+      <div class="form-group">
+        <input type="email" id="user-email" placeholder="Email" required />
+      </div>
+      <div class="form-group">
+        <input type="password" id="user-password" placeholder="Password" required />
+      </div>
+      <div class="button-group">
+      <button type="submit">Registrati</button>
+      </div>
+    </form>
+    <p><a href="javascript:void(0);" (click)="toggleForm()">Vuoi registrarti come azienda/partner?</a></p>
+  </div>
+
+  <!-- Form company -->
+  <div class="register-right" *ngIf="!showUserForm">
+    <h2>Registrazione azienda/partner</h2>
+    <form class="register">
+      <div class="form-group">
+        <input type="text" id="company-name" placeholder="Nome azienda/partner" required />
+      </div>
+      <div class="form-group">
+        <input type="email" id="company-email" placeholder="Email azienda" required />
+      </div>
+      <div class="form-group">
+        <input type="password" id="company-password" placeholder="Password" required />
+      </div>
+      <div class="button-group">
+      <button type="submit">Registrati</button>
+
+      </div>
+    </form>
+    <p><a href="javascript:void(0);" (click)="toggleForm()">Vuoi registrarti come utente?</a></p>
+  </div>
+</div>
+

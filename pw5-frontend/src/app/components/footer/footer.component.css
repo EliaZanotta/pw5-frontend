@@ -1,0 +1,144 @@
+.footer {
+    background-color: #333;
+    color: #fff;
+    padding: 40px 20px;
+    font-family: 'P', sans-serif;
+  }
+
+  .footerContainer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .footerAbout,
+  .footerLinks,
+  .footerSocial {
+    flex: 1;
+    min-width: 250px;
+  }
+.footerLinks {
+cursor: pointer;
+}
+.footerLinks h4 {
+  cursor: default;
+}
+  .footerAbout h3 {
+    font-size: 1.8rem;
+    color: #F29C11;
+    margin-bottom: 10px;
+  }
+
+  .footerAbout p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .footerLinks h4,
+  .footerSocial h4 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #F29C11;
+  }
+
+  .footerLinks ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .footerLinks ul li {
+    margin-bottom: 8px;
+  }
+
+  .footerLinks ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+  }
+
+  .footerLinks ul li a:hover {
+    text-decoration: underline;
+  }
+
+  .footerSocial .socialIcons {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+  }
+
+  .footerSocial .socialIcons a img {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s;
+  }
+
+  .footerSocial .socialIcons a img:hover {
+    transform: scale(1.1);
+  }
+
+  .footerBottom {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #ccc;
+  }
+
+  .footerBottom p {
+    margin: 0;
+  }
+
+  /* --- Media Queries per Responsiveness --- */
+
+/* Smartphone (fino a 480px) */
+@media (max-width: 480px) {
+    .footerContainer {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .footerAbout,
+    .footerLinks,
+    .footerSocial {
+      flex: none;
+      min-width: 100%;
+    }
+
+    .footerLinks ul li {
+      margin-bottom: 5px;
+    }
+
+    .footerSocial .socialIcons {
+      justify-content: center;
+    }
+  }
+
+  /* Tablet (481px - 768px) */
+  @media (min-width: 481px) and (max-width: 768px) {
+    .footerContainer {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .footerAbout,
+    .footerLinks,
+    .footerSocial {
+      flex: none;
+      min-width: 100%;
+    }
+  }
+
+  /* Laptop (769px - 1024px) */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .footerContainer {
+      gap: 15px;
+    }
+
+    .footerAbout,
+    .footerLinks,
+    .footerSocial {
+      min-width: 200px;
+    }
+  }

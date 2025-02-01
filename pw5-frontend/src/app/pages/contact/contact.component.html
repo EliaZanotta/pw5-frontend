@@ -1,1 +1,59 @@
-<p>contact works!</p>
+<div class="contact-page">
+  <!-- Hero Image -->
+  <div class="hero-image">
+    <img src="assets/contacts.png" alt="Contact Us Hero">
+    <div class="hero-text">
+
+    </div>
+  </div>
+
+  <!-- Contact Section -->
+  <div class="contact-section">
+    <!-- Left Side: Information and Map -->
+    <div class="contact-info">
+      <h3>Dove trovarci</h3>
+      <p>
+        Indirizzo: Piazza Monte Grappa, Varese, Italia<br>
+        Telefono: +39 0332 123456<br>
+        Email: info&#64;varese-devgroup.com
+      </p>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2737.2640342978464!2d8.825436815884508!3d45.81769927910668!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47869e9c642364bb%3A0x6c7559f682e8b0dd!2sPiazza%20Monte%20Grappa%2C%20Varese%20VA%2C%20Italia!5e0!3m2!1sit!2sit!4v1615123456789!5m2!1sit!2sit"
+        allowfullscreen=""
+        loading="lazy"
+      ></iframe>
+    </div>
+
+    <!-- Right Side: Contact Form -->
+    <div class="contact-form">
+      <h3>Contattaci</h3>
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="name">Nome</label>
+          <input id="name" type="text" formControlName="name" placeholder="Il tuo nome">
+          <div class="error" *ngIf="contactForm.get('name')?.touched && contactForm.get('name')?.invalid">
+            Il nome è richiesto.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input id="email" type="email" formControlName="email" placeholder="La tua email">
+          <div class="error" *ngIf="contactForm.get('email')?.touched && contactForm.get('email')?.invalid">
+            Inserisci un'email valida.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Messaggio</label>
+          <textarea id="message" formControlName="message" placeholder="Il tuo messaggio"></textarea>
+          <div class="error" *ngIf="contactForm.get('message')?.touched && contactForm.get('message')?.invalid">
+            Il messaggio è richiesto.
+          </div>
+        </div>
+
+        <button type="submit" [disabled]="contactForm.invalid">Contattaci</button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,11 +1,53 @@
-import { Component } from '@angular/core';
+import {EventsService, Event} from './events.service';
+import {Component, OnInit, LOCALE_ID, NgModule} from '@angular/core';
+import {RouterLink} from '@angular/router';
+import {DatePipe, NgForOf, NgIf, registerLocaleData, SlicePipe} from '@angular/common';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {faEuroSign, faSackDollar} from '@fortawesome/free-solid-svg-icons';
+import localeIt from '@angular/common/locales/it';
+
+registerLocaleData(localeIt);
 
 @Component({
   selector: 'app-events',
-  imports: [],
   templateUrl: './events.component.html',
-  styleUrl: './events.component.css'
+  styleUrls: ['./events.component.css'],
+  imports: [
+    RouterLink,
+    NgForOf,
+    DatePipe,
+    NgIf,
+    FontAwesomeModule,
+    SlicePipe
+  ],
+  standalone: true,
+  providers: [{provide: LOCALE_ID, useValue: 'it-IT'}]
 })
-export class EventsComponent {
 
+export class EventsComponent implements OnInit {
+  faEuroSign = faEuroSign;
+
+  eventsByCategory: { [key: string]: Event[] } = {
+    future: [],
+    past: []
+  };
+
+  constructor(private eventsService: EventsService) {
+  }
+
+  ngOnInit(): void {
+    this.eventsService.getEvents().subscribe((events: Event[]) => {
+      this.eventsByCategory = this.categorizeEvents(events);
+    });
+  }
+
+  private categorizeEvents(events: Event[]): { future: Event[]; past: Event[] } {
+    const futureEvents: Event[] = events.filter(event => event.status === 'CONFIRMED');
+    const pastEvents: Event[] = events.filter(event => event.status === 'ARCHIVED');
+
+    return {future: futureEvents, past: pastEvents};
+  }
+
+  protected readonly faSackDollar = faSackDollar;
 }
+

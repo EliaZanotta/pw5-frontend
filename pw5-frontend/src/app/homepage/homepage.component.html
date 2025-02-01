@@ -1,1 +1,89 @@
-<p>homepage works!</p>
+<!-- Hero Section -->
+<section class="heroSection">
+  <div class="heroContent">
+    <h1>Varese Developer Group</h1>
+    <p>La community per sviluppatori appassionati di innovazione e tecnologia.</p>
+    <a routerLink="/events">Scopri i nostri Eventi</a>
+  </div>
+</section>
+
+<!-- About Section -->
+<section class="aboutSection">
+  <div class="aboutContainer">
+    <div class="aboutImages">
+      <img
+        src="https://ddzgqog6k5jvc.cloudfront.net/images/uploads/companies/thumbnails/thinkopen-garlasco-1.jpg"
+        alt="Community Image"
+      />
+    </div>
+    <div class="aboutText">
+      <h2 data-aos="fade-right">Chi Siamo</h2>
+      <p data-aos="fade-up">
+        Il Varese Developer Group è una community in crescita che organizza regolarmente eventi, workshop e conferenze
+        per favorire lo scambio di conoscenze e l’apprendimento continuo.
+      </p>
+      <p data-aos="fade-up" data-aos-delay="200">
+        Unisciti a noi per crescere come sviluppatore e scoprire tutto il potenziale dell'innovazione tecnologica.
+      </p>
+      <a routerLink="#" data-aos="zoom-in" data-aos-delay="400">
+        Unisciti alla Community
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- Upcoming Events Section -->
+<section class="eventsSection">
+  <h1>Eventi in Arrivo</h1>
+  <div class="eventsGrid">
+    <div class="eventCard" *ngFor="let event of incomingEvents">
+      <img src="https://angularexperts.imgix.net/workshops/rxjs.webp?auto=format" alt="Workshop Angular">
+      <div class="eventContent">
+        <h3>{{ event.title }}</h3>
+        <p>{{ event.startDate | date:'dd MMMM yyyy, HH:mm' }}</p>
+        <a routerLink="/events/{{ event.id }}">Dettagli</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Partner Carousel Section -->
+<section class="partnerCarouselSection">
+  <h2 class="partnerCarouselTitle">Le Nostre Aziende Partner</h2>
+  <p class="partnerCarouselSubtitle">Collaboriamo con le migliori aziende per costruire il futuro della tecnologia</p>
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+      <!-- Partner Logos -->
+      <div class="swiper-slide">
+        <img src="https://cryptologos.cc/logos/ethereum-eth-logo.png" alt="Partner 1">
+      </div>
+      <div class="swiper-slide">
+        <img
+          src="https://static.vecteezy.com/system/resources/thumbnails/046/861/647/small/google-logo-transparent-background-free-png.png"
+          alt="Partner 2">
+      </div>
+      <div class="swiper-slide">
+        <img src="https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/45_Bitcoin_logo_logos-512.png"
+             alt="Partner 3">
+      </div>
+      <div class="swiper-slide">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Tesla_logo.png/480px-Tesla_logo.png"
+             alt="Partner 4">
+      </div>
+      <div class="swiper-slide">
+        <img src="https://seeklogo.com/images/S/Stargate_Earth_Symbol-logo-F41488DDAE-seeklogo.com.png" alt="Partner 5">
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contactSection">
+  <h2>Contattaci</h2>
+  <p>Vuoi sapere di più sul Varese Developer Group? Contattaci tramite i nostri canali ufficiali o visita i nostri
+    eventi.</p>
+  <a routerLink="/contact">Contattaci</a>
+</section>
