@@ -13,7 +13,7 @@ export interface Event {
   host: string;
   title: string;
   status: string;
-  pendingSpeakerRequests: string[];
+  pendingSpeakerRequests: PendingSpeakerRequest[];
   maxParticipants: number;
   registeredParticipants: number;
   ticketIds: string[];
@@ -22,9 +22,15 @@ export interface Event {
   description?: string;
 }
 
-export interface CategorizedEvents {
-  future: Event[];
-  past: Event[];
+interface PendingSpeakerRequest {
+  id: string | null;
+  firstName: string | null;
+  lastName: string | null;
+  email: string | null;
+  hashedPsw: string | null;
+  status: string | null;
+  role: string | null;
+  userDetails: UserDetails | null;
 }
 
 interface Speaker {
@@ -45,6 +51,11 @@ interface UserDetails {
   favouriteTopics: string[];
 }
 
+export interface CategorizedEvents {
+  future: Event[];
+  past: Event[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -54,10 +65,14 @@ export class EventsService {
 
   constructor(private http: HttpClient) { }
 
-  getEvents(): Observable<any> {
-    return this.http.get(this.apiUrl);
+  // Updated to extract events from the response format
+  getEvents(): Observable<Event[]> {
+    return this.http.get<{ events: Event[] }>(this.apiUrl).pipe(
+      map(response => response.events)
+    );
   }
-  // New method to get categorized events
+
+  // Updated method to get categorized events
   getCategorizedEvents(): Observable<CategorizedEvents> {
     return this.getEvents().pipe(
       map((events: Event[]) => this.categorizeEvents(events))

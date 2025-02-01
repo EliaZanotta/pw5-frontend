@@ -1,1 +1,13 @@
-<p>partner-companies works!</p>
+<div class="page-header">
+  <h1>Aziende e Partner</h1>
+</div>
+
+<div [ngClass]="{'add-padding': partnerCompanies.length < 6}">
+<div class="partner-container">
+  <div *ngFor="let company of partnerCompanies; trackBy: trackById" class="partner-card" (click)="goToCompany(company.id)">
+    <img [src]="'https://www.supero.com.mt/wp-content/uploads/2015/05/azienda-1024x682.jpg'"  alt="{{ company.name }}">
+    <h3>{{ company.name }}</h3>
+    <p>{{ company.description || 'Nessuna descrizione disponibile' }}</p>
+  </div>
+</div>
+</div>

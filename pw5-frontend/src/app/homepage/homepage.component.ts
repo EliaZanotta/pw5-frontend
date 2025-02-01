@@ -2,7 +2,7 @@ import {Component, AfterViewInit, OnInit, LOCALE_ID} from '@angular/core';
 import {EventsService} from '../pages/events/events.service';
 import Swiper from 'swiper';
 import {Navigation, Autoplay} from 'swiper/modules';
-import { Event } from '../pages/events/events.component';
+import { Event } from '../pages/events/events.service';
 import {DatePipe, NgForOf, registerLocaleData} from '@angular/common';
 import localeIt from '@angular/common/locales/it';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
