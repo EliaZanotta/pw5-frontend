@@ -1,4 +1,4 @@
-import {EventsService} from './events.service';
+import {EventsService, Event} from './events.service';
 import {Component, OnInit, LOCALE_ID, NgModule} from '@angular/core';
 import {RouterLink} from '@angular/router';
 import {DatePipe, NgForOf, NgIf, registerLocaleData, SlicePipe} from '@angular/common';
@@ -7,17 +7,6 @@ import {faEuroSign, faSackDollar} from '@fortawesome/free-solid-svg-icons';
 import localeIt from '@angular/common/locales/it';
 
 registerLocaleData(localeIt);
-
-export interface Event {
-  id: number;
-  title: string;
-  startDate: string;
-  endDate: string;
-  place: string;
-  host: string;
-  eventSubscription: string;
-  status: string;
-}
 
 @Component({
   selector: 'app-events',
