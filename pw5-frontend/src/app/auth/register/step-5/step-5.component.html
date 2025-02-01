@@ -1,11 +1,13 @@
 <!--wizard section-->
 <section class="wizard-nav">
-  <div class="wizard-nav-container">
-    <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= 1}" *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(1))">
+  <div class="wizard-nav-container" [attr.data-user-choice]="userChoice">
+    <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= 1}"
+         *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(1))">
       <div class="wizard-nav-item-circle">1</div>
       <p>Registrazione Utente</p>
     </div>
-    <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= 2}" *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(2))">
+    <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= 2}"
+         *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(2))">
       <div class="wizard-nav-item-circle">2</div>
       <p>Conferma Nuovo Account</p>
     </div>
@@ -17,8 +19,9 @@
       <div class="wizard-nav-item-circle">4</div>
       <p>Cambia Password</p>
     </div>
-    <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= (userChoice === 'user' ? 3 : 5)}" *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(5))">
-      <div class="wizard-nav-item-circle">{{userChoice === 'user' ? 3 : 5}}</div>
+    <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= (userChoice === 'user' ? 3 : 5)}"
+         *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(5))">
+      <div class="wizard-nav-item-circle">{{ userChoice === 'user' ? 3 : 5 }}</div>
       <p>Vai al Login</p>
     </div>
   </div>

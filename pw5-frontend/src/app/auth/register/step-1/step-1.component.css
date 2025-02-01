@@ -89,7 +89,7 @@
 
 .wizard-nav-container[data-user-choice='user'] .wizard-nav-item:last-child::before {
   width: 950%;
-  left: -900%;
+  left: -880%;
 }
 
 .wizard-nav-container[data-user-choice='host'] .wizard-nav-item::before {
