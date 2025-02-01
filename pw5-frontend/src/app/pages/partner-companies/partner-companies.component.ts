@@ -24,7 +24,7 @@ export class PartnerCompaniesComponent implements OnInit {
 
   ngOnInit(): void {
     // Fetch partner companies from the service
-    this.partnerCompaniesService.getCompanies().subscribe(
+    this.partnerCompaniesService.getAllHosts().subscribe(
       (companies: Host[]) => {
         this.partnerCompanies = companies;
       },
