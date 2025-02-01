@@ -1,10 +1,28 @@
 <div class="container">
-  <div class="confirmation-box">
-    <h1>Email confermata con successo!</h1>
-    <p>La tua email è stata confermata con successo.<br> Adesso puoi accedere al tuo account.</p>
-    <a href="/auth">
-      <button class="btn-login">Accedi</button>
-    </a>
-  </div>
+    <div class="confirmation-box" *ngIf="userChoice === 'user'">
+        <h1>Email confermata con successo!</h1>
+        <p>La tua email è stata confermata con successo.<br> Accesso effettuato.</p>
+        <a routerLink="/">
+            <button class="btn-login" (click)="deleteUserChoiceCookie()">Home</button>
+        </a>
+    </div>
+    <div class="confirmation-box" *ngIf="userChoice === 'host'">
+        <h1>Email confermata con successo!</h1>
+        <p>La tua email è stata confermata con successo.<br> Per continuare,
+            <a routerLink="/auth/register/step-3">
+                clicca qui per completare la registrazione come azienda
+            </a>, oppure vai alla home
+        </p>
+        <a routerLink="/">
+            <button class="btn-login" (click)="deleteUserChoiceCookie()">Home</button>
+        </a>
+    </div>
+
+    <div class="confirmation-box" *ngIf="userChoice === ''">
+        <h1>Email già confermata</h1>
+        <a routerLink="/">
+            <button class="btn-login">Home</button>
+        </a>
+    </div>
 </div>
 

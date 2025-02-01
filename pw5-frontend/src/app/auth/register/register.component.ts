@@ -22,7 +22,7 @@ export class RegisterComponent {
     }
 
     setUserChoice(choice: string) {
-        this.wizardService.setUserChoice(choice);
+        document.cookie = `USER_CHOICE=${choice}; path=/`;
         this.wizardService.setStep(1);
     }
 }
