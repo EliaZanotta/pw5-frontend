@@ -1,17 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {WizardService} from '../wizard.service';
 import {NgClass, NgIf} from '@angular/common';
 import {AuthService} from '../../auth.service';
 import {Router, RouterLink} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Host, HostService} from '../../../host.service';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-step-4',
   imports: [
     NgIf,
     NgClass,
-    RouterLink,
     FormsModule,
     ReactiveFormsModule
   ],
@@ -26,22 +25,40 @@ export class Step4Component implements OnInit {
   oldPsw: string = '';
   newPsw: string = '';
 
-  constructor(public wizardService: WizardService, public authService: AuthService, private router: Router, private hostService: HostService) {
+  constructor(public authService: AuthService, private router: Router, private hostService: HostService) {
   }
 
   async ngOnInit(): Promise<void> {
-    this.wizardService.setStep(4);
-    this.currentStep = this.wizardService.getStep() ? this.wizardService.getStep() : 2;
-    console.log('Step ' + this.wizardService.getStep());
-    this.host = (await this.authService.getLoggedHost()).host;
-    if (this.host) {
-      this.userChoice = 'host';
-      console.log('User choice:', this.userChoice);
+    console.log('Step ' + this.currentStep);
+    try {
+      this.host = (await this.authService.getLoggedHost()).host;
+
+      if (this.host) {
+        this.userChoice = 'host';
+        console.log('User choice:', this.userChoice);
+        console.log('Host:', this.host);
+
+        // Check if the password has already been set
+        if (this.host.hashedPsw !== this.host.provvisoryPsw) {
+          await this.router.navigate(['/auth/register/step-5']);
+        }
+      }
+    } catch (errorResponse) {
+      if (errorResponse instanceof HttpErrorResponse) {
+        if (errorResponse.status === 401) {
+          // Wait 3 seconds before redirecting to step 3
+          setTimeout(() => {
+            this.router.navigate(['/auth/register/step-3']);
+          }, 3000);
+        }
+      } else {
+        this.showErrorMessage('An unexpected error occurred');
+      }
+
     }
-    console.log('Host:', this.host);
   }
 
-  handleChangePswSubmit() {
+  async handleChangePswSubmit() {
     if (this.oldPsw === '' || this.newPsw === '') {
       this.showErrorMessage('Please fill all fields');
       return;
@@ -53,10 +70,15 @@ export class Step4Component implements OnInit {
     }
 
     try {
-      this.hostService.changePassword(payload);
-      this.router.navigate(['/auth/register/step-5']);
-    } catch (error) {
-      this.showErrorMessage('An error occurred. Please try again later');
+      await this.hostService.changePassword(payload);
+      await this.router.navigate(['/auth/register/step-5']);
+    } catch (errorResponse) {
+      if (errorResponse instanceof HttpErrorResponse) {
+        this.showErrorMessage(errorResponse.error.message);
+      } else {
+        this.showErrorMessage('An unexpected error occurred');
+      }
+      console.error('Error changing password:', errorResponse);
     }
   }
 

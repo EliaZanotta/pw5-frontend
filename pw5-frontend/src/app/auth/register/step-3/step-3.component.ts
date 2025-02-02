@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {WizardService} from '../wizard.service';
 import {NgClass, NgIf} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Router, RouterLink} from '@angular/router';
 import {AuthService, User} from '../../auth.service';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-step-3',
@@ -32,20 +32,33 @@ export class Step3Component implements OnInit {
     this.activeTab = tab;
   }
 
-  constructor(public wizardService: WizardService, public authService: AuthService, private router: Router) {
+  constructor(public authService: AuthService, private router: Router) {
   }
 
   async ngOnInit(): Promise<void> {
-    this.wizardService.setStep(3);
     const userChoiceCookie = document.cookie.split('; ').find(row => row.startsWith('USER_CHOICE='));
     if (userChoiceCookie) {
       this.userChoice = userChoiceCookie.split('=')[1];
     }
-    console.log('User choice:', this.userChoice);
-    this.currentStep = this.wizardService.getStep() ? this.wizardService.getStep() : 2;
-    console.log('Step ' + this.wizardService.getStep());
-    this.user = (await this.authService.getLoggedUser()).user;
-    console.log('User:', this.user);
+
+    const loggedHost = (await this.authService.getLoggedHost()).host;
+    if (loggedHost) {
+      await this.router.navigate(['/auth/register/step-4']);
+    }
+
+
+    try{
+      this.user = (await this.authService.getLoggedUser()).user;
+    } catch (errorResponse) {
+      if (errorResponse instanceof HttpErrorResponse) {
+        if (errorResponse.status === 401) {
+          // Wait 3 seconds before redirecting to step 2
+          setTimeout(() => {
+            this.router.navigate(['/auth/register/step-2']);
+          }, 3000);
+        }
+      }
+    }
   }
 
   async handleAziendaSubmit() {
@@ -97,6 +110,7 @@ export class Step3Component implements OnInit {
       } else {
         this.showErrorMessage('Errore durante il login');
       }
+      console.log('Error:', error);
     }
   }
 

@@ -10,6 +10,8 @@ export class Host {
   hostStatus: string | undefined;
   type: string | undefined;
   description: string | undefined;
+  hashedPsw: string | undefined;
+  provvisoryPsw: string | undefined;
   pastEvents: Event[] | undefined;
   programmedEvents: Event[] | undefined;
   createdBy: string | undefined;

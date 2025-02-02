@@ -224,21 +224,4 @@ input:focus {
   color: #4b5563;
 }
 
-.unauthorized-button {
-  padding: 0.75rem;
-  background-color: #3a001e;
-  color: white;
-  border: none;
-  border-radius: 0.25rem;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  text-decoration: none;
-  display: inline-block;
-  margin-top: 1rem;
-}
-
-.unauthorized-button:hover {
-  background-color: #202020;
-}
-
 

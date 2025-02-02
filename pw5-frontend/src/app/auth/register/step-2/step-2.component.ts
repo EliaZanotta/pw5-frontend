@@ -1,11 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {NgClass, NgIf} from '@angular/common';
-import {WizardService} from '../wizard.service';
 import {AuthService} from '../../auth.service';
 import {FormsModule} from '@angular/forms';
 import {Router} from '@angular/router';
-import {firstValueFrom} from 'rxjs';
 import {User} from '../../auth.service';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-step-2',
@@ -24,19 +23,29 @@ export class Step2Component implements OnInit {
   errorMessage: string | null = null;
   newMailSent: boolean = false;
 
-  constructor(public wizardService: WizardService, public authService: AuthService, private router: Router) {
+  constructor(public authService: AuthService, private router: Router) {
   }
 
   async ngOnInit(): Promise<void> {
-    this.wizardService.setStep(2);
     const userChoiceCookie = document.cookie.split('; ').find(row => row.startsWith('USER_CHOICE='));
     if (userChoiceCookie) {
       this.userChoice = userChoiceCookie.split('=')[1];
     }
-    this.currentStep = this.wizardService.getStep() ? this.wizardService.getStep() : 2;
-    console.log('Step ' + this.wizardService.getStep());
-    this.user = (await this.authService.getLoggedUser()).user;
-    console.log('User:', this.user);
+
+    try {
+      this.user = (await this.authService.getLoggedUser()).user;
+    } catch (errorResponse) {
+      if (errorResponse instanceof HttpErrorResponse) {
+        if (errorResponse.status === 401) {
+          await this.router.navigate(['/auth/register']);
+        }
+      }
+    }
+
+    const loggedHost = (await this.authService.getLoggedHost()).host;
+    if (loggedHost) {
+      await this.router.navigate(['/auth/register/step-4']);
+    }
   }
 
   async handleVerify() {
@@ -56,7 +65,11 @@ export class Step2Component implements OnInit {
 
   async handleResend() {
     try {
-      if (this.user?.status === 'VERIFIED') {
+      if (!this.user) {
+        return;
+      }
+
+      if (this.user.status === 'VERIFIED') {
         this.showErrorMessage('Email già verificata');
         return;
       } else {

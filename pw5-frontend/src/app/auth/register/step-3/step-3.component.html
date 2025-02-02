@@ -2,7 +2,7 @@
   <img class="background-image" src="/assets/registerImage.jpg" alt="Register Image"/>
 
   <!--wizard section-->
-  <section class="wizard-nav">
+  <section class="wizard-nav" *ngIf="user !== null && user.status === 'VERIFIED'">
     <div class="wizard-nav-container" [attr.data-user-choice]="userChoice">
       <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= 1}"
            *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(1))">
@@ -104,7 +104,7 @@
   </section>
 
   <!--Congratulation For User section-->
-  <section class="congratulation-container" *ngIf="userChoice === 'user'">
+  <section class="congratulation-container" *ngIf="user?.status === 'VERIFIED' && userChoice === 'user'">
     <div class="congratulation-box">
       <h1>Congratulazioni!</h1>
       <p>Il tuo account è stato creato con successo.</p>
