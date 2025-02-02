@@ -10,6 +10,7 @@ import {MatSelect} from '@angular/material/select';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from '@angular/material/datepicker';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatTooltip} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [],
@@ -27,7 +28,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     MatDatepicker,
     MatDatepickerInput,
     MatNativeDateModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTooltip
   ],
   exports: [
     MatFormFieldModule,
@@ -46,7 +48,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     MatDatepickerInput,
     MatNativeDateModule,
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTooltip
   ]
 })
 export class FiltersModule { }

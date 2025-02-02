@@ -119,6 +119,21 @@
 .events-list {
   padding-bottom: 0px; /* Consistent bottom padding for all event lists */
 }
+.details-button {
+  display: inline-block;
+  background: #ce2424;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.details-button:hover {
+  background: #a11b1b;
+}
+
 
 /* Responsività */
 @media (max-width: 768px) {

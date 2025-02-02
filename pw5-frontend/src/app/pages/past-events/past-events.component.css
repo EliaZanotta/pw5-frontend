@@ -117,6 +117,20 @@
 .events-list {
   padding-bottom: 40px;
 }
+.details-button {
+  display: inline-block;
+  background: #ce2424;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.details-button:hover {
+  background: #a11b1b;
+}
 
 
 /* Responsività */

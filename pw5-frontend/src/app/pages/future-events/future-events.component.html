@@ -48,7 +48,7 @@
         <p><strong>📅 Data:</strong> {{ formatDate(event.startDate) }}</p>
         <p><strong>📍 Luogo:</strong> {{ event.place }}</p>
         <p class="description">{{ event.description }}</p>
-        <button class="details-button" (click)="bookEvent(event.id)">Scopri di più</button>
+        <a routerLink="/events/{{ event.id }}" class="details-button">Scopri di più</a>
       </div>
     </div>
   </div>

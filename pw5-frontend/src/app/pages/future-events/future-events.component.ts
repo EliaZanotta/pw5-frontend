@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { EventsService, CategorizedEvents, Event } from '../events/events.service';
 import { formatDate, NgForOf, NgIf } from '@angular/common';
 import {EventFilterComponent} from '../../components/event-filter/event-filter.component';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-future-events',
   templateUrl: './future-events.component.html',
   styleUrls: ['./future-events.component.css'],
-  imports: [NgIf, NgForOf, EventFilterComponent],
+  imports: [NgIf, NgForOf, EventFilterComponent, RouterLink],
   standalone: true,
   providers: [EventsService]
 })

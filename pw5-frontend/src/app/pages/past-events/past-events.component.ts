@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { EventsService, CategorizedEvents, Event } from '../events/events.service';
 import { DatePipe, NgForOf, NgIf } from '@angular/common';
 import {EventFilterComponent} from '../../components/event-filter/event-filter.component';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-past-events',
   templateUrl: './past-events.component.html',
   styleUrls: ['./past-events.component.css'],
-  imports: [NgForOf, NgIf, EventFilterComponent],
+  imports: [NgForOf, NgIf, EventFilterComponent, RouterLink],
   standalone: true,
   providers: [DatePipe]
 })
