@@ -1,0 +1,78 @@
+<div class="login-container">
+  <img class="login-image" src="/assets/imageLogin.jpg" alt="Login Image" />
+  <div class="login-box">
+    <h1>Login</h1>
+
+    <div class="tabs">
+      <button class="tab" [class.active]="activeTab === 'utente'" (click)="setActiveTab('utente')">
+        Utente
+      </button>
+      <button class="tab" [class.active]="activeTab === 'azienda'" (click)="setActiveTab('azienda')">
+        Azienda/Partner
+      </button>
+    </div>
+
+    <form class="login-form" *ngIf="activeTab === 'utente'" (ngSubmit)="handleUtenteSubmit()">
+      <div class="form-group">
+        <label for="utente-email">Email</label>
+        <input
+          id="utente-email"
+          type="email"
+          placeholder="you@example.com"
+          [(ngModel)]="utenteEmail"
+          name="utenteEmail"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="utente-password">Password</label>
+        <input
+          id="utente-password"
+          type="password"
+          [(ngModel)]="utentePassword"
+          name="utentePassword"
+          required
+        />
+      </div>
+      <button type="submit" class="submit-button">
+        Login
+      </button>
+      <p class="register-link">
+        Non hai un account? <a routerLink="/auth/register">Clicca qui per registrarti</a>
+      </p>
+    </form>
+
+    <form class="login-form" *ngIf="activeTab === 'azienda'" (ngSubmit)="handleAziendaSubmit()">
+      <div class="form-group">
+        <label for="azienda-email">Email</label>
+        <input
+          id="azienda-email"
+          type="email"
+          placeholder="company@example.com"
+          [(ngModel)]="aziendaEmail"
+          name="aziendaEmail"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="azienda-password">Password</label>
+        <input
+          id="azienda-password"
+          type="password"
+          [(ngModel)]="aziendaPassword"
+          name="aziendaPassword"
+          required
+        />
+      </div>
+      <button type="submit" class="submit-button">
+        Login
+      </button>
+      <p class="register-link">
+        Vuoi diventare partner? <a routerLink="/auth/register-host">Clicca qui per registrare la tua attività</a>, oppure <a routerLink="/">torna alla home</a>
+      </p>
+    </form>
+    <div class="login-error" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+  </div>
+</div>
