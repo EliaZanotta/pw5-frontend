@@ -2,6 +2,10 @@
   text-decoration: none;
 }
 
+.hero {
+  margin-bottom: 50px;
+}
+
 .card {
   background: white;
   border-radius: 8px;
@@ -37,6 +41,7 @@
   align-items: center; /* Vertically center items */
   justify-content: space-between; /* Space between title and icon */
 }
+
 .event-subType {
   margin-left: 8px; /* Optional: Adds space between title and icon */
   width: 24px; /* Adjust width as needed */
@@ -73,9 +78,8 @@
 }
 
 
-
 .hero {
-  background: radial-gradient(circle, rgba(58,0,30,1) 0%, rgba(206,36,36,1) 100%);
+  background: radial-gradient(circle, rgba(58, 0, 30, 1) 0%, rgba(206, 36, 36, 1) 100%);
   color: white;
   text-align: center;
   padding: 80px 20px;
@@ -127,4 +131,132 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+
+.filters {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+mat-form-field {
+  flex: 1;
+  min-width: 220px;
+  max-width: 400px;
+}
+
+.filters-container {
+  margin-left: 30px;
+}
+
+.filters-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Adds space between filters */
+  margin: 20px 30px; /* Adjusts margins around the filter container */
+  align-items: flex-start;
+}
+
+mat-form-field {
+  flex: 1;
+  min-width: 220px;
+  max-width: 400px;
+}
+
+.no-events-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.2rem;
+  margin: 20px 0;
+  padding: 10px;
+  font-weight: bold;
+}
+
+
+/* Button positioned inline with filters */
+.clear-filters-btn {
+  background-color: transparent;
+  color: #f44336; /* Red icon color */
+  border: none;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+/* Icon styling inside the button */
+.clear-filters-btn fa-icon {
+  font-size: 24px;
+}
+
+/* Hover effect */
+.clear-filters-btn:hover {
+  background-color: rgba(244, 67, 54, 0.1); /* Light red background */
+  color: black; /* Icon turns black */
+}
+
+/* Focus effect */
+.clear-filters-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.3);
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+  .filters-container {
+    flex-direction: column; /* Stack filters on smaller screens */
+  }
+
+  .clear-filters-btn fa-icon {
+    font-size: 28px;
+  }
+}
+
+
+mat-label {
+  overflow: hidden;
+  padding-right: 8px;
+}
+
+.clear-filters-btn {
+  background-color: transparent;
+  color: #f44336; /* Red icon color */
+  border: none;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* Icon styling */
+.clear-filters-btn fa-icon {
+  font-size: 24px;
+}
+
+/* Hover effect */
+.clear-filters-btn:hover {
+  background-color: rgba(244, 67, 54, 0.1); /* Light red background */
+  color: #d32f2f; /* Darker red icon color */
+}
+
+/* Focus effect */
+.clear-filters-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.3);
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+  .clear-filters-btn fa-icon {
+    font-size: 28px;
+  }
 }
