@@ -1,28 +1,117 @@
-<!--wizard section-->
-<section class="wizard-nav">
-  <div class="wizard-nav-container" [attr.data-user-choice]="userChoice">
-    <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= 1}"
-         *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(1))">
-      <div class="wizard-nav-item-circle">1</div>
-      <p>Registrazione Utente</p>
+<div class="step-3-container">
+  <img class="background-image" src="/assets/registerImage.jpg" alt="Register Image"/>
+
+  <!--wizard section-->
+  <section class="wizard-nav">
+    <div class="wizard-nav-container" [attr.data-user-choice]="userChoice">
+      <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= 1}"
+           *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(1))">
+        <div class="wizard-nav-item-circle">1</div>
+        <p>Registrazione Utente</p>
+      </div>
+      <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= 2}"
+           *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(2))">
+        <div class="wizard-nav-item-circle">2</div>
+        <p>Conferma Nuovo Account</p>
+      </div>
+      <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= 3}" *ngIf="userChoice !== 'user'">
+        <div class="wizard-nav-item-circle">3</div>
+        <p>Registra Azienda</p>
+      </div>
+      <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= 4}" *ngIf="userChoice !== 'user'">
+        <div class="wizard-nav-item-circle">4</div>
+        <p>Cambia Password</p>
+      </div>
+      <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= (userChoice === 'user' ? 3 : 5)}"
+           *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(5))">
+        <div class="wizard-nav-item-circle">{{ userChoice === 'user' ? 3 : 5 }}</div>
+        <p>Vai al Login</p>
+      </div>
     </div>
-    <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= 2}"
-         *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(2))">
-      <div class="wizard-nav-item-circle">2</div>
-      <p>Conferma Nuovo Account</p>
+  </section>
+
+  <!--Register Host section-->
+  <section class="register-host-container" *ngIf="userChoice === 'host'">
+    <div class="register-host-box">
+      <h1>Registra la tua attività</h1>
+
+      <div class="tabs">
+        <button class="tab" [class.active]="activeTab === 'company'" (click)="setActiveTab('company')">
+          Azienda
+        </button>
+        <button class="tab" [class.active]="activeTab === 'partner'" (click)="setActiveTab('partner')">
+          Partner
+        </button>
+      </div>
+
+      <form class="register-host-form" *ngIf="activeTab === 'company'" (ngSubmit)="handleAziendaSubmit()">
+        <div class="form-group">
+          <label for="company-name">Nome della tua azienda</label>
+          <input
+            id="company-name"
+            type="text"
+            [(ngModel)]="companyName"
+            name="companyName"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="company-email">Email aziendale</label>
+          <input
+            id="company-email"
+            type="email"
+            placeholder="company@example.com"
+            [(ngModel)]="companyEmail"
+            name="companyEmail"
+            required
+          />
+        </div>
+        <button type="submit" class="submit-button">
+          Registrati
+        </button>
+      </form>
+
+      <form class="register-host-form" *ngIf="activeTab === 'partner'" (ngSubmit)="handlePartnerSubmit()">
+        <div class="form-group">
+          <label for="partner-name">Nome del partner</label>
+          <input
+            id="partner-name"
+            type="text"
+            [(ngModel)]="partnerName"
+            name="partnerName"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="partner-email">Email del partner</label>
+          <input
+            id="partner-email"
+            type="email"
+            placeholder="partner@example.com"
+            [(ngModel)]="partnerEmail"
+            name="partnerEmail"
+            required
+          />
+        </div>
+        <button type="submit" class="submit-button">
+          Registrati
+        </button>
+      </form>
+      <div class="register-host-error" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
     </div>
-    <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= 3}" *ngIf="userChoice !== 'user'">
-      <div class="wizard-nav-item-circle">3</div>
-      <p>Registra Azienda</p>
+  </section>
+
+  <!--Congratulation For User section-->
+  <section class="congratulation-container" *ngIf="userChoice === 'user'">
+    <div class="congratulation-box">
+      <h1>Congratulazioni!</h1>
+      <p>Il tuo account è stato creato con successo.</p>
+      <p>Accesso effettuato.</p>
+      <a class="congratulation-button" (click)="deleteUserChoiceCookie()" routerLink="/">Torna alla Home</a>
     </div>
-    <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= 4}" *ngIf="userChoice !== 'user'">
-      <div class="wizard-nav-item-circle">4</div>
-      <p>Cambia Password</p>
-    </div>
-    <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= (userChoice === 'user' ? 3 : 5)}"
-         *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(5))">
-      <div class="wizard-nav-item-circle">{{ userChoice === 'user' ? 3 : 5 }}</div>
-      <p>Vai al Login</p>
-    </div>
-  </div>
-</section>
+  </section>
+
+
+</div>

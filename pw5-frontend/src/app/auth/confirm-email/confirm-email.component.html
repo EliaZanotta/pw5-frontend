@@ -3,7 +3,7 @@
         <h1>Email confermata con successo!</h1>
         <p>La tua email è stata confermata con successo.<br> Accesso effettuato.</p>
         <a routerLink="/">
-            <button class="btn-login" (click)="deleteUserChoiceCookie()">Home</button>
+            <button class="btn-login">Home</button>
         </a>
     </div>
     <div class="confirmation-box" *ngIf="userChoice === 'host'">
@@ -14,11 +14,11 @@
             </a>, oppure vai alla home
         </p>
         <a routerLink="/">
-            <button class="btn-login" (click)="deleteUserChoiceCookie()">Home</button>
+            <button class="btn-login">Home</button>
         </a>
     </div>
 
-    <div class="confirmation-box" *ngIf="userChoice === ''">
+    <div class="confirmation-box" *ngIf="user?.status === 'VERIFIED'">
         <h1>Email già confermata</h1>
         <a routerLink="/">
             <button class="btn-login">Home</button>

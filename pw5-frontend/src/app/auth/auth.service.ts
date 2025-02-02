@@ -22,20 +22,20 @@ export class AuthService {
   constructor(private http: HttpClient) {
   }
 
-  async register(userData: { firstName: string; lastName: string; email: string; hashedPsw: string; }): Promise<any> {
-    return await lastValueFrom(this.http.post<any>(`${this.baseUrl}register`, userData));
+  async register(payload: { firstName: string; lastName: string; email: string; hashedPsw: string; }): Promise<any> {
+    return await lastValueFrom(this.http.post<any>(`${this.baseUrl}register`, payload));
   }
 
-  async registerHost(userData: { name: string; email: string; }): Promise<any> {
-    return await lastValueFrom(this.http.post<any>(`${this.baseUrl}register-host`, userData));
+  async registerHost(payload: { type: string; name: string; email: string; }): Promise<any> {
+    return await lastValueFrom(this.http.post<any>(`${this.baseUrl}register-host`, payload));
   }
 
-  async login(userData: { email: string; hashedPsw: string }): Promise<any> {
-    return await lastValueFrom(this.http.post<any>(`${this.baseUrl}login`, userData, { withCredentials: true }));
+  async login(payload: { email: string; hashedPsw: string }): Promise<any> {
+    return await lastValueFrom(this.http.post<any>(`${this.baseUrl}login`, payload, { withCredentials: true }));
   }
 
-  async loginHost(userData: { email: string; hashedPsw: string }): Promise<any> {
-    return await lastValueFrom(this.http.post<any>(`${this.baseUrl}login-host`, userData, { withCredentials: true }));
+  async loginHost(payload: { email: string; hashedPsw: string }): Promise<any> {
+    return await lastValueFrom(this.http.post<any>(`${this.baseUrl}login-host`, payload, { withCredentials: true }));
   }
 
   async confirmEmail(token: string): Promise<any> {

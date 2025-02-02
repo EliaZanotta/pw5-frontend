@@ -23,7 +23,7 @@ export class ConfirmEmailComponent implements OnInit {
     async ngOnInit(): Promise<void> {
         try {
             const userChoiceCookie = document.cookie.split('; ').find(row => row.startsWith('USER_CHOICE='));
-            if (userChoiceCookie) {
+            if (userChoiceCookie !== '' && userChoiceCookie !== undefined) {
                 this.userChoice = userChoiceCookie.split('=')[1];
             }
             this.user = (await this.auth.getLoggedUser()).user;
@@ -32,9 +32,5 @@ export class ConfirmEmailComponent implements OnInit {
         } catch (e) {
             console.error('Error confirming email:', e);
         }
-    }
-
-    deleteUserChoiceCookie() {
-        document.cookie = 'USER_CHOICE=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     }
 }
