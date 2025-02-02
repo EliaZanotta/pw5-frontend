@@ -1,53 +1,81 @@
-import { Component, OnInit } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { CommonModule, NgIf, NgForOf } from '@angular/common';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faCalendarDays, faMapPin, faUsers, faTicket, faUser } from '@fortawesome/free-solid-svg-icons';
+import { EventsService, Event } from '../events/events.service';
 
 @Component({
   selector: 'app-single-event',
-  imports: [MatCardModule, RouterLink],
   templateUrl: './single-event.component.html',
-  styleUrl: './single-event.component.css'
+  styleUrls: ['./single-event.component.css'],
+  imports: [CommonModule, NgIf, NgForOf, FontAwesomeModule],
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class SingleEventComponent implements OnInit {
-  event: any | null = null; // Evento attuale
+  eventData: Event | null = null;
+  errorMessage: string | null = null;
 
-  // Lista statica di eventi (da sostituire con un servizio eventualmente)
-  events = [
-    {
-      id: 1,
-      title: 'Frontend Workshop',
-      date: '10-02-2025',
-      time: '10:00 AM',
-      location: 'TechHub Conference Room 1',
-      image: 'img/pynight_techtalks_2.png',
-      speaker: 'Jane Doe',
-      speakerId: 101,
-      participants: 25,
-      status: 'open',
-    },
-    { id: 2, title: 'Backend Conference', date: '15-03-2025', image: 'img/eventibg.webp' },
-    { id: 3, title: 'DevOps Meetup', date: '20-04-2025', image: 'img/eventibg.webp' },
-    { id: 4, title: 'AI Seminar', date: '05-05-2025', image: 'img/eventibg.webp' },
-    { id: 5, title: 'Code & Cheers - Xmas version', date: '19-12-2024', image: 'img/code_cheers_xmas.png', location: 'Gallarate' },
-    { id: 6, title: 'Code & Cheers', date: '03-10-2024', image: 'img/code_cheers.png', location: 'Gallarate' },
-    { id: 7, title: 'PyNight & TechTalks', date: '13-06-2024', image: 'img/pynight_techtalks_2.png', location: 'Elmec', speaker: 'Fabio Lipreri ' + ',' + 'Fabio Scantamburlo', speakerId: 102 + ',' + 103, },
-    { id: 8, title: 'On Tech X', date: '04-06-2024', image: 'img/ontechx.png', location: 'Reti' },
-  ];
+  // FontAwesome icons
+  faCalendarDays = faCalendarDays;
+  faMapPin = faMapPin;
+  faUsers = faUsers;
+  faTicket = faTicket;
+  faUser = faUser;
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(private eventsService: EventsService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    // Recupera l'ID dall'URL
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.event = this.events.find((ev) => ev.id === id);
+    this.fetchEvent();
   }
 
-  goBooking(): void {
-    this.router.navigate(['/booking',]);
+  fetchEvent(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+
+    if (id) {
+      this.eventsService.getEventById(id).subscribe({
+        next: (response: any) => {
+          this.eventData = response.event; // Accessing event inside the response object
+        },
+        error: () => {
+          this.errorMessage = 'Errore durante il recupero dei dati dell\'evento. Riprova più tardi.';
+        }
+      });
+    } else {
+      this.errorMessage = 'Nessun ID evento trovato nei parametri del percorso.';
+    }
   }
 
-  goBack(): void {
-    this.router.navigate(['/events']);
+
+  formatDate(dateString: string): string {
+    if (!dateString) {
+      return 'Data non disponibile';
+    }
+
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+      return 'Data non valida';
+    }
+
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    };
+    return date.toLocaleDateString(undefined, options);
+  }
+  formatMaxParticipants(maxParticipants: number | null): string {
+    return maxParticipants === 0 ? 'Infinity' : (maxParticipants || 'Illimitati').toString();
+  }
+
+  formatEventSubscription(eventSubscription: string | null): string {
+    if (!eventSubscription) {
+      return 'Tipo non disponibile';
+    }
+    return eventSubscription === 'paid' ? 'Evento a pagamento' : 'Evento gratis';
   }
 
 }

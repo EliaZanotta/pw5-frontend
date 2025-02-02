@@ -79,6 +79,10 @@ export class EventsService {
     );
   }
 
+  getEventById(id: string): Observable<Event> {
+    return this.http.get<Event>(`${this.apiUrl}/${id}`);
+  }
+
   // Private helper method to categorize events
   private categorizeEvents(events: Event[]): CategorizedEvents {
     const futureEvents = events.filter(event => event.status === 'CONFIRMED');
