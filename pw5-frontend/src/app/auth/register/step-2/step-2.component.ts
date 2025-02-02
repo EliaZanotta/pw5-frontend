@@ -44,7 +44,6 @@ export class Step2Component implements OnInit {
       if (this.user) {
         if (this.user.status === 'VERIFIED') {
           await this.router.navigate(['/auth/register/step-3']);
-          this.wizardService.nextStep();
         } else {
           this.showErrorMessage('Email non ancora verificata');
         }

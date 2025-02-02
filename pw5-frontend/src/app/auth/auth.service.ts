@@ -27,7 +27,7 @@ export class AuthService {
   }
 
   async registerHost(payload: { type: string; name: string; email: string; }): Promise<any> {
-    return await lastValueFrom(this.http.post<any>(`${this.baseUrl}register-host`, payload));
+    return await lastValueFrom(this.http.post<any>(`${this.baseUrl}register-host`, payload, { withCredentials: true }));
   }
 
   async login(payload: { email: string; hashedPsw: string }): Promise<any> {
@@ -52,5 +52,9 @@ export class AuthService {
 
   async getLoggedUser(): Promise<any> {
     return await lastValueFrom(this.http.get<any>(`${this.baseUrl}get-authenticated-user`, { withCredentials: true }));
+  }
+
+  async getLoggedHost(): Promise<any> {
+    return await lastValueFrom(this.http.get<any>(`${this.baseUrl}get-authenticated-host`, { withCredentials: true }));
   }
 }

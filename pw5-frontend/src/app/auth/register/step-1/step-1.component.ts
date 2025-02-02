@@ -65,9 +65,6 @@ export class Step1Component implements OnInit {
         try {
             await this.authService.register(payload);
             await this.authService.login(loginPayload);
-            this.wizardService.nextStep();
-            this.wizardService.setUserEmail(this.userEmail);
-            this.wizardService.setUserStatus('unverified');
             await this.router.navigate(['/auth/register/step-2']);
         } catch (error) {
             this.showErrorMessage('Error during registration');

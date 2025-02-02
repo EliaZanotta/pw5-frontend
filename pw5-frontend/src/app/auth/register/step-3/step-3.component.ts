@@ -41,6 +41,7 @@ export class Step3Component implements OnInit {
     if (userChoiceCookie) {
       this.userChoice = userChoiceCookie.split('=')[1];
     }
+    console.log('User choice:', this.userChoice);
     this.currentStep = this.wizardService.getStep() ? this.wizardService.getStep() : 2;
     console.log('Step ' + this.wizardService.getStep());
     this.user = (await this.authService.getLoggedUser()).user;
@@ -66,8 +67,10 @@ export class Step3Component implements OnInit {
       // if response is a 401 error, add an error message
       if (typeof error === 'object' && error !== null && 'status' in error && (error as any).status === 401) {
         this.showErrorMessage('Non sei autorizzato a effettuare questa operazione');
+        console.log('Error:', error);
       } else {
         this.showErrorMessage('Errore durante il login');
+        console.log('Error:', error);
       }
     }
   }
