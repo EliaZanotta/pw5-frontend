@@ -1,82 +1,26 @@
 <div class="hero">
-    <h1>Scopri i nostri eventi</h1>
+  <h1>Scopri i nostri eventi</h1>
   <p class="hero-description">
     Unisciti a noi per scoprire nuove esperienze e conoscere nuove persone.
   </p>
   <a routerLink="/future-events" class="browse-button">Scopri tutti</a>
 </div>
 
-<div class="filters-container">
-  <!-- Title filter with autocomplete -->
-  <mat-form-field appearance="outline">
-    <mat-label>Titolo</mat-label>
-    <input
-      matInput
-      [matAutocomplete]="titleAuto"
-      [(ngModel)]="filters.title"
-      (ngModelChange)="applyFilters()"
-    >
-    <mat-autocomplete #titleAuto="matAutocomplete" panelClass="custom-autocomplete-panel">
-      <mat-option *ngFor="let title of filteredTitles" [value]="title">
-        {{ title }}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-
-  <!-- Date filter with datepicker -->
-  <mat-form-field appearance="outline">
-    <mat-label>Data evento</mat-label>
-    <input matInput [matDatepicker]="picker" [(ngModel)]="filters.date" (ngModelChange)="applyFilters()">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
-
-  <!-- Topic filter with autocomplete -->
-  <mat-form-field appearance="outline">
-    <mat-label>Filtra per topic</mat-label>
-    <input matInput [matAutocomplete]="topicAuto" [(ngModel)]="filters.topic" (ngModelChange)="applyFilters()">
-    <mat-autocomplete #topicAuto="matAutocomplete">
-      <mat-option *ngFor="let topic of filteredTopic" [value]="topic">
-        {{ topic }}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-
-  <!-- Host filter with autocomplete -->
-  <mat-form-field appearance="outline">
-    <mat-label>Filtra per host</mat-label>
-    <input matInput [matAutocomplete]="hostAuto" [(ngModel)]="filters.host" (ngModelChange)="applyFilters()">
-    <mat-autocomplete #hostAuto="matAutocomplete">
-      <mat-option *ngFor="let host of filteredHosts" [value]="host">
-        {{ host }}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-
-  <!-- Subscription type filter with dropdown -->
-  <mat-form-field appearance="outline">
-    <mat-label>Tipo evento</mat-label>
-    <mat-select [(value)]="filters.subscription" (selectionChange)="applyFilters()">
-      <mat-option value="">Tutti</mat-option>
-      <mat-option value="FREE">Gratuito</mat-option>
-      <mat-option value="PAID">A pagamento</mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <!-- Icon-only Clear Filters Button with tooltip -->
-  <button class="clear-filters-btn" (click)="clearFilters()" matTooltip="Azzera filtri">
-    <fa-icon [icon]="faFilterCircleXmark"></fa-icon>
-  </button>
-
+<!-- Event Filters with wrapping container -->
+<div class="filter-section">
+  <app-event-filter
+    [allTitles]="allTitles"
+    [allTopics]="allTopics"
+    [allHosts]="allHosts"
+    (filtersChanged)="applyFilters($event)"
+    (clearFiltersEvent)="clearFilters()"
+  ></app-event-filter>
 </div>
-
 
 
 <section *ngFor="let category of ['future', 'past']" class="event-container">
   <div class="category-header">
-    <h2>
-      {{ category === 'future' ? 'Eventi Futuri' : 'Eventi Passati' }}
-    </h2>
+    <h2>{{ category === 'future' ? 'Eventi Futuri' : 'Eventi Passati' }}</h2>
     <a routerLink="/{{category}}-events" class="browse-button">Scopri tutti</a>
   </div>
 
@@ -87,20 +31,14 @@
 
   <!-- Event grid displaying events -->
   <div class="event-grid" *ngIf="eventsByCategory[category].length > 0">
-    <a *ngFor="let event of eventsByCategory[category] | slice:0:4"
-       routerLink="/events/{{ event.id }}"
-       class="event-card">
+    <a *ngFor="let event of eventsByCategory[category] | slice:0:4" routerLink="/events/{{ event.id }}" class="event-card">
       <div class="card">
         <div class="image-container">
-          <img [src]="'img/code_cheers.png'" [alt]="event.title" class="event-image"/>
+          <img [src]="'img/code_cheers.png'" [alt]="event.title" class="event-image" />
         </div>
         <div class="card-content">
           <h3 class="event-title">{{ event.title }}
-            <fa-icon
-              [icon]="faSackDollar"
-              *ngIf="event.eventSubscription === 'PAID'"
-              style="color: black;">
-            </fa-icon>
+            <fa-icon [icon]="faSackDollar" *ngIf="event.eventSubscription === 'PAID'" style="color: black;"></fa-icon>
           </h3>
           <p class="event-date">{{ event.startDate | date:'dd MMMM yyyy, HH:mm' }}</p>
           <p class="event-location">{{ event.place }}</p>

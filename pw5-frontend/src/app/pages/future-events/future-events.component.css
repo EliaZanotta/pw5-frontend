@@ -95,6 +95,31 @@
     background: #3a001e;
 }
 
+.no-events-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.2rem;
+  margin: 20px 0;
+  padding: 20px;
+  font-weight: bold;
+}
+
+/* Add extra padding at the bottom if no events */
+.no-events-message.add-extra-padding {
+  padding-top: 100px;
+  padding-bottom: 100px; /* Add 100px padding when this class is present */
+}
+
+
+/* Apply padding when there are fewer than 4 events */
+.event-card.add-padding {
+  margin-bottom: 100px; /* Extra spacing below the last card */
+}
+
+.events-list {
+  padding-bottom: 0px; /* Consistent bottom padding for all event lists */
+}
+
 /* Responsività */
 @media (max-width: 768px) {
     .event-card {
