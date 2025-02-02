@@ -8,14 +8,17 @@ import {FiltersModule} from '../../modules/filters.module';
   selector: 'app-partner-companies',
   templateUrl: './partner-companies.component.html',
   styleUrls: ['./partner-companies.component.css'],
-  standalone: true,
-  imports: [ FiltersModule ]
+  imports: [ FiltersModule ],
+  standalone: true
 })
 export class PartnerCompaniesComponent implements OnInit {
   partnerCompanies: Host[] = [];
   filteredCompanies: Host[] = [];
   filteredNames: string[] = [];
   faFilterCircleXmark = faFilterCircleXmark;
+
+  isLoading = true;
+  errorMessage: string | null = null;
 
   filters = {
     name: '',
@@ -34,9 +37,12 @@ export class PartnerCompaniesComponent implements OnInit {
         this.partnerCompanies = companies;
         this.filteredCompanies = companies;
         this.filteredNames = companies.map(c => c.name);
+        this.isLoading = false;
       },
       (error: any) => {
         console.error('Error fetching companies:', error);
+        this.errorMessage = 'Errore nel recupero delle aziende. Riprova più tardi.';
+        this.isLoading = false;
       }
     );
   }

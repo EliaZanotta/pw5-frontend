@@ -31,11 +31,19 @@
 </div>
 
 <div [ngClass]="{'add-padding': filteredCompanies.length < 6}">
-  <div class="partner-container">
+  <div class="partner-container" *ngIf="filteredCompanies.length > 0">
     <div *ngFor="let company of filteredCompanies; trackBy: trackById" class="partner-card" (click)="goToCompany(company.id)">
       <img [src]="'https://www.supero.com.mt/wp-content/uploads/2015/05/azienda-1024x682.jpg'" alt="{{ company.name }}">
       <h3>{{ company.name }}</h3>
       <p>{{ company.description || 'Nessuna descrizione disponibile' }}</p>
     </div>
+  </div>
+
+  <!-- No Companies Message -->
+  <div
+    *ngIf="!isLoading && !errorMessage && filteredCompanies.length === 0"
+    class="no-companies-message add-padding"
+  >
+    Non ci sono aziende o partner corrispondenti ai filtri selezionati.
   </div>
 </div>
