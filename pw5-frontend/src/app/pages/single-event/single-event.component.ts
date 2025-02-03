@@ -4,12 +4,14 @@ import { CommonModule, NgIf, NgForOf } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCalendarDays, faMapPin, faUsers, faTicket, faUser } from '@fortawesome/free-solid-svg-icons';
 import { EventsService, Event } from '../events/events.service';
+import {BookingComponent} from '../../components/booking/booking.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-single-event',
   templateUrl: './single-event.component.html',
   styleUrls: ['./single-event.component.css'],
-  imports: [CommonModule, NgIf, NgForOf, FontAwesomeModule],
+  imports: [CommonModule, NgIf, NgForOf, FontAwesomeModule, BookingComponent],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.Default,
 })
@@ -24,7 +26,7 @@ export class SingleEventComponent implements OnInit {
   faTicket = faTicket;
   faUser = faUser;
 
-  constructor(private eventsService: EventsService, private route: ActivatedRoute) {}
+  constructor(private eventsService: EventsService, private route: ActivatedRoute, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.fetchEvent();
@@ -77,5 +79,13 @@ export class SingleEventComponent implements OnInit {
     }
     return eventSubscription === 'paid' ? 'Evento a pagamento' : 'Evento gratis';
   }
+
+ showBookingDialog(eventName: string) {
+    this.dialog.open(BookingComponent, {
+      width: '500px',
+      disableClose: true,
+      data: {eventName: this.eventData?.title}
+    });
+ }
 
 }
