@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AuthService, User } from '../../auth/auth.service';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { Observable, interval, startWith } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 // Icons
@@ -24,7 +24,7 @@ import { AdminNotification, SpeakerRequest, InboxService } from './inbox.service
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   isMenuOpen: boolean = false;
   user: User | null = null;
   isHost: boolean = false;
@@ -49,6 +49,9 @@ export class HeaderComponent implements OnInit {
   faHandshakeRegular = faHandshakeRegular;
   faInboxSolid = faInboxSolid;
 
+  private adminNotificationsSubscription!: Subscription;
+  private speakerRequestsSubscription!: Subscription;
+
   constructor(private authService: AuthService, private inboxService: InboxService, library: FaIconLibrary) {
     library.addIcons(faUserSolid, faUserRegular, faHandshakeSolid, faHandshakeRegular, faInboxSolid);
   }
@@ -57,11 +60,20 @@ export class HeaderComponent implements OnInit {
     await this.loadUser();
 
     if (this.isAdmin) {
-      this.fetchAdminNotifications();
+      this.subscribeToAdminNotifications();
     }
 
     if (this.isSpeaker) {
-      this.fetchSpeakerRequests();
+      this.subscribeToSpeakerRequests();
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.adminNotificationsSubscription) {
+      this.adminNotificationsSubscription.unsubscribe();
+    }
+    if (this.speakerRequestsSubscription) {
+      this.speakerRequestsSubscription.unsubscribe();
     }
   }
 
@@ -96,10 +108,9 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  private fetchAdminNotifications(): void {
-    interval(10000)
+  private subscribeToAdminNotifications(): void {
+    this.adminNotificationsSubscription = this.inboxService.getAdminNotificationsObservable()
       .pipe(
-        startWith(0), // Trigger the first fetch immediately
         switchMap(() => this.inboxService.getAdminNotifications())
       )
       .subscribe((notifications: AdminNotification[]) => {
@@ -107,10 +118,9 @@ export class HeaderComponent implements OnInit {
       });
   }
 
-  private fetchSpeakerRequests(): void {
-    interval(10000)
+  private subscribeToSpeakerRequests(): void {
+    this.speakerRequestsSubscription = this.inboxService.getSpeakerRequestsObservable()
       .pipe(
-        startWith(0),
         switchMap(() => this.inboxService.getSpeakerRequests())
       )
       .subscribe((requests: SpeakerRequest[]) => {
@@ -129,7 +139,7 @@ export class HeaderComponent implements OnInit {
 
   closeSpeakerModal(): void {
     this.showSpeakerModal = false;
-    this.fetchSpeakerRequests();
+    this.subscribeToSpeakerRequests();
   }
 
   openAdminModal(): void {
@@ -138,6 +148,6 @@ export class HeaderComponent implements OnInit {
 
   closeAdminModal(): void {
     this.showAdminModal = false;
-    this.fetchAdminNotifications();
+    this.subscribeToAdminNotifications();
   }
 }
