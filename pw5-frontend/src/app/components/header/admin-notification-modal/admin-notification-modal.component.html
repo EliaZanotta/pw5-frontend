@@ -1,20 +1,38 @@
 <div class="modal-backdrop" *ngIf="show" (click)="close()"></div>
 <div class="modal" *ngIf="show">
   <div class="modal-header">
-    <h2>Admin Notifications</h2>
-    <button class="close-btn" (click)="close()">×</button>
+    <h2>Notifiche Admin</h2>
+    <button mat-icon-button (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
   </div>
+
   <div class="modal-content">
-    <ng-container *ngIf="notifications.length > 0; else noNotifications">
-      <ul class="notification-list">
-        <li *ngFor="let note of notifications" class="notification-item">
-          <strong>{{ note?.type }}</strong> - {{ note?.message }} <br>
-          <small *ngIf="note?.timestamp">{{ note.timestamp | date: 'short' }}</small>
-        </li>
-      </ul>
+    <ng-container *ngIf="sortedNotifications.length > 0; else noNotifications">
+      <div class="notification-list">
+        <div
+          *ngFor="let note of sortedNotifications"
+          class="notification-item"
+          [ngClass]="{ handled: note.status === 'HANDLED' }"
+        >
+          <div class="notification-item-text">
+            <p class="font-semibold">{{ note?.type }}: {{ note?.message }}</p>
+            <p class="text-sm text-gray-500">
+              <strong>Host:</strong> {{ note?.hostEmail }} <br />
+              <strong>Data e ora:</strong> {{ note?.timestamp | date: 'short' }} <br />
+              <strong>Stato:</strong> {{ note?.status }}
+            </p>
+          </div>
+          <div class="notification-actions" *ngIf="note.status !== 'HANDLED'">
+            <button mat-raised-button color="primary" (click)="acceptNotification(note.id)">Accetta</button>
+            <button mat-raised-button color="warn" (click)="rejectNotification(note.id)">Rifiuta</button>
+          </div>
+          <p *ngIf="note.status === 'HANDLED'" class="text-sm font-medium">Host già gestito</p>
+        </div>
+      </div>
     </ng-container>
     <ng-template #noNotifications>
-      <p>No notifications found.</p>
+      <p>Nessuna notifica trovata.</p>
     </ng-template>
   </div>
 </div>

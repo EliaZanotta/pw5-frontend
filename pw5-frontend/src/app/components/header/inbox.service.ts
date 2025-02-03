@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import {catchError, Observable, Subject} from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 
 export interface AdminNotification {
@@ -29,32 +29,40 @@ export class InboxService {
   private adminNotificationsUrl = this.baseUrl + 'user/notification/all';
   private speakerRequestsUrl = this.baseUrl + 'speaker-inbox/my-requests';
 
-  // Subjects to trigger updates
-  private adminNotificationsSubject = new Subject<void>();
-  private speakerRequestsSubject = new Subject<void>();
-
   constructor(private http: HttpClient) {}
 
-  // Public observable streams to subscribe to
-  getAdminNotificationsObservable(): Observable<AdminNotification[]> {
-    return this.adminNotificationsSubject.asObservable().pipe(
-        switchMap(() => this.getAdminNotifications())
-    );
+// PUT request to confirm a notification
+  acceptNotification(notificationId: string): Observable<void> {
+    const url = `${this.baseUrl}user/notification/${notificationId}/confirm`;
+    return this.http.put(url, {}, { withCredentials: true, responseType: 'text' as 'json' })
+        .pipe(
+            map(() => undefined),
+            catchError((error) => {
+              console.error('Error accepting notification:', error);
+              if (error.status === 500) {
+                // Handle 500 Internal Server Error
+                console.error('Internal Server Error:', error.message);
+              }
+              throw error;  // Rethrow the error if needed
+            })
+        );
   }
 
-  getSpeakerRequestsObservable(): Observable<SpeakerRequest[]> {
-    return this.speakerRequestsSubject.asObservable().pipe(
-        switchMap(() => this.getSpeakerRequests())
-    );
-  }
-
-  // Trigger methods to fetch new data
-  triggerAdminNotificationsFetch(): void {
-    this.adminNotificationsSubject.next();
-  }
-
-  triggerSpeakerRequestsFetch(): void {
-    this.speakerRequestsSubject.next();
+// PUT request to reject a notification
+  rejectNotification(notificationId: string): Observable<void> {
+    const url = `${this.baseUrl}user/notification/${notificationId}/reject`;
+    return this.http.put(url, {}, { withCredentials: true, responseType: 'text' as 'json' })
+        .pipe(
+            map(() => undefined),
+            catchError((error) => {
+              console.error('Error rejecting notification:', error);
+              if (error.status === 500) {
+                // Handle 500 Internal Server Error
+                console.error('Internal Server Error:', error.message);
+              }
+              throw error;  // Rethrow the error if needed
+            })
+        );
   }
 
   // Private methods to perform HTTP requests
