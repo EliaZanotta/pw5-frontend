@@ -4,19 +4,20 @@ import { RouterLink } from '@angular/router';
 import { AuthService, User } from '../../auth/auth.service';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-// User, Handshake, and Inbox icons
+// Icons
 import { faUser as faUserSolid } from '@fortawesome/free-solid-svg-icons';
 import { faUser as faUserRegular } from '@fortawesome/free-regular-svg-icons';
 import { faHandshake as faHandshakeSolid } from '@fortawesome/free-solid-svg-icons';
 import { faHandshake as faHandshakeRegular } from '@fortawesome/free-regular-svg-icons';
-import { faInbox as faInboxSolid } from '@fortawesome/free-solid-svg-icons';  // Inbox icon from FontAwesome
+import { faInbox as faInboxSolid } from '@fortawesome/free-solid-svg-icons';
 
 import { SpeakerRequestModalComponent } from './speaker-request-modal/speaker-request-modal.component';
+import {AdminNotificationModalComponent} from './admin-notification-modal/admin-notification-modal.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterLink, FontAwesomeModule, SpeakerRequestModalComponent],
+  imports: [CommonModule, RouterLink, FontAwesomeModule, SpeakerRequestModalComponent, AdminNotificationModalComponent],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
@@ -25,12 +26,15 @@ export class HeaderComponent implements OnInit {
   user: User | null = null;
   isHost: boolean = false;
   isSpeaker: boolean = false;
-  showModal: boolean = false;
+  isAdmin: boolean = false;  // New flag for admin role
+  showSpeakerModal: boolean = false;
+  showAdminModal: boolean = false;
 
   // Hover state flags
   isHoveredUser: boolean = false;
   isHoveredHandshake: boolean = false;
-  isHoveredInbox: boolean = false;  // Hover state for inbox icon
+  isHoveredInbox: boolean = false;
+  isHoveredAdminInbox: boolean = false;
 
   // Icon definitions
   faUserSolid = faUserSolid;
@@ -48,26 +52,27 @@ export class HeaderComponent implements OnInit {
   }
 
   private async loadUser(): Promise<void> {
-    // Try to fetch a regular user first
     try {
       const userResult = (await this.authService.getLoggedUser()).user;
       if (userResult) {
         this.user = userResult;
         this.isSpeaker = userResult.role?.toUpperCase() === 'SPEAKER';
-        this.isHost = false;  // Not a host if a regular user is found
+        this.isAdmin = userResult.role?.toUpperCase() === 'ADMIN';
+        this.isHost = false;
         return;
       }
     } catch (error) {
       console.error('Error fetching logged user:', error);
     }
 
-    // If no regular user is found, try fetching a host
+    // Try to fetch a host if no regular user was found
     try {
       const hostResult = (await this.authService.getLoggedHost()).host;
       if (hostResult) {
         this.user = hostResult;
         this.isHost = true;
-        this.isSpeaker = false;  // Hosts are not speakers
+        this.isSpeaker = false;
+        this.isAdmin = false;
       } else {
         this.user = null;
       }
@@ -82,11 +87,19 @@ export class HeaderComponent implements OnInit {
     document.body.classList.toggle('menu-open', this.isMenuOpen);
   }
 
-  openModal(): void {
-    this.showModal = true;
+  openSpeakerModal(): void {
+    this.showSpeakerModal = true;
   }
 
-  closeModal(): void {
-    this.showModal = false;
+  closeSpeakerModal(): void {
+    this.showSpeakerModal = false;
+  }
+
+  openAdminModal(): void {
+    this.showAdminModal = true;
+  }
+
+  closeAdminModal(): void {
+    this.showAdminModal = false;
   }
 }
