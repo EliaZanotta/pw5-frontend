@@ -1,0 +1,160 @@
+/* Contenitore generale */
+.past-events-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Titolo della pagina */
+.page-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.page-subtitle {
+  font-size: 20px;
+  margin-bottom: 60px;
+}
+
+/* Lista eventi */
+.events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Card evento */
+.event-card {
+    display: flex;
+    align-items: stretch; /* Allinea perfettamente l'immagine e il contenuto */
+    background: #f0f0f0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    height: 250px; /* Altezza fissa per uniformità */
+}
+
+.event-card:hover {
+    transform: scale(1.02);
+}
+
+/* Immagine dell'evento */
+.event-image {
+    width: 30%;
+    height: 100%;
+    display: flex;
+}
+
+.event-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Assicura che l'immagine riempia lo spazio */
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+/* Dettagli evento */
+.event-info {
+    width: 70%;
+    padding: 20px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra il testo verticalmente */
+}
+
+.event-info h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.event-info p {
+    font-size: 16px;
+    color: #555;
+    margin: 5px 0;
+}
+
+/* Bottone dettagli */
+.details-button {
+  background: #ce2424;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease-in-out;
+    align-self: start; /* Allinea il bottone a sinistra */
+}
+
+.details-button:hover {
+  background: #3a001e;
+}
+/* Message for no events */
+.no-events-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.2rem;
+  margin: 20px 0;
+  padding: 20px;
+  font-weight: bold;
+}
+
+/* Add extra padding at the bottom for no events */
+.no-events-message.add-extra-padding {
+  padding-bottom: 100px;
+}
+
+/* Apply padding when there are fewer than 4 events */
+.event-card.add-padding {
+  margin-bottom: 40px;
+}
+
+/* Ensure bottom padding for all event lists */
+.events-list {
+  padding-bottom: 40px;
+}
+.details-button {
+  display: inline-block;
+  background: #ce2424;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.details-button:hover {
+  background: #a11b1b;
+}
+
+
+/* Responsività */
+@media (max-width: 768px) {
+    .event-card {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .event-image {
+        width: 100%;
+        height: 200px;
+    }
+
+    .event-image img {
+        border-radius: 10px 10px 0 0;
+    }
+
+    .event-info {
+        width: 100%;
+        text-align: center;
+    }
+
+    .details-button {
+        align-self: center;
+    }
+}

@@ -1,0 +1,54 @@
+<div class="step-2-container">
+  <img class="background-image" src="/assets/registerImage.jpg" alt="Register Image"/>
+
+  <!--wizard section-->
+  <section class="wizard-nav">
+    <div class="wizard-nav-container" [attr.data-user-choice]="userChoice">
+      <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= 1}"
+           *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(1))">
+        <div class="wizard-nav-item-circle">1</div>
+        <p>Registrazione Utente</p>
+      </div>
+      <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= 2}"
+           *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(2))">
+        <div class="wizard-nav-item-circle">2</div>
+        <p>Conferma Nuovo Account</p>
+      </div>
+      <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= 3}" *ngIf="userChoice !== 'user'">
+        <div class="wizard-nav-item-circle">3</div>
+        <p>Registra Azienda</p>
+      </div>
+      <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= 4}" *ngIf="userChoice !== 'user'">
+        <div class="wizard-nav-item-circle">4</div>
+        <p>Cambia Password</p>
+      </div>
+      <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= (userChoice === 'user' ? 3 : 5)}"
+           *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(5))">
+        <div class="wizard-nav-item-circle">{{ userChoice === 'user' ? 3 : 5 }}</div>
+        <p>Vai al Login</p>
+      </div>
+    </div>
+  </section>
+
+  <!--User Check Account Status or Send new Mail Section-->
+  <section class="verification-container">
+    <div class="verification-box">
+      <h1>Verifica Account Utente</h1>
+      <p>Ti abbiamo inviato un'email di verifica all'indirizzo <strong>{{ user?.email }}</strong>. Controlla la tua casella di
+        posta elettronica e clicca sul link per confermare il tuo account. Quando hai confermato il tuo account, clicca
+        sul pulsante qui sotto per continuare.</p>
+      <button class="btn-verify" (click)="handleVerify()">Continua</button>
+      <p>Non hai ricevuto l'email di verifica?</p>
+      <button class="btn-resend" (click)="handleResend()">Rispedisci Email</button>
+
+      <div class="verification-error" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+
+      <div class="verification-new-mail-sent" *ngIf="newMailSent">
+        <p>Email inviata con successo!</p>
+      </div>
+    </div>
+  </section>
+
+</div>

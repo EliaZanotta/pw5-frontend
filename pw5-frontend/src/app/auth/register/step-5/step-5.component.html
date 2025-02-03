@@ -1,0 +1,45 @@
+<div class="step-5-container">
+  <img class="background-image" src="/assets/registerImage.jpg" alt="Register Image"/>
+
+  <!--wizard section-->
+  <section class="wizard-nav" *ngIf="userChoice !== ''">
+    <div class="wizard-nav-container" [attr.data-user-choice]="userChoice">
+      <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= 1}"
+           *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(1))">
+        <div class="wizard-nav-item-circle">1</div>
+        <p>Registrazione Utente</p>
+      </div>
+      <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= 2}"
+           *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(2))">
+        <div class="wizard-nav-item-circle">2</div>
+        <p>Conferma Nuovo Account</p>
+      </div>
+      <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= 3}" *ngIf="userChoice !== 'user'">
+        <div class="wizard-nav-item-circle">3</div>
+        <p>Registra Azienda</p>
+      </div>
+      <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= 4}" *ngIf="userChoice !== 'user'">
+        <div class="wizard-nav-item-circle">4</div>
+        <p>Cambia Password</p>
+      </div>
+      <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= (userChoice === 'user' ? 3 : 5)}"
+           *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(5))">
+        <div class="wizard-nav-item-circle">{{ userChoice === 'user' ? 3 : 5 }}</div>
+        <p>Vai al Login</p>
+      </div>
+    </div>
+  </section>
+
+  <!--Congratulation For Host section-->
+  <section class="congratulation-container" *ngIf="host?.hashedPsw !== host?.provvisoryPsw">
+    <div class="congratulation-box">
+      <h1>Congratulazioni!</h1>
+      <p *ngIf="host?.type === 'COMPANY'">Il tuo account aziendale è stato creato con successo.</p>
+      <p *ngIf="host?.type === 'PARTNER'">Il tuo account partner è stato creato con successo.</p>
+      <p>Accesso effettuato come {{ host?.type === 'COMPANY' ? 'Azienda' : 'Partner' }}</p>
+      <a class="congratulation-button" routerLink="/" (click)="deleteUserChoiceCookie()">Torna alla Home</a>
+    </div>
+  </section>
+
+
+</div>
