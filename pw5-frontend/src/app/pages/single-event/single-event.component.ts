@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule, NgIf, NgForOf } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCalendarDays, faMapPin, faUsers, faTicket, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarDays, faMapPin, faUsers, faTicket, faUser, faLaptopCode, faMicrophoneAlt } from '@fortawesome/free-solid-svg-icons';
 import { EventsService, Event } from '../events/events.service';
 import {BookingComponent} from '../../components/booking/booking.component';
 import {MatDialog} from '@angular/material/dialog';
@@ -25,6 +25,9 @@ export class SingleEventComponent implements OnInit {
   faUsers = faUsers;
   faTicket = faTicket;
   faUser = faUser;
+  faLaptopCode = faLaptopCode;
+  faMicrophoneAlt = faMicrophoneAlt;
+
 
   constructor(private eventsService: EventsService, private route: ActivatedRoute, public dialog: MatDialog) {}
 
