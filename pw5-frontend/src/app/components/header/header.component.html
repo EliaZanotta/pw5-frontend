@@ -14,17 +14,29 @@
   </nav>
 
   <div class="header-right">
-    <!-- Display the icon if a user or host is logged in -->
+    <!-- Speaker inbox icon -->
+    <ng-container *ngIf="isSpeaker">
+      <a (click)="openModal()" class="profile-icon fa-2x inbox-icon-btn" style="padding-right: 100px;">
+        <fa-icon
+          [icon]="faInboxSolid"
+          (mouseenter)="isHoveredInbox = true"
+          (mouseleave)="isHoveredInbox = false"
+          [ngStyle]="{ color: isHoveredInbox ? '#9b1b1b' : '#ce2424' }">
+        </fa-icon>
+      </a>
+    </ng-container>
+
+    <!-- User and handshake icons -->
     <ng-container *ngIf="user; else loginBtn">
       <a [routerLink]="isHost ? '/single-companies' : '/user-area'">
         <fa-icon
           [icon]="
-            isHovered
-              ? (isHost ? faHandshakeSolid : faUserSolid)
-              : (isHost ? faHandshakeRegular : faUserRegular)
-          "
-          (mouseenter)="isHovered = true"
-          (mouseleave)="isHovered = false"
+          isHoveredUser
+            ? (isHost ? faHandshakeSolid : faUserSolid)
+            : (isHost ? faHandshakeRegular : faUserRegular)
+        "
+          (mouseenter)="isHoveredUser = true"
+          (mouseleave)="isHoveredUser = false"
           class="profile-icon fa-2x"
           style="color: #ce2424;">
         </fa-icon>
@@ -41,4 +53,7 @@
       ☰
     </button>
   </div>
+
+  <!-- Modal component for speaker requests -->
+  <app-speaker-request-modal [show]="showModal" (closeModal)="closeModal()"></app-speaker-request-modal>
 </header>
