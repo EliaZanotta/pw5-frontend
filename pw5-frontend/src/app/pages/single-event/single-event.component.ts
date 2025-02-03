@@ -11,7 +11,7 @@ import {MatDialog} from '@angular/material/dialog';
   selector: 'app-single-event',
   templateUrl: './single-event.component.html',
   styleUrls: ['./single-event.component.css'],
-  imports: [CommonModule, NgIf, NgForOf, FontAwesomeModule, BookingComponent],
+  imports: [CommonModule, NgIf, NgForOf, FontAwesomeModule],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.Default,
 })
