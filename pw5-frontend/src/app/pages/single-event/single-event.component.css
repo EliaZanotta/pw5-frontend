@@ -1,0 +1,153 @@
+:root {
+  --primary-color: #e63946;
+  --secondary-color: #1d3557;
+  --background-color: #f1faee;
+  --text-color: #1d3557;
+  --button-hover-color: #d62839;
+  --button-active-color: #a31d2b;
+  --icon-color: #457b9d;
+}
+
+.event-page {
+  min-height: 100vh;
+  background: #fff6f4;
+  color: var(--text-color);
+  font-family: 'Open Sans', Arial, sans-serif;
+  line-height: 1.6;
+}
+
+.main-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.event-header {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;
+}
+
+.image-wrapper {
+  position: relative;
+}
+
+.event-image {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 12px 12px 0 0;
+}
+
+.image-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent 60%);
+  z-index: 1;
+}
+
+.event-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 24px;
+  color: #ffffff;
+  z-index: 2;
+}
+
+.event-title {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.host-info {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  margin-right: 12px;
+  font-size: 24px;
+  color: var(--icon-color);
+}
+
+.details-container {
+  background-color: #ffffff;
+  padding: 32px;
+  border-radius: 12px;
+  margin-bottom: 40px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.details-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.details-column {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+}
+
+.detail-label {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.topics-column {
+  flex: 1;
+}
+
+.topics-container {
+  background-color: #ffffff;
+  color: var(--secondary-color);
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.about-container {
+  background-color: #ffffff;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.register-button {
+  display: inline-block;
+  background-color: var(--primary-color);
+  color: #ff6b6b;
+  padding: 14px 28px;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 18px;
+  transition: background-color 0.3s, transform 0.2s;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.register-button:hover {
+  color: red;
+  background-color: #3a001e;
+  transform: translateY(-2px);
+}
+
+.register-button:active {
+  background-color: var(--button-active-color);
+  transform: translateY(0);
+}

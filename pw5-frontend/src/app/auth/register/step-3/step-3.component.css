@@ -1,0 +1,246 @@
+.step-3-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  min-height: 100vh;
+}
+
+.background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  opacity: 0.75;
+}
+
+.wizard-nav {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  position: relative;
+}
+
+.wizard-nav-container {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin: 0 auto;
+  position: relative;
+}
+
+.wizard-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+.wizard-nav-item::before {
+  content: '';
+  position: absolute;
+  top: 20px;
+  height: 2px;
+  background-color: #ce2424;
+  z-index: -1;
+}
+
+.wizard-nav-item.active::before {
+  background-color: #28a745;
+}
+
+.wizard-nav-item:first-child::before {
+  display: none;
+}
+
+.wizard-nav-item-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ce2424;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.wizard-nav-item.active .wizard-nav-item-circle {
+  background-color: #28a745;
+}
+
+.wizard-nav-item p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: bold;
+  color: #f0f0f0;
+  text-align: center;
+  max-width: 100px;
+}
+
+.wizard-nav-container[data-user-choice='user'] .wizard-nav-item::before {
+  width: 700%;
+  left: -670%;
+}
+
+.wizard-nav-container[data-user-choice='user'] .wizard-nav-item:last-child::before {
+  width: 950%;
+  left: -880%;
+}
+
+.wizard-nav-container[data-user-choice='host'] .wizard-nav-item::before {
+  width: 330%;
+  left: -300%;
+}
+
+.wizard-nav-container[data-user-choice='host'] .wizard-nav-item:last-child::before {
+  width: 450%;
+  left: -400%;
+}
+
+.register-host-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 100px;
+}
+
+.register-host-box {
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem;
+  background-color: rgba(255, 246, 244, 0.85);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #202020;
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.tab {
+  padding: 0.5rem;
+  background-color: #e5e7eb;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.tab.active {
+  background-color: #3a001e;
+  color: white;
+}
+
+.register-host-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #4b5563;
+}
+
+input {
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+}
+
+input:focus {
+  outline: none;
+  border-color: #ce2424;
+  box-shadow: 0 0 4px #3a001e;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #3a001e;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #202020;
+}
+
+.register-host-error {
+  color: #e53e3e;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.congratulation-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 100px;
+}
+
+.congratulation-box {
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem;
+  background-color: rgba(255, 246, 244, 0.85);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.congratulation-box p {
+  color: #4b5563;
+}
+
+.congratulation-button {
+  padding: 0.75rem;
+  background-color: #3a001e;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 1rem;
+}
+
+.congratulation-button:hover {
+  background-color: #202020;
+}
+
+

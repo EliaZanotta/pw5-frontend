@@ -1,1 +1,49 @@
-<p>partner-companies works!</p>
+<div class="page-header">
+  <h1>Aziende e Partner</h1>
+</div>
+
+<div class="filters-container">
+  <!-- Name filter with autocomplete -->
+  <mat-form-field appearance="outline">
+    <mat-label>Nome</mat-label>
+    <input matInput [matAutocomplete]="nameAuto" [(ngModel)]="filters.name" (ngModelChange)="applyFilters()">
+    <mat-autocomplete #nameAuto="matAutocomplete">
+      <mat-option *ngFor="let name of filteredNames" [value]="name">
+        {{ name }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <!-- Type filter with dropdown -->
+  <mat-form-field appearance="outline">
+    <mat-label>Tipo</mat-label>
+    <mat-select [(value)]="filters.type" (selectionChange)="applyFilters()">
+      <mat-option value="">Tutti</mat-option>
+      <mat-option value="PARTNER">Partner</mat-option>
+      <mat-option value="COMPANY">Azienda</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Clear Filters Button -->
+  <button class="clear-filters-btn" (click)="clearFilters()" matTooltip="Azzera filtri">
+    <fa-icon [icon]="faFilterCircleXmark"></fa-icon>
+  </button>
+</div>
+
+<div [ngClass]="{'add-padding': filteredCompanies.length < 6}">
+  <div class="partner-container" *ngIf="filteredCompanies.length > 0">
+    <div *ngFor="let company of filteredCompanies; trackBy: trackById" class="partner-card" (click)="goToCompany(company.id)">
+      <img [src]="'https://www.supero.com.mt/wp-content/uploads/2015/05/azienda-1024x682.jpg'" alt="{{ company.name }}">
+      <h3>{{ company.name }}</h3>
+      <p>{{ company.description || 'Nessuna descrizione disponibile' }}</p>
+    </div>
+  </div>
+
+  <!-- No Companies Message -->
+  <div
+    *ngIf="!isLoading && !errorMessage && filteredCompanies.length === 0"
+    class="no-companies-message add-padding"
+  >
+    Non ci sono aziende o partner corrispondenti ai filtri selezionati.
+  </div>
+</div>
