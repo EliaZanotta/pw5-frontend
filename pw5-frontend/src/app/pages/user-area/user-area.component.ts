@@ -15,14 +15,46 @@ export class UserAreaComponent {
     email: 'mario.rossi@example.com',
     registrationDate: '10 Gennaio 2023',
     accessLevel: 'Premium',
-    activities: [
-      { date: '5 Febbraio 2024', description: 'Prenotazione evento "Tech Meetup 2024"' },
-      { date: '3 Febbraio 2024', description: 'Modifica informazioni profilo' },
-      { date: '28 Gennaio 2024', description: 'Aggiunto nuovo metodo di pagamento' }
+    pastEvents: [
+      {
+        title: 'Conferenza su Angular',
+        date: '15 Marzo 2024',
+        location: 'Milano, Italia',
+        image: 'https://cdn-magazine.startupitalia.eu/wp-content/uploads/2024/11/25153624/PBO5180.jpg',
+        description: 'Evento dedicato agli sviluppatori che lavorano con Angular.'
+      },
+      {
+        title: 'Conferenza Tecnologica',
+        date: '25 Aprile 2024',
+        location: 'Bologna, Italia',
+        image: 'https://www.4writing.it/wp-content/uploads/2024/12/btw_generica.jpg',
+        description: 'Ultime innovazioni nel mondo della tecnologia e dell’AI.'
+      }
+    ],
+    bookedEvents: [
+      {
+        title: 'Hackathon DevTech',
+        date: '30 Agosto 2025',
+        location: 'Milano, Italia',
+        image: 'https://www.startupbusiness.it/wp-content/uploads/2024/09/Foto-9-3-24_-10-53-29.webp',
+        description: 'Maratona di coding per innovatori e sviluppatori.'
+      },
+      {
+        title: 'Fiera Technology',
+        date: '5 Agosto 2025',
+        location: 'Roma, Italia',
+        image: 'https://ntstudio.it/wp-content/uploads/2022/04/nt-studio-eventi-aziendali-milano-1920x1080-017.jpg',
+        description: 'Evento imperdibile per gli amanti del viaggio e delle nuove tecnologie.'
+      }
     ]
   };
 
-  selectedTab: string = 'profile';
+  // Combiniamo eventi passati e prenotati per la sezione My Tickets
+  get tickets() {
+    return [...this.user.pastEvents, ...this.user.bookedEvents];
+  }
+
+  selectedTab: string = 'bookedEvents';
 
   constructor(private router: Router) {}
 

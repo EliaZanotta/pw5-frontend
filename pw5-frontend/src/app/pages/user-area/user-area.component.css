@@ -86,6 +86,65 @@
   text-align: left;
 }
 
+/* Card evento */
+.event-card {
+  display: flex;
+  align-items: stretch;
+  background: #f9f9f9;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  height: 250px;
+  margin-bottom: 20px;
+}
+
+.event-card:hover {
+  transform: scale(1.02);
+}
+
+/* Card 2 evento */
+.event-card2 {
+  display: flex;
+  align-items: stretch;
+  background: #f9f9f9;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  height: 290px;
+  margin-bottom: 20px;
+}
+
+.event-card2:hover {
+  transform: scale(1.02);
+}
+
+/* Immagine dell'evento */
+.event-image {
+  width: 30%;
+  height: 100%;
+  display: flex;
+}
+
+.event-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+/* Dettagli evento */
+.event-info {
+  width: 70%;
+  padding: 20px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 /* Pulsante impostazioni */
 .settings-button {
   display: block;
@@ -122,4 +181,71 @@
 
 .back-button:hover {
   background: #e65100;
+}
+
+/* Pulsante per scaricare il ticket */
+.download-button {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s ease-in-out;
+  align-self: start;
+}
+
+.download-button:hover {
+  background: #388e3c;
+}
+
+
+
+/* Stile per la modale */
+.modal {
+  display: flex;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+/* Contenuto della modale */
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Pulsante per chiudere la modale */
+.close {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Pulsante di conferma */
+.confirm-button {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.confirm-button:hover {
+  background: #388e3c;
 }

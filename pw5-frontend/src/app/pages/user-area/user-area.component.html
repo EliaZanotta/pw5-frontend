@@ -13,9 +13,9 @@
 
   <!-- Menu di navigazione -->
   <div class="user-menu">
-      <button [class.active]="selectedTab === 'profile'" (click)="setTab('profile')">Eventi Prenotati</button>
-      <button [class.active]="selectedTab === 'activities'" (click)="setTab('activities')">Eventi passati</button>
-      <button [class.active]="selectedTab === 'settings'" (click)="setTab('settings')">My Tickets</button>
+      <button [class.active]="selectedTab === 'bookedEvents'" (click)="setTab('bookedEvents')">Eventi Prenotati</button>
+      <button [class.active]="selectedTab === 'pastEvents'" (click)="setTab('pastEvents')">Eventi Passati</button>
+      <button [class.active]="selectedTab === 'myTickets'" (click)="setTab('myTickets')">My Tickets</button>
   </div>
 
   <!-- Riga divisoria -->
@@ -23,28 +23,68 @@
 
   <!-- Contenuto dinamico -->
   <div class="user-content">
-      @if (selectedTab === 'profile') {
-          <h2>Profilo Utente</h2>
-          <p><strong>📧 Email:</strong> {{ user.email }}</p>
-          <p><strong>📅 Registrato il:</strong> {{ user.registrationDate }}</p>
-          <p><strong>🔐 Livello Accesso:</strong> {{ user.accessLevel }}</p>
-      }
-
-      @if (selectedTab === 'activities') {
-          <h2>Attività Recenti</h2>
-          <ul>
-              @for (activity of user.activities; track activity) {
-                  <li>{{ activity.date }} - {{ activity.description }}</li>
+      
+      <!-- Eventi Prenotati -->
+      @if (selectedTab === 'bookedEvents') {
+          <h2>Eventi Prenotati</h2>
+          <div class="events-list">
+              @for (event of user.bookedEvents; track event) {
+                  <div class="event-card">
+                      <div class="event-image">
+                          <img [src]="event.image" alt="{{ event.title }}">
+                      </div>
+                      <div class="event-info">
+                          <h2>{{ event.title }}</h2>
+                          <p><strong>📅 Data:</strong> {{ event.date }}</p>
+                          <p><strong>📍 Luogo:</strong> {{ event.location }}</p>
+                          <p class="description">{{ event.description }}</p>
+                      </div>
+                  </div>
               }
-          </ul>
+          </div>
       }
 
-      @if (selectedTab === 'settings') {
-          <h2>Impostazioni</h2>
-          <button class="settings-button">🔄 Cambia Password</button>
-          <button class="settings-button">📧 Modifica Email</button>
-          <button class="settings-button">❌ Disattiva Account</button>
+      <!-- Eventi Passati -->
+      @if (selectedTab === 'pastEvents') {
+          <h2>Eventi Passati</h2>
+          <div class="events-list">
+              @for (event of user.pastEvents; track event) {
+                  <div class="event-card">
+                      <div class="event-image">
+                          <img [src]="event.image" alt="{{ event.title }}">
+                      </div>
+                      <div class="event-info">
+                          <h2>{{ event.title }}</h2>
+                          <p><strong>📅 Data:</strong> {{ event.date }}</p>
+                          <p><strong>📍 Luogo:</strong> {{ event.location }}</p>
+                          <p class="description">{{ event.description }}</p>
+                      </div>
+                  </div>
+              }
+          </div>
       }
+
+      <!-- My Tickets -->
+      @if (selectedTab === 'myTickets') {
+          <h2>I Miei Ticket</h2>
+          <div class="events-list">
+              @for (event of tickets; track event) {
+                  <div class="event-card2">
+                      <div class="event-image">
+                          <img [src]="event.image" alt="{{ event.title }}">
+                      </div>
+                      <div class="event-info">
+                          <h2>{{ event.title }}</h2>
+                          <p><strong>📅 Data:</strong> {{ event.date }}</p>
+                          <p><strong>📍 Luogo:</strong> {{ event.location }}</p>
+                          <p class="description">{{ event.description }}</p>
+                          <button class="download-button">🎟 Vai all'attivazione</button>
+                      </div>
+                  </div>
+              }
+          </div>
+      }
+
+      
   </div>
-
 </div>
