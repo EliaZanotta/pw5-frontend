@@ -1,0 +1,21 @@
+<div class="modal-backdrop" *ngIf="show" (click)="close()"></div>
+<div class="modal" *ngIf="show">
+  <div class="modal-header">
+    <h2>Speaker Requests</h2>
+    <button class="close-btn" (click)="close()">×</button>
+  </div>
+  <div class="modal-content">
+    <ng-container *ngIf="requests.length > 0; else noRequests">
+      <ul class="notification-list">
+        <li *ngFor="let request of requests" class="notification-item">
+          <strong>Event ID:</strong> {{ request?.eventId }} <br>
+          <strong>Status:</strong> {{ request?.status }} <br>
+          <small>Speaker Email: {{ request?.speakerEmail }}</small>
+        </li>
+      </ul>
+    </ng-container>
+    <ng-template #noRequests>
+      <p>No requests found.</p>
+    </ng-template>
+  </div>
+</div>

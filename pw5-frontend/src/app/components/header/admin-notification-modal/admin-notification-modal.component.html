@@ -1,0 +1,20 @@
+<div class="modal-backdrop" *ngIf="show" (click)="close()"></div>
+<div class="modal" *ngIf="show">
+  <div class="modal-header">
+    <h2>Admin Notifications</h2>
+    <button class="close-btn" (click)="close()">×</button>
+  </div>
+  <div class="modal-content">
+    <ng-container *ngIf="notifications.length > 0; else noNotifications">
+      <ul class="notification-list">
+        <li *ngFor="let note of notifications" class="notification-item">
+          <strong>{{ note?.type }}</strong> - {{ note?.message }} <br>
+          <small *ngIf="note?.timestamp">{{ note.timestamp | date: 'short' }}</small>
+        </li>
+      </ul>
+    </ng-container>
+    <ng-template #noNotifications>
+      <p>No notifications found.</p>
+    </ng-template>
+  </div>
+</div>
