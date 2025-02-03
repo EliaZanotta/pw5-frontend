@@ -3,6 +3,7 @@ import { EventsService, CategorizedEvents, Event } from '../events/events.servic
 import { DatePipe, NgForOf, NgIf } from '@angular/common';
 import { EventFilterComponent } from '../../components/event-filter/event-filter.component';
 import { RouterLink } from '@angular/router';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-past-events',
@@ -13,6 +14,8 @@ import { RouterLink } from '@angular/router';
   providers: [DatePipe]
 })
 export class PastEventsComponent implements OnInit {
+  allEvents: Event[] = [];
+  eventsByCategory: { [key: string]: Event[] } = {future: [], past: []};
   pastEvents: Event[] = [];
   filteredEvents: Event[] = [];
   isLoading: boolean = true;
@@ -34,26 +37,17 @@ export class PastEventsComponent implements OnInit {
 
   constructor(private eventsService: EventsService, private datePipe: DatePipe) { }
 
-  ngOnInit(): void {
-    this.fetchPastEvents();
+  async ngOnInit(): Promise<void> {
+    await this.fetchPastEvents();
   }
 
-  fetchPastEvents(): void {
-    this.eventsService.getCategorizedEvents().subscribe({
-      next: (categorizedEvents: CategorizedEvents) => {
-        // Cache the full list of past events
-        this.pastEvents = categorizedEvents.past;
-        // Initialize filtered events with all past events
-        this.filteredEvents = [...this.pastEvents];
-        this.initializeFilterOptions();
-        this.isLoading = false;
-      },
-      error: (error) => {
-        console.error('Error fetching past events:', error);
-        this.errorMessage = 'Si è verificato un errore durante il recupero degli eventi passati.';
-        this.isLoading = false;
-      }
-    });
+  async fetchPastEvents(): Promise<void> {
+    this.allEvents = (await this.eventsService.getEvents()).events;
+    this.eventsByCategory = this.categorizeEvents(this.allEvents);
+    this.pastEvents = this.eventsByCategory['past'];
+    this.filteredEvents = [...this.pastEvents];
+    this.isLoading = false;
+    this.initializeFilterOptions();
   }
 
   initializeFilterOptions(): void {
@@ -61,6 +55,12 @@ export class PastEventsComponent implements OnInit {
     this.allTopics = [...new Set(this.pastEvents.flatMap(event => event.topics || []))];
     // Replace any null hosts with empty strings, then filter them out if needed
     this.allHosts = [...new Set(this.pastEvents.map(event => event.host || ''))].filter(host => host !== '');
+  }
+
+  private categorizeEvents(events: Event[]): { future: Event[]; past: Event[] } {
+    const futureEvents = events.filter(event => event.status === 'CONFIRMED');
+    const pastEvents = events.filter(event => event.status === 'ARCHIVED');
+    return {future: futureEvents, past: pastEvents};
   }
 
   applyFilters(newFilters: any): void {
