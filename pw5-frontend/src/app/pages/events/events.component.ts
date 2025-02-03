@@ -7,6 +7,7 @@ import { faSackDollar, faFilterCircleXmark } from '@fortawesome/free-solid-svg-i
 import localeIt from '@angular/common/locales/it';
 import { FiltersModule } from '../../modules/filters.module';
 import { EventFilterComponent } from '../../components/event-filter/event-filter.component';
+import { NgModule, LOCALE_ID } from '@angular/core';
 
 registerLocaleData(localeIt);
 
@@ -14,6 +15,7 @@ registerLocaleData(localeIt);
   selector: 'app-events',
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.css'],
+  providers: [{ provide: LOCALE_ID, useValue: 'it-IT' }],
   standalone: true,
   imports: [
     RouterLink,
@@ -23,13 +25,13 @@ registerLocaleData(localeIt);
     FiltersModule,
     CommonModule,
     EventFilterComponent
-  ],
-  providers: [{ provide: 'LOCALE_ID', useValue: 'it-IT' }]
+  ]
 })
 export class EventsComponent implements OnInit {
   // These two properties store the full events list and the currently displayed (filtered) events
   allEvents: Event[] = [];
   eventsByCategory: { [key: string]: Event[] } = { future: [], past: [] };
+
 
   // Filter options for the autocomplete components
   allTitles: string[] = [];
@@ -46,8 +48,6 @@ export class EventsComponent implements OnInit {
   };
 
   faSackDollar = faSackDollar;
-  faFilterCircleXmark = faFilterCircleXmark;
-
   constructor(private eventsService: EventsService) {}
 
   ngOnInit(): void {
