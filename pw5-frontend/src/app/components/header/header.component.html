@@ -26,17 +26,21 @@
         </a>
       </ng-container>
 
-    <!-- Admin inbox icon -->
+    <!-- Admin inbox icon with red dot indicator -->
     <ng-container *ngIf="isAdmin">
-      <a (click)="openAdminModal()" class="profile-icon fa-2x inbox-icon-btn" style="padding-right: 100px;">
+      <a (click)="openAdminModal()" class="profile-icon fa-2x inbox-icon-btn" style="padding-right: 100px; position: relative;">
         <fa-icon
           [icon]="faInboxSolid"
           (mouseenter)="isHoveredAdminInbox = true"
           (mouseleave)="isHoveredAdminInbox = false"
-          [ngStyle]="{ color: isHoveredAdminInbox ? '#13449f' : '#2447ce' }">
+          [ngStyle]="{ color: isHoveredAdminInbox ? '#1b6f9b' : '#2447ce' }">
         </fa-icon>
+        <!-- Red dot for unread notifications -->
+        <span *ngIf="hasUnreadNotifications" style="position: absolute; top: 0; right: 100px; width: 10px; height: 10px; background: red; border-radius: 50%;"></span>
       </a>
     </ng-container>
+
+
 
     <!-- User and handshake icons -->
     <ng-container *ngIf="user; else loginBtn">

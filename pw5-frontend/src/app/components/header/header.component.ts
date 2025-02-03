@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AuthService, User } from '../../auth/auth.service';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {Observable, interval, startWith} from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 // Icons
 import { faUser as faUserSolid } from '@fortawesome/free-solid-svg-icons';
@@ -12,7 +14,8 @@ import { faHandshake as faHandshakeRegular } from '@fortawesome/free-regular-svg
 import { faInbox as faInboxSolid } from '@fortawesome/free-solid-svg-icons';
 
 import { SpeakerRequestModalComponent } from './speaker-request-modal/speaker-request-modal.component';
-import {AdminNotificationModalComponent} from './admin-notification-modal/admin-notification-modal.component';
+import { AdminNotificationModalComponent } from './admin-notification-modal/admin-notification-modal.component';
+import {AdminNotification, InboxService} from './inbox.service';
 
 @Component({
   selector: 'app-header',
@@ -26,7 +29,7 @@ export class HeaderComponent implements OnInit {
   user: User | null = null;
   isHost: boolean = false;
   isSpeaker: boolean = false;
-  isAdmin: boolean = false;  // New flag for admin role
+  isAdmin: boolean = false;
   showSpeakerModal: boolean = false;
   showAdminModal: boolean = false;
 
@@ -36,6 +39,8 @@ export class HeaderComponent implements OnInit {
   isHoveredInbox: boolean = false;
   isHoveredAdminInbox: boolean = false;
 
+  hasUnreadNotifications: boolean = false;  // New flag to indicate unread notifications
+
   // Icon definitions
   faUserSolid = faUserSolid;
   faUserRegular = faUserRegular;
@@ -43,12 +48,17 @@ export class HeaderComponent implements OnInit {
   faHandshakeRegular = faHandshakeRegular;
   faInboxSolid = faInboxSolid;
 
-  constructor(private authService: AuthService, library: FaIconLibrary) {
+  constructor(private authService: AuthService, private inboxService: InboxService, library: FaIconLibrary) {
     library.addIcons(faUserSolid, faUserRegular, faHandshakeSolid, faHandshakeRegular, faInboxSolid);
   }
 
   async ngOnInit(): Promise<void> {
     await this.loadUser();
+
+    // Start fetching notifications periodically
+    if (this.isAdmin) {
+      this.fetchAdminNotifications();
+    }
   }
 
   private async loadUser(): Promise<void> {
@@ -82,6 +92,19 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+  private fetchAdminNotifications(): void {
+    // Fetch unread notifications periodically
+    interval(10000)
+      .pipe(
+        startWith(0), // Trigger the first fetch immediately
+        switchMap(() => this.inboxService.getAdminNotifications())
+      )
+      .subscribe((notifications: AdminNotification[]) => {
+        // Set the flag if there are any unread notifications
+        this.hasUnreadNotifications = notifications.some(n => n.status === 'UNREAD');
+      });
+  }
+
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
     document.body.classList.toggle('menu-open', this.isMenuOpen);
@@ -101,5 +124,6 @@ export class HeaderComponent implements OnInit {
 
   closeAdminModal(): void {
     this.showAdminModal = false;
+    this.fetchAdminNotifications();
   }
 }
