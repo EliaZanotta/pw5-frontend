@@ -1,23 +1,25 @@
 <div class="register-types-container">
-    <img src="/assets/registerImage.jpg" alt="Register Image" class="register-image"/>
-    <a routerLink="/auth/register/step-1" (click)="setUserChoice('user')">
-        <div class="register-type">
-            <fa-icon [icon]="faUser" size="10x" class="icon"></fa-icon>
-            <h3>Utente</h3>
-        </div>
-    </a>
-    <div class="register-title">
-        <h3>Scegli il tipo di registrazione</h3>
-        <a routerLink="/">
-            <p>Torna alla home</p>
-        </a>
+  <img src="/assets/registerImage.jpg" alt="Register Image" class="register-image"/>
+  <a routerLink="/auth/register/step-1" (click)="setUserChoice('user')">
+    <div class="register-type">
+      <fa-icon [icon]="faUser" size="10x" class="icon"></fa-icon>
+      <h3>Utente</h3>
     </div>
-    <a routerLink="/auth/register/step-1" (click)="setUserChoice('host')">
-        <div class="register-type">
-            <fa-icon [icon]="faHandshake" size="10x" class="icon"></fa-icon>
-            <h3>Azienda/Partner</h3>
-        </div>
+  </a>
+  <div class="register-title">
+    <h3>Scegli il tipo di registrazione</h3>
+    <a routerLink="/">
+      <p>Torna alla home</p>
     </a>
+  </div>
+  <a routerLink="/auth/register/step-1" (click)="setUserChoice('host')">
+    <div class="register-type">
+      <fa-icon [icon]="faHandshake" size="10x" class="icon"></fa-icon>
+      <h3>Azienda/Partner</h3>
+    </div>
+  </a>
+
+  <p>TODO REGISTER</p>
 
 </div>
 
