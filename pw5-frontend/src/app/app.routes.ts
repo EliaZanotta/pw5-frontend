@@ -18,6 +18,8 @@ import {Step2Component} from './auth/register/step-2/step-2.component';
 import {Step3Component} from './auth/register/step-3/step-3.component';
 import {Step4Component} from './auth/register/step-4/step-4.component';
 import {Step5Component} from './auth/register/step-5/step-5.component';
+import {UserEventsBookingComponent} from './pages/user-events-booking/user-events-booking.component';
+import {UserEventParticipationsComponent} from './pages/user-event-participations/user-event-participations.component';
 
 export const routes: Routes = [
   {path: '', component: HomepageComponent},
@@ -39,7 +41,6 @@ export const routes: Routes = [
   {path: 'past-events', component: PastEventsComponent},
   {path: 'future-events', component: FutureEventsComponent},
   {path: '**', component: NotFoundComponent},
-  { path: 'booking', component: BookingComponent },
   {path: 'user-events-booking', component: UserEventsBookingComponent},
   {path: 'user-event-participations', component: UserEventParticipationsComponent}
 
