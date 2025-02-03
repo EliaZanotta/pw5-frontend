@@ -1,6 +1,8 @@
 <div class="future-events-container">
   <h1 class="page-title">Eventi Futuri</h1>
-  <p class="page-subtitle">Sfoglia gli eventi che stanno per arrivare, scopri cosa ti aspetta e prenota il tuo posto!</p>
+  <p class="page-subtitle">
+    Sfoglia gli eventi che stanno per arrivare, scopri cosa ti aspetta e prenota il tuo posto!
+  </p>
 
   <!-- Filters Section -->
   <app-event-filter
@@ -29,7 +31,6 @@
     Non ci sono eventi corrispondenti ai filtri selezionati.
   </div>
 
-
   <!-- Events List -->
   <div class="events-list" *ngIf="!isLoading && !errorMessage && filteredEvents.length > 0">
     <div
@@ -39,7 +40,13 @@
     >
       <!-- Immagine Evento -->
       <div class="event-image">
-        <img [src]="event.image || 'https://eosmarketing.it/upload/img/c/1000x667-Eventi-aziendali-guida-alle-tipologie-e-a-come-organizzarli-post-Coronavirus.jpg'" alt="{{ event.title }}">
+        <img
+          [src]="
+            event.image ||
+            'https://eosmarketing.it/upload/img/c/1000x667-Eventi-aziendali-guida-alle-tipologie-e-a-come-organizzarli-post-Coronavirus.jpg'
+          "
+          alt="{{ event.title }}"
+        >
       </div>
 
       <!-- Dettagli Evento -->

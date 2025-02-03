@@ -18,7 +18,12 @@
   <!-- Date filter with datepicker -->
   <mat-form-field appearance="outline">
     <mat-label>Data evento</mat-label>
-    <input matInput [matDatepicker]="picker" [(ngModel)]="filters.date" (ngModelChange)="applyFilters()">
+    <input
+      matInput
+      [matDatepicker]="picker"
+      [(ngModel)]="filters.date"
+      (ngModelChange)="applyFilters()"
+    >
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
@@ -26,7 +31,12 @@
   <!-- Topic filter with autocomplete -->
   <mat-form-field appearance="outline">
     <mat-label>Filtra per topic</mat-label>
-    <input matInput [matAutocomplete]="topicAuto" [(ngModel)]="filters.topic" (ngModelChange)="applyFilters()">
+    <input
+      matInput
+      [matAutocomplete]="topicAuto"
+      [(ngModel)]="filters.topic"
+      (ngModelChange)="applyFilters()"
+    >
     <mat-autocomplete #topicAuto="matAutocomplete">
       <mat-option *ngFor="let topic of filteredTopic" [value]="topic">
         {{ topic }}
@@ -37,7 +47,12 @@
   <!-- Host filter with autocomplete -->
   <mat-form-field appearance="outline">
     <mat-label>Filtra per host</mat-label>
-    <input matInput [matAutocomplete]="hostAuto" [(ngModel)]="filters.host" (ngModelChange)="applyFilters()">
+    <input
+      matInput
+      [matAutocomplete]="hostAuto"
+      [(ngModel)]="filters.host"
+      (ngModelChange)="applyFilters()"
+    >
     <mat-autocomplete #hostAuto="matAutocomplete">
       <mat-option *ngFor="let host of filteredHosts" [value]="host">
         {{ host }}
