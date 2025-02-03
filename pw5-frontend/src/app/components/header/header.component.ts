@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AuthService, User } from '../../auth/auth.service';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import {Observable, interval, startWith} from 'rxjs';
+import { Observable, interval, startWith } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 // Icons
@@ -15,7 +15,7 @@ import { faInbox as faInboxSolid } from '@fortawesome/free-solid-svg-icons';
 
 import { SpeakerRequestModalComponent } from './speaker-request-modal/speaker-request-modal.component';
 import { AdminNotificationModalComponent } from './admin-notification-modal/admin-notification-modal.component';
-import {AdminNotification, InboxService} from './inbox.service';
+import { AdminNotification, SpeakerRequest, InboxService } from './inbox.service';
 
 @Component({
   selector: 'app-header',
@@ -39,7 +39,8 @@ export class HeaderComponent implements OnInit {
   isHoveredInbox: boolean = false;
   isHoveredAdminInbox: boolean = false;
 
-  hasUnreadNotifications: boolean = false;  // New flag to indicate unread notifications
+  hasUnreadNotifications: boolean = false;  // New flag to indicate unread admin notifications
+  hasPendingRequests: boolean = false;       // New flag to indicate pending speaker requests
 
   // Icon definitions
   faUserSolid = faUserSolid;
@@ -55,9 +56,12 @@ export class HeaderComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     await this.loadUser();
 
-    // Start fetching notifications periodically
     if (this.isAdmin) {
       this.fetchAdminNotifications();
+    }
+
+    if (this.isSpeaker) {
+      this.fetchSpeakerRequests();
     }
   }
 
@@ -93,15 +97,24 @@ export class HeaderComponent implements OnInit {
   }
 
   private fetchAdminNotifications(): void {
-    // Fetch unread notifications periodically
     interval(10000)
       .pipe(
         startWith(0), // Trigger the first fetch immediately
         switchMap(() => this.inboxService.getAdminNotifications())
       )
       .subscribe((notifications: AdminNotification[]) => {
-        // Set the flag if there are any unread notifications
         this.hasUnreadNotifications = notifications.some(n => n.status === 'UNREAD');
+      });
+  }
+
+  private fetchSpeakerRequests(): void {
+    interval(10000)
+      .pipe(
+        startWith(0),
+        switchMap(() => this.inboxService.getSpeakerRequests())
+      )
+      .subscribe((requests: SpeakerRequest[]) => {
+        this.hasPendingRequests = requests.some(r => r.status === 'PENDING');
       });
   }
 
@@ -116,6 +129,7 @@ export class HeaderComponent implements OnInit {
 
   closeSpeakerModal(): void {
     this.showSpeakerModal = false;
+    this.fetchSpeakerRequests();
   }
 
   openAdminModal(): void {
