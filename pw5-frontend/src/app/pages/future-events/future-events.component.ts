@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { EventsService, CategorizedEvents, Event } from '../events/events.service';
-import { formatDate, NgForOf, NgIf } from '@angular/common';
-import { EventFilterComponent } from '../../components/event-filter/event-filter.component';
-import { RouterLink } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {EventsService, CategorizedEvents, Event} from '../events/events.service';
+import {formatDate, NgForOf, NgIf} from '@angular/common';
+import {EventFilterComponent} from '../../components/event-filter/event-filter.component';
+import {RouterLink} from '@angular/router';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-future-events',
@@ -13,6 +14,8 @@ import { RouterLink } from '@angular/router';
   providers: [EventsService]
 })
 export class FutureEventsComponent implements OnInit {
+  allEvents: Event[] = [];
+  eventsByCategory: { [key: string]: Event[] } = {future: [], past: []};
   futureEvents: Event[] = [];
   filteredEvents: Event[] = [];
   isLoading: boolean = true;
@@ -32,28 +35,26 @@ export class FutureEventsComponent implements OnInit {
     subscription: ''
   };
 
-  constructor(private eventsService: EventsService) { }
-
-  ngOnInit(): void {
-    this.fetchFutureEvents();
+  constructor(private eventsService: EventsService) {
   }
 
-  fetchFutureEvents(): void {
-    this.eventsService.getCategorizedEvents().subscribe({
-      next: (categorizedEvents: CategorizedEvents) => {
-        // Cache the future events
-        this.futureEvents = categorizedEvents.future;
-        // Initialize the filtered events with all future events
-        this.filteredEvents = [...this.futureEvents];
-        this.initializeFilterOptions();
-        this.isLoading = false;
-      },
-      error: (error: any) => {
-        console.error('Error fetching events:', error);
-        this.errorMessage = 'Si è verificato un errore durante il recupero degli eventi.';
-        this.isLoading = false;
-      }
-    });
+  async ngOnInit(): Promise<void> {
+    await this.fetchFutureEvents();
+  }
+
+  async fetchFutureEvents(): Promise<void> {
+    this.allEvents = (await this.eventsService.getEvents()).events;
+    this.eventsByCategory = this.categorizeEvents(this.allEvents);
+    this.futureEvents = this.eventsByCategory['future'];
+    this.filteredEvents = [...this.futureEvents];
+    this.isLoading = false;
+    this.initializeFilterOptions();
+  }
+
+  private categorizeEvents(events: Event[]): { future: Event[]; past: Event[] } {
+    const futureEvents = events.filter(event => event.status === 'CONFIRMED');
+    const pastEvents = events.filter(event => event.status === 'ARCHIVED');
+    return {future: futureEvents, past: pastEvents};
   }
 
   initializeFilterOptions(): void {

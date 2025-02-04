@@ -1,11 +1,20 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { CommonModule, NgIf, NgForOf } from '@angular/common';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCalendarDays, faMapPin, faUsers, faTicket, faUser, faLaptopCode, faMicrophoneAlt } from '@fortawesome/free-solid-svg-icons';
-import { EventsService, Event } from '../events/events.service';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {CommonModule, NgIf, NgForOf} from '@angular/common';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {
+  faCalendarDays,
+  faMapPin,
+  faUsers,
+  faTicket,
+  faUser,
+  faLaptopCode,
+  faMicrophoneAlt
+} from '@fortawesome/free-solid-svg-icons';
+import {EventsService, Event} from '../events/events.service';
 import {BookingComponent} from '../../components/booking/booking.component';
 import {MatDialog} from '@angular/material/dialog';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-single-event',
@@ -29,26 +38,24 @@ export class SingleEventComponent implements OnInit {
   faMicrophoneAlt = faMicrophoneAlt;
 
 
-  constructor(private eventsService: EventsService, private route: ActivatedRoute, public dialog: MatDialog) {}
-
-  ngOnInit(): void {
-    this.fetchEvent();
+  constructor(private eventsService: EventsService, private route: ActivatedRoute, public dialog: MatDialog) {
   }
 
-  fetchEvent(): void {
+  async ngOnInit(): Promise<void> {
+    await this.fetchEvent();
+  }
+
+  async fetchEvent(): Promise<void> {
     const id = this.route.snapshot.paramMap.get('id');
 
     if (id) {
-      this.eventsService.getEventById(id).subscribe({
-        next: (response: any) => {
-          this.eventData = response.event; // Accessing event inside the response object
-        },
-        error: () => {
-          this.errorMessage = 'Errore durante il recupero dei dati dell\'evento. Riprova più tardi.';
+      try {
+        this.eventData = (await this.eventsService.getEventById(id)).event;
+      } catch (errorResponse) {
+        if (errorResponse instanceof HttpErrorResponse) {
+          this.errorMessage = errorResponse.error.message;
         }
-      });
-    } else {
-      this.errorMessage = 'Nessun ID evento trovato nei parametri del percorso.';
+      }
     }
   }
 
@@ -72,6 +79,7 @@ export class SingleEventComponent implements OnInit {
     };
     return date.toLocaleDateString(undefined, options);
   }
+
   formatMaxParticipants(maxParticipants: number | null): string {
     return maxParticipants === 0 ? 'Infinity' : (maxParticipants || 'Illimitati').toString();
   }
@@ -83,12 +91,15 @@ export class SingleEventComponent implements OnInit {
     return eventSubscription === 'paid' ? 'Evento a pagamento' : 'Evento gratis';
   }
 
- showBookingDialog(eventName: string) {
+  showBookingDialog() {
     this.dialog.open(BookingComponent, {
       width: '500px',
       disableClose: true,
-      data: {eventName: this.eventData?.title}
+      data: {
+        id: this.eventData?.id,
+        eventName: this.eventData?.title
+      }
     });
- }
+  }
 
 }
