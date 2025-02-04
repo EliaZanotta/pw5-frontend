@@ -3,6 +3,8 @@ import {Router} from '@angular/router';
 import {AuthService, User} from '../../auth/auth.service';
 import {Event, EventsService} from '../events/events.service';
 import {DatePipe, NgForOf, NgIf} from '@angular/common';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {HttpErrorResponse} from '@angular/common/http';
 
 
 @Component({
@@ -22,7 +24,7 @@ export class UserAreaComponent implements OnInit {
   isRevokeEventModalOpen: boolean = false;
   selectedEvent: any = null;
 
-  constructor(private router: Router, private authService: AuthService, private eventsService: EventsService) {
+  constructor(private router: Router, private authService: AuthService, private eventsService: EventsService, private snackBar: MatSnackBar) {
   }
 
   async ngOnInit(): Promise<void> {
@@ -65,11 +67,34 @@ export class UserAreaComponent implements OnInit {
     this.closeModal();
   }
 
-  revokeEvent(): void {
+  async revokeEvent(): Promise<void> {
+    const payload = {
+      id: this.selectedEvent?.id
+    }
+
     try {
-
-    } catch (error) {
-
+      let response = await this.eventsService.revokeEvent(payload);
+      let event = response.event;
+      if (event) {
+        this.snackBar.open('Evento revocato con successo!', 'Chiudi', {
+          duration: 20000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+          panelClass: 'success-snackbar'
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      }
+    } catch (errorResponse) {
+      if (errorResponse instanceof HttpErrorResponse) {
+        this.snackBar.open("Errore durante la revoca dell'evento", 'Chiudi', {
+          duration: 20000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+          panelClass: 'error-snackbar'
+        });
+      }
     }
     this.closeModal();
   }

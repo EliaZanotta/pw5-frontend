@@ -75,4 +75,8 @@ export class EventsService {
   async bookEvent(payload: { id: string }): Promise<any> {
     return await lastValueFrom(this.http.put<any>(`${this.baseUrl}/book`, payload, {withCredentials: true}));
   }
+
+  async revokeEvent(payload: { id: string }): Promise<any> {
+    return await lastValueFrom(this.http.put<any>(`${this.baseUrl}/revoke`, payload, {withCredentials: true}));
+  }
 }
