@@ -1,6 +1,15 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {lastValueFrom} from 'rxjs';
+import {Event} from '../pages/events/events.service';
+
+class UserDetails {
+  archivedEvents: Event[] | undefined;
+  bookedEvents: Event[] | undefined;
+  bookedTickets: any[] | undefined;
+  constructor() {
+  }
+}
 
 export class User {
     id: number | undefined;
@@ -9,6 +18,7 @@ export class User {
     email: string | undefined;
     status: string | undefined;
     role: string | undefined;
+    userDetails: UserDetails | undefined;
     constructor() {
     }
 }
