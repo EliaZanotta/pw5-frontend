@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { EventsService, CategorizedEvents, Event } from '../events/events.service';
 import { DatePipe, NgForOf, NgIf } from '@angular/common';
-import {EventFilterComponent} from '../../components/event-filter/event-filter.component';
-import {RouterLink} from '@angular/router';
+import { EventFilterComponent } from '../../components/event-filter/event-filter.component';
+import { RouterLink } from '@angular/router';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-past-events',
@@ -13,17 +14,19 @@ import {RouterLink} from '@angular/router';
   providers: [DatePipe]
 })
 export class PastEventsComponent implements OnInit {
+  allEvents: Event[] = [];
+  eventsByCategory: { [key: string]: Event[] } = {future: [], past: []};
   pastEvents: Event[] = [];
   filteredEvents: Event[] = [];
   isLoading: boolean = true;
   errorMessage: string = '';
 
-  // Filter options
+  // Filter options for the autocomplete dropdowns
   allTitles: string[] = [];
   allTopics: string[] = [];
   allHosts: string[] = [];
 
-  // Current filters
+  // Current filters object
   filters = {
     title: '',
     date: null,
@@ -34,41 +37,62 @@ export class PastEventsComponent implements OnInit {
 
   constructor(private eventsService: EventsService, private datePipe: DatePipe) { }
 
-  ngOnInit(): void {
-    this.fetchPastEvents();
+  async ngOnInit(): Promise<void> {
+    await this.fetchPastEvents();
   }
 
-  fetchPastEvents(): void {
-    this.eventsService.getCategorizedEvents().subscribe({
-      next: (categorizedEvents: CategorizedEvents) => {
-        this.pastEvents = categorizedEvents.past;
-        this.filteredEvents = [...this.pastEvents];
-        this.initializeFilterOptions();
-        this.isLoading = false;
-      },
-      error: (error) => {
-        console.error('Error fetching past events:', error);
-        this.errorMessage = 'Si è verificato un errore durante il recupero degli eventi passati.';
-        this.isLoading = false;
-      }
-    });
+  async fetchPastEvents(): Promise<void> {
+    this.allEvents = (await this.eventsService.getEvents()).events;
+    this.eventsByCategory = this.categorizeEvents(this.allEvents);
+    this.pastEvents = this.eventsByCategory['past'];
+    this.filteredEvents = [...this.pastEvents];
+    this.isLoading = false;
+    this.initializeFilterOptions();
   }
 
   initializeFilterOptions(): void {
     this.allTitles = [...new Set(this.pastEvents.map(event => event.title))];
     this.allTopics = [...new Set(this.pastEvents.flatMap(event => event.topics || []))];
-    this.allHosts = [...new Set(this.pastEvents.map(event => event.host))];
+    // Replace any null hosts with empty strings, then filter them out if needed
+    this.allHosts = [...new Set(this.pastEvents.map(event => event.host || ''))].filter(host => host !== '');
+  }
+
+  private categorizeEvents(events: Event[]): { future: Event[]; past: Event[] } {
+    const futureEvents = events.filter(event => event.status === 'CONFIRMED');
+    const pastEvents = events.filter(event => event.status === 'ARCHIVED');
+    return {future: futureEvents, past: pastEvents};
   }
 
   applyFilters(newFilters: any): void {
     this.filters = newFilters;
 
     this.filteredEvents = this.pastEvents.filter(event => {
-      const matchesTitle = this.filters.title ? event.title.toLowerCase().includes(this.filters.title.toLowerCase()) : true;
-      const matchesDate = this.filters.date ? new Date(event.startDate).toDateString() === new Date(this.filters.date).toDateString() : true;
-      const matchesTopic = this.filters.topic ? (event.topics || []).some(topic => topic.toLowerCase().includes(this.filters.topic.toLowerCase())) : true;
-      const matchesHost = this.filters.host ? event.host.toLowerCase().includes(this.filters.host.toLowerCase()) : true;
-      const matchesSubscription = this.filters.subscription ? event.eventSubscription === this.filters.subscription : true;
+      // Use safe default values for fields that might be null
+      const eventTitle = event.title || '';
+      const eventHost = event.host || '';
+      const eventSubscription = event.eventSubscription || '';
+
+      const matchesTitle = this.filters.title
+        ? eventTitle.toLowerCase().includes(this.filters.title.toLowerCase())
+        : true;
+
+      const matchesDate = this.filters.date
+        ? new Date(event.startDate).toDateString() === new Date(this.filters.date).toDateString()
+        : true;
+
+      const matchesTopic = this.filters.topic
+        ? (event.topics || []).some(topic =>
+          topic.toLowerCase().includes(this.filters.topic.toLowerCase())
+        )
+        : true;
+
+      const matchesHost = this.filters.host
+        ? eventHost.toLowerCase().includes(this.filters.host.toLowerCase())
+        : true;
+
+      const matchesSubscription = this.filters.subscription
+        ? eventSubscription === this.filters.subscription
+        : true;
 
       return matchesTitle && matchesDate && matchesTopic && matchesHost && matchesSubscription;
     });
@@ -92,6 +116,6 @@ export class PastEventsComponent implements OnInit {
 
   bookEvent(id: string): void {
     console.log(`Mock booking event with id: ${id}`);
-    // Simulate booking logic here
+    // Simulate booking logic here if needed.
   }
 }

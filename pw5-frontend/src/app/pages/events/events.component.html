@@ -31,16 +31,17 @@
 
   <!-- Event grid displaying events -->
   <div class="event-grid" *ngIf="eventsByCategory[category].length > 0">
-    <a *ngFor="let event of eventsByCategory[category] | slice:0:4" routerLink="/events/{{ event.id }}" class="event-card">
+    <a *ngFor="let event of eventsByCategory[category] | slice:0:4" routerLink="/events/{{ event.id }}"
+       class="event-card">
       <div class="card">
         <div class="image-container">
-          <img [src]="'img/code_cheers.png'" [alt]="event.title" class="event-image" />
+          <img [src]="'img/code_cheers.png'" [alt]="event.title" class="event-image"/>
         </div>
         <div class="card-content">
           <h3 class="event-title">{{ event.title }}
             <fa-icon [icon]="faSackDollar" *ngIf="event.eventSubscription === 'PAID'" style="color: black;"></fa-icon>
           </h3>
-          <p class="event-date">{{ event.startDate | date:'dd MMMM yyyy, HH:mm' }}</p>
+          <p class="event-date"> {{ event.startDate | date:'dd MMMM yyyy, HH:mm':undefined:'it-IT' }}
           <p class="event-location">{{ event.place }}</p>
           <div class="card-bottom-content">
             <p class="event-host">{{ event.host }}</p>

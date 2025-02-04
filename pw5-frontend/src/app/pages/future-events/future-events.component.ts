@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { EventsService, CategorizedEvents, Event } from '../events/events.service';
-import { formatDate, NgForOf, NgIf } from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {EventsService, CategorizedEvents, Event} from '../events/events.service';
+import {formatDate, NgForOf, NgIf} from '@angular/common';
 import {EventFilterComponent} from '../../components/event-filter/event-filter.component';
 import {RouterLink} from '@angular/router';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-future-events',
@@ -13,6 +14,8 @@ import {RouterLink} from '@angular/router';
   providers: [EventsService]
 })
 export class FutureEventsComponent implements OnInit {
+  allEvents: Event[] = [];
+  eventsByCategory: { [key: string]: Event[] } = {future: [], past: []};
   futureEvents: Event[] = [];
   filteredEvents: Event[] = [];
   isLoading: boolean = true;
@@ -32,43 +35,65 @@ export class FutureEventsComponent implements OnInit {
     subscription: ''
   };
 
-  constructor(private eventsService: EventsService) { }
-
-  ngOnInit(): void {
-    this.fetchFutureEvents();
+  constructor(private eventsService: EventsService) {
   }
 
-  fetchFutureEvents(): void {
-    this.eventsService.getCategorizedEvents().subscribe({
-      next: (categorizedEvents: CategorizedEvents) => {
-        this.futureEvents = categorizedEvents.future;
-        this.filteredEvents = [...this.futureEvents];
-        this.initializeFilterOptions();
-        this.isLoading = false;
-      },
-      error: (error: any) => {
-        console.error('Error fetching events:', error);
-        this.errorMessage = 'Si è verificato un errore durante il recupero degli eventi.';
-        this.isLoading = false;
-      }
-    });
+  async ngOnInit(): Promise<void> {
+    await this.fetchFutureEvents();
+  }
+
+  async fetchFutureEvents(): Promise<void> {
+    this.allEvents = (await this.eventsService.getEvents()).events;
+    this.eventsByCategory = this.categorizeEvents(this.allEvents);
+    this.futureEvents = this.eventsByCategory['future'];
+    this.filteredEvents = [...this.futureEvents];
+    this.isLoading = false;
+    this.initializeFilterOptions();
+  }
+
+  private categorizeEvents(events: Event[]): { future: Event[]; past: Event[] } {
+    const futureEvents = events.filter(event => event.status === 'CONFIRMED');
+    const pastEvents = events.filter(event => event.status === 'ARCHIVED');
+    return {future: futureEvents, past: pastEvents};
   }
 
   initializeFilterOptions(): void {
+    // Note: If any property is null, it is filtered out.
     this.allTitles = [...new Set(this.futureEvents.map(event => event.title))];
     this.allTopics = [...new Set(this.futureEvents.flatMap(event => event.topics || []))];
-    this.allHosts = [...new Set(this.futureEvents.map(event => event.host))];
+    this.allHosts = [...new Set(this.futureEvents.map(event => event.host || ''))].filter(host => host !== '');
   }
 
   applyFilters(newFilters: any): void {
     this.filters = newFilters;
 
     this.filteredEvents = this.futureEvents.filter(event => {
-      const matchesTitle = this.filters.title ? event.title.toLowerCase().includes(this.filters.title.toLowerCase()) : true;
-      const matchesDate = this.filters.date ? new Date(event.startDate).toDateString() === new Date(this.filters.date).toDateString() : true;
-      const matchesTopic = this.filters.topic ? (event.topics || []).some(topic => topic.toLowerCase().includes(this.filters.topic.toLowerCase())) : true;
-      const matchesHost = this.filters.host ? event.host.toLowerCase().includes(this.filters.host.toLowerCase()) : true;
-      const matchesSubscription = this.filters.subscription ? event.eventSubscription === this.filters.subscription : true;
+      // Use fallback values for potentially null fields
+      const eventTitle = event.title || '';
+      const eventHost = event.host || '';
+      const eventSubscription = event.eventSubscription || '';
+
+      const matchesTitle = this.filters.title
+        ? eventTitle.toLowerCase().includes(this.filters.title.toLowerCase())
+        : true;
+
+      const matchesDate = this.filters.date
+        ? new Date(event.startDate).toDateString() === new Date(this.filters.date).toDateString()
+        : true;
+
+      const matchesTopic = this.filters.topic
+        ? (event.topics || []).some(topic =>
+          topic.toLowerCase().includes(this.filters.topic.toLowerCase())
+        )
+        : true;
+
+      const matchesHost = this.filters.host
+        ? eventHost.toLowerCase().includes(this.filters.host.toLowerCase())
+        : true;
+
+      const matchesSubscription = this.filters.subscription
+        ? eventSubscription === this.filters.subscription
+        : true;
 
       return matchesTitle && matchesDate && matchesTopic && matchesHost && matchesSubscription;
     });
@@ -85,11 +110,7 @@ export class FutureEventsComponent implements OnInit {
     this.filteredEvents = [...this.futureEvents];
   }
 
-  bookEvent(id: string): void {
-    console.log(`Mock booking event with id: ${id}`);
-    // Simulate booking logic here
-  }
-
+  // Format the event date for display
   formatDate(date: string): string {
     return new Date(date).toLocaleDateString('it-IT', {
       year: 'numeric',

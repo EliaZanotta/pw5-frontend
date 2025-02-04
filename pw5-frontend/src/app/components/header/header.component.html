@@ -3,25 +3,42 @@
     <h1 class="full-logo">Varese Developer Group</h1>
     <h1 class="short-logo">VDG</h1>
   </div>
-  <!-- Navigazione -->
+
   <nav class="navigation" [ngClass]="{ 'active': isMenuOpen }">
     <ul>
       <li><a routerLink="/">Home</a></li>
       <li><a routerLink="/events">Eventi</a></li>
       <li><a routerLink="/partner-companies">Aziende Partner</a></li>
-      <li><a routerLink="/user-area">Area Utente</a></li>
       <li><a routerLink="/contact">Contatti</a></li>
     </ul>
   </nav>
 
   <div class="header-right">
-    <!-- Pulsante Accedi -->
-    <button routerLink="/auth/login" class="login-btn">Accedi</button>
+    <!-- Display the icon if a user or host is logged in -->
+    <ng-container *ngIf="user; else loginBtn">
+      <a [routerLink]="isHost ? '/single-companies' : '/user-area'">
+        <fa-icon
+          [icon]="
+            isHovered
+              ? (isHost ? faHandshakeSolid : faUserSolid)
+              : (isHost ? faHandshakeRegular : faUserRegular)
+          "
+          (mouseenter)="isHovered = true"
+          (mouseleave)="isHovered = false"
+          class="profile-icon fa-2x"
+          style="color: #ce2424;">
+        </fa-icon>
+      </a>
+    </ng-container>
 
-    <!-- Pulsante Menu Hamburger -->
+    <!-- "Accedi" button for non-logged in users -->
+    <ng-template #loginBtn>
+      <button routerLink="/auth/login" class="login-btn">Accedi</button>
+    </ng-template>
+
+    <!-- Hamburger Menu Toggle -->
     <button class="menu-toggle" (click)="toggleMenu()" aria-label="Toggle menu">
       ☰
     </button>
   </div>
-
 </header>
