@@ -17,7 +17,7 @@ export class AppComponent {
 
   constructor(private router: Router) {
     this.router.events.subscribe(() => {
-      this.showHeaderFooter = !this.router.url.includes('auth') && !this.router.url.includes('register') && !this.router.url.includes('confirm-email');
+      this.showHeaderFooter = !this.router.url.includes('auth') && !this.router.url.includes('register') && !this.router.url.includes('confirm-email') && !this.router.url.includes('event-registration-form');
     });
   }
 }

@@ -1,0 +1,150 @@
+<div class="container2">
+  <div class="container">
+    <form (ngSubmit)="onSubmit()" #eventForm="ngForm">
+      <div>
+        <label for="title">Titolo:</label>
+        <input
+          type="text"
+          id="title"
+          required
+          [(ngModel)]="event.title"
+          name="title"
+        />
+      </div>
+      <div>
+        <label for="description">Descrizione:</label>
+        <textarea
+          id="description"
+          required
+          [(ngModel)]="event.description"
+          name="description"
+        ></textarea>
+      </div>
+      <div class="date-container">
+        <div>
+          <label for="startDate">Data inizio:</label>
+          <input
+            type="date"
+            id="startDate"
+            required
+            [(ngModel)]="event.startDate"
+            name="startDate"
+          />
+        </div>
+        <div>
+          <label for="endDate">Data fine:</label>
+          <input
+            type="date"
+            id="endDate"
+            required
+            [(ngModel)]="event.endDate"
+            name="endDate"
+          />
+        </div>
+      </div>
+      <div class="email-topic-container">
+        <div>
+          <label for="speakerEmail">Email speaker:</label>
+          <input
+            type="email"
+            id="speakerEmail"
+            [(ngModel)]="newSpeakerEmail"
+            name="newSpeakerEmail"
+            (keyup.enter)="addSpeakerEmail()"
+            placeholder="Clicca invio per aggiungere email"
+          />
+          <div class="emails-list">
+            <span
+              *ngFor="let email of event.speakerEmails; let i = index"
+              class="email-tag"
+            >
+              {{ email }}
+              <button
+                type="button"
+                class="delete-email"
+                (click)="removeSpeakerEmail(i)"
+              >
+                ×
+              </button>
+            </span>
+          </div>
+        </div>
+        <div>
+          <label for="topics">Topic:</label>
+          <input
+            type="text"
+            id="topics"
+            [(ngModel)]="newTopic"
+            name="newTopic"
+            (keyup.enter)="addTopic()"
+            placeholder="Clicca invio per aggiungere topic"
+          />
+          <div class="topics-list">
+            <span
+              *ngFor="let topic of event.topics; let i = index"
+              class="topic-tag"
+            >
+              {{ topic }}
+              <button
+                type="button"
+                class="delete-topic"
+                (click)="removeTopic(i)"
+              >
+                ×
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <label for="maxParticipants">Partecipanti max:</label>
+        <input
+          type="number"
+          id="maxParticipants"
+          required
+          [(ngModel)]="event.maxParticipants"
+          name="maxParticipants"
+          placeholder="0 capienza illimitata"
+          (focus)="handleFocus($event)"
+          (blur)="handleBlur($event)"
+        />
+      </div>
+      <div class="radio-group">
+        <div>
+          <input
+            type="radio"
+            id="free"
+            name="eventType"
+            [(ngModel)]="event.eventType"
+            value="free"
+          />
+          <label for="free">Gratuito</label>
+        </div>
+        <div>
+          <input
+            type="radio"
+            id="paid"
+            name="eventType"
+            [(ngModel)]="event.eventType"
+            value="paid"
+          />
+          <label for="paid">A pagamento</label>
+        </div>
+      </div>
+      <div *ngIf="event.eventType === 'paid'">
+        <label for="price">Prezzo:</label>
+        <input
+          type="number"
+          id="price"
+          [(ngModel)]="event.price"
+          name="price"
+          placeholder="Inserisci il prezzo"
+          class="price-input"
+        />
+      </div>
+      <div class="button-container">
+        <button type="submit">Create Event</button>
+      </div>
+    </form>
+  </div>
+</div>
