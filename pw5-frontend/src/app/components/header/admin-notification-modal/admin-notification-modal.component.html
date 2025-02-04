@@ -16,11 +16,14 @@
           [ngClass]="{ handled: note.status === 'HANDLED' }"
         >
           <div class="notification-item-text">
-            <p class="font-semibold">{{ note?.type }}: {{ note?.message }}</p>
+            <p class="font-semibold"> {{ note?.message }}</p>
             <p class="text-sm text-gray-500">
               <strong>Host:</strong> {{ note?.hostEmail }} <br />
-              <strong>Data e ora:</strong> {{ note?.timestamp | date: 'short' }} <br />
-              <strong>Stato:</strong> {{ note?.status }}
+              <strong>Data e ora:</strong> {{ note?.timestamp | date:'dd/MM/yyyy HH:mm' }} <br />
+              <strong>Stato:</strong>
+              <span *ngIf="note?.status === 'UNREAD'"> Host da gestire</span>
+              <span *ngIf="note?.status === 'HANDLED'"> Host accettato</span>
+              <span *ngIf="note?.status === 'REJECTED'"> Host rifiutato</span>
             </p>
           </div>
           <div class="notification-actions" *ngIf="note.status !== 'HANDLED'">
