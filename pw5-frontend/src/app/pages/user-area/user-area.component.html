@@ -205,6 +205,11 @@
       <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
     </div>
 
+    <!-- Gestisci eventi (ADMIN) -->
+    <div *ngIf="selectedTab === 'manageEvents' && user?.role === 'ADMIN'">
+      <app-events-management></app-events-management>
+      </div>
+
     <!-- Impostazioni -->
     <div *ngIf="selectedTab === 'settings'">
       <h2>Impostazioni</h2>

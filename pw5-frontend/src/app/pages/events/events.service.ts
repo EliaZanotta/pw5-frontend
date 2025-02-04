@@ -79,4 +79,12 @@ export class EventsService {
   async revokeEvent(payload: { id: string }): Promise<any> {
     return await lastValueFrom(this.http.put<any>(`${this.baseUrl}/revoke`, payload, {withCredentials: true}));
   }
+
+  async deleteEvent(eventId: string): Promise<void> {
+    const url = `${this.baseUrl}/admin/${eventId}`;
+    await lastValueFrom(
+      this.http.delete(url, { responseType: 'text' })
+    );
+  }
+
 }
