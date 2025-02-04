@@ -16,6 +16,13 @@
         <button [class.active]="selectedTab === 'social'" (click)="setTab('social')">Social</button>
         <button [class.active]="selectedTab === 'events'" (click)="setTab('events')">Eventi Ospitati</button>
         <button [class.active]="selectedTab === 'about'" (click)="setTab('about')">About</button>
+
+        <!-- Il bottone "Crea Evento" sarà visibile solo se l'utente è l'azienda proprietaria -->
+        @if (isCompany()) {
+            <button [class.active]="selectedTab === 'crea-evento'" (click)="setTab('crea-evento')">Crea Evento</button>
+        }
+
+        <button [class.active]="selectedTab === 'info'" (click)="setTab('info')">Info</button>
     </div>
 
     <!-- Riga divisoria -->
@@ -55,6 +62,31 @@
             <p><strong>📍 Indirizzo:</strong> {{ company.address }}</p>
             <p><strong>🌐 Sito Web:</strong> <a [href]="company.website" target="_blank">{{ company.website }}</a></p>
             <p><strong>📧 Email:</strong> <a [href]="'mailto:' + company.email">{{ company.email }}</a></p>
+        }
+
+        @if (selectedTab === 'info') {
+
+            <!-- Pulsante di logout -->
+            <div class="logout-section">
+                <button class="logout-button" (click)="logout()">🔴 Logout</button> <!-- (click)="logout()" -->
+            </div>
+        }
+
+        @if (selectedTab === 'crea-evento' && isCompany()) {
+            <h2>Crea un Nuovo Evento</h2>
+            <p>
+                Questa sezione ti permette di creare e gestire eventi per la tua azienda. Puoi specificare dettagli come 
+                il nome dell'evento, la data, la posizione e altre informazioni rilevanti.
+            </p>
+            <p>
+                Assicurati di fornire tutte le informazioni necessarie affinché gli utenti possano trovare e partecipare
+                ai tuoi eventi con facilità.
+            </p>
+
+            <!-- Pulsante per creare un evento -->
+            <div class="back-section">
+                <button class="back-button" (click)="goEvents()">Crea Evento</button>
+            </div>
         }
     </div>
 

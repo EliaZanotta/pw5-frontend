@@ -9,6 +9,7 @@ import { UserAreaComponent } from './pages/user-area/user-area.component';
 import { SingleCompanyComponent } from './pages/single-company/single-company.component';
 import { ContactComponent } from './pages/contact/contact.component';
 
+
 export const routes: Routes = [
     { path: '', component: HomepageComponent },
   { path: 'events', component: EventsComponent },

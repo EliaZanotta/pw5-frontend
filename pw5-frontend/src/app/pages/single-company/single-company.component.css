@@ -1,7 +1,16 @@
+/* Reset globale */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden; /* Evita scrollbar orizzontali */
+}
+
 /* Contenitore principale */
 .company-container {
     width: 100%;
-    margin: 0;
+    max-width: 100%;
+    margin: 0 auto;
     padding: 0;
     text-align: center;
 }
@@ -17,6 +26,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
 }
 
 /* Profilo aziendale */
@@ -50,6 +60,7 @@
     justify-content: center;
     gap: 30px;
     margin: 20px 0;
+    flex-wrap: wrap; /* Per evitare overflow su schermi piccoli */
 }
 
 .company-menu button {
@@ -77,12 +88,33 @@
 
 /* Contenuti */
 .company-content {
-    max-width: 80%;
-    margin: auto;
+    width: 100%;
+    max-width: 1200px; /* Mantiene leggibilità su desktop */
+    margin: 0 auto;
     padding: 20px;
     background: #ffffff;
     border-radius: 8px;
     text-align: left;
+}
+
+/* Pulsante logout */
+.logout-section {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.logout-button {
+    background-color: #ce2424; 
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.logout-button:hover {
+    background-color: #d9534f;
 }
 
 /* Pulsante indietro */
@@ -91,7 +123,7 @@
 }
 
 .back-button {
-    background: #ff5722;
+    background: #ce2424;
     color: white;
     border: none;
     padding: 14px 25px;
@@ -102,5 +134,74 @@
 }
 
 .back-button:hover {
-    background: #e65100;
+    background: #ce2424;
+}
+
+/* RESPONSIVE DESIGN */
+
+/* 📱 Mobile (max-width: 576px) */
+@media screen and (max-width: 576px) {
+    .company-container {
+        max-width: 100%;
+        padding: 10px;
+    }
+
+    .company-banner {
+        height: 200px;
+    }
+
+    .company-logo {
+        width: 100px;
+        height: 100px;
+    }
+
+    .company-name {
+        font-size: 22px;
+    }
+
+    .company-description {
+        font-size: 16px;
+    }
+
+    .company-menu {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .company-menu button {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    .company-content {
+        max-width: 95%;
+        padding: 15px;
+    }
+
+    .back-button, .logout-button {
+        width: 100%;
+        font-size: 14px;
+        padding: 12px;
+    }
+}
+
+/* 📱 Tablet (max-width: 768px) */
+@media screen and (max-width: 768px) {
+    .company-container {
+        max-width: 95%;
+    }
+}
+
+/* 💻 Laptop (max-width: 1024px) */
+@media screen and (max-width: 1024px) {
+    .company-container {
+        max-width: 90%;
+    }
+}
+
+/* 🖥️ Desktop (min-width: 1200px) */
+@media screen and (min-width: 1200px) {
+    .company-container {
+        max-width: 100%;
+    }
 }
