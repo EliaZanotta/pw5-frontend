@@ -68,7 +68,7 @@ button {
 
 button:hover {
   background-color: #8b0707;
-  transform: translateY(-2px);
+  transform: transform(-2px);
 }
 
 .topics-list,
@@ -135,6 +135,7 @@ button:hover {
   justify-content: center;
 }
 
+
 /* Responsive styles for tablets (768px to 1024px) */
 @media (max-width: 1024px) and (min-width: 768px) {
   .container {
@@ -144,6 +145,17 @@ button:hover {
 
   button {
     width: 50%;
+    font-size: 1.2rem; /* Increased font size for buttons */
+  }
+
+  label {
+    font-size: 1.2rem; /* Increased font size for labels */
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: 1.2rem; /* Increased font size for inputs */
   }
 }
 
@@ -156,6 +168,7 @@ button:hover {
 
   button {
     width: 70%;
+    font-size: 1.2rem; /* Increased font size for buttons */
   }
 
   .date-container,
@@ -165,5 +178,15 @@ button:hover {
 
   .price-input {
     width: 100%;
+  }
+
+  label {
+    font-size: 1.2rem; /* Increased font size for labels */
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: 1.2rem; /* Increased font size for inputs */
   }
 }
