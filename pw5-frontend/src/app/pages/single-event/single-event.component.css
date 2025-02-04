@@ -129,8 +129,8 @@
 
 .register-button {
   display: inline-block;
-  background-color: var(--primary-color);
-  color: #ff6b6b;
+  background-color: #ce2424;
+  color: white;
   padding: 14px 28px;
   border-radius: 12px;
   text-align: center;
@@ -139,10 +139,10 @@
   transition: background-color 0.3s, transform 0.2s;
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  border: none;
 }
 
 .register-button:hover {
-  color: red;
   background-color: #3a001e;
   transform: translateY(-2px);
 }
