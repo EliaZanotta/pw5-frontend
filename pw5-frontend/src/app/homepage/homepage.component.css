@@ -1,4 +1,8 @@
 /* Hero Section */
+body {
+  overflow: hidden; /* Ensure content does not overflow */
+
+}
 .heroSection {
   position: relative;
   background-image: url("https://www.laramind.com/blog/wp-content/uploads/2020/09/montegrappa-varese.jpg");
@@ -192,18 +196,17 @@
   background: #f0f0f0;
   padding: 40px;
   text-align: center;
+  overflow: hidden; /* Ensure content does not overflow */
 }
 
 .partnerCarouselTitle {
   font-size: 2.5rem;
-  color: #000000; /* Changed from #333333 */
-  margin-bottom: 10px;
-  margin-top: 10px;
+  margin-bottom: 40px;
+  margin-top: 40px;
 }
 
 .partnerCarouselSubtitle {
   font-size: 1.2rem;
-  color: #3a001e; /* Changed from #555555 */
   margin-top: 30px;
   margin-bottom: 30px;
 }
@@ -211,6 +214,7 @@
 .swiper-container {
   width: 100%;
   padding: 20px 0;
+  overflow: hidden; /* Ensure content does not overflow */
 }
 
 .swiper-slide {
@@ -219,13 +223,14 @@
   align-items: center;
 }
 
+.swiper-wrapper {
+  display: flex;
+  align-items: center;
+}
+
 .swiper-slide img {
   max-width: 100%;
   max-height: 200px;
-}
-
-.swiper-slide:hover img {
-  filter: grayscale(0%);
 }
 
 /* Contact Section */
@@ -299,13 +304,22 @@
     gap: 30px;
   }
   .eventContent h3 {
-   min-height: 100px;
+    min-height: 100px;
   }
   .partnerCarouselTitle {
     font-size: 2rem;
   }
   .partnerCarouselSubtitle {
     font-size: 1rem;
+  }
+  .swiper-container {
+    width: 100%;
+    padding: 20px 0;
+    overflow: hidden; /* Ensure content does not overflow */
+  }
+  .swiper-slide img {
+    max-width: 100%;
+    max-height: 150px;
   }
   .contactSection h2 {
     font-size: 1.8rem;
@@ -354,6 +368,15 @@
   }
   .partnerCarouselSubtitle {
     font-size: 0.9rem;
+  }
+  .swiper-container {
+    width: 100%;
+    padding: 20px 0;
+    overflow: hidden; /* Ensure content does not overflow */
+  }
+  .swiper-slide img {
+    max-width: 100%;
+    max-height: 120px;
   }
   .contactSection h2 {
     font-size: 1.5rem;

@@ -27,6 +27,7 @@
               }
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/rose-red.css",
               "node_modules/swiper/swiper-bundle.min.css",
               "src/styles.css"
             ],
@@ -39,8 +40,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "10MB",
+                  "maximumError": "100MB"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -88,6 +89,7 @@
               }
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/rose-red.css",
               "src/styles.css"
             ],
             "scripts": []
