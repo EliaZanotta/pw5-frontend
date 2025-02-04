@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {lastValueFrom} from 'rxjs';
 
 export interface UserDetails {
@@ -60,8 +60,11 @@ export class UserService {
     return await lastValueFrom(this.http.put<any>(`${this.baseUrl}favourite-topic/remove/${topicId}`, null, { withCredentials: true }));
   }
 
-  async getAllUsers(): Promise<User[]> {
-    const response = await lastValueFrom(this.http.get<{ users: User[], message: string }>(this.baseUrl));
-    return response.users;  // Extract the 'users' array from the response
+  async getAllUsers(): Promise<{ users: User[], message: string }> {
+    return await lastValueFrom(this.http.get<{ users: User[], message: string }>(this.baseUrl, { withCredentials: true }));
+  }
+  async deleteUser(userId: string): Promise<void> {
+    const url = `${this.baseUrl}${userId}`;
+    await lastValueFrom(this.http.delete(url, { withCredentials: true }));
   }
 }

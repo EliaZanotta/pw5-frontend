@@ -215,6 +215,11 @@
       <app-host-management></app-host-management>
     </div>
 
+    <!-- Gestisci user (ADMIN) -->
+    <div *ngIf="selectedTab === 'manageUsers' && user?.role === 'ADMIN'">
+      <app-user-management></app-user-management>
+    </div>
+
     <!-- Impostazioni -->
     <div *ngIf="selectedTab === 'settings'">
       <h2>Impostazioni</h2>
