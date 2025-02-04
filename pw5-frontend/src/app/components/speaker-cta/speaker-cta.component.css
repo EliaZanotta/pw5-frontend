@@ -1,0 +1,35 @@
+.speaker-cta {
+    padding: 2rem;
+    background-color: #f5f5f5;
+    text-align: center;
+}
+
+.mat-card {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+h2 {
+    color: #ce2424;
+    margin-bottom: 1rem;
+}
+
+p {
+    color: #3a001e;
+    margin-bottom: 1.5rem;
+}
+
+button {
+    font-size: 1.1rem;
+}
+
+mat-icon {
+    margin-right: 0.5rem;
+}
+
+.mat-mdc-raised-button.mat-primary {
+    --mdc-protected-button-container-color: #ce2424;
+    --mdc-protected-button-label-text-color: white;
+    font-family: 'Montserrat', sans-serif;
+}
