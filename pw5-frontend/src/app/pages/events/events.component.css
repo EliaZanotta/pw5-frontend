@@ -1,4 +1,12 @@
 /* Event card styling */
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 90%;
+}
+
+
 .event-card {
   text-decoration: none;
 }
@@ -40,7 +48,8 @@
 }
 
 /* Date and location styling */
-.event-date, .event-location {
+.event-date,
+.event-location {
   color: rgb(128, 128, 128);
 }
 
@@ -62,10 +71,14 @@
 
 /* Hero section */
 .hero {
-  background: radial-gradient(circle, rgba(58, 0, 30, 1) 0%, rgba(206, 36, 36, 1) 100%);
+  background: radial-gradient(
+    circle,
+    rgba(58, 0, 30, 1) 0%,
+    rgba(206, 36, 36, 1) 100%
+  );
   color: white;
   text-align: center;
-  padding: 80px 20px;
+  padding: 80px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -79,7 +92,8 @@
 }
 
 /* Buttons */
-.browse-button, .see-more-button {
+.browse-button,
+.see-more-button {
   background: white;
   color: #3a001e;
   padding: 10px 20px;
@@ -88,14 +102,15 @@
   transition: transform 0.3s, background 0.3s;
 }
 
-.browse-button:hover, .see-more-button:hover {
+.browse-button:hover,
+.see-more-button:hover {
   transform: scale(1.05);
   background: #f0f0f0;
 }
 
 /* Event section */
 .event-container {
-  padding: 40px 20px;
+  padding: 20px;
 }
 
 .category-header {
@@ -109,14 +124,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  margin: 20px 30px;
   align-items: flex-start;
-}
-
-mat-form-field {
-  flex: 1;
-  min-width: 220px;
-  max-width: 400px;
 }
 
 /* No events message */
@@ -146,21 +154,95 @@ mat-form-field {
 /* Style the filter section */
 .filter-section {
   display: flex;
-  justify-content: center;
-  padding: 20px 0;
+justify-content: center;
+  padding: 20px;
 }
 
 .filter-section app-event-filter {
-  width: 90%;
+  width: 80%;
 }
 
+
+
+
 /* Responsive styles */
-@media (max-width: 600px) {
+@media (max-width: 1000px) and (min-width: 768px) {
   .filters-container {
+    flex-direction: column; /* Stack filters vertically on tablets */
+  }
+
+  .event-grid {
+    grid-template-columns: repeat(2, 1fr); /* Adjust grid columns for tablets */
+  }
+
+  .container {
+    width: 50%;
+    padding: 1.5rem;
+  }
+
+  label {
+    font-size: 1.2rem; /* Increased font size for labels */
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: 1.2rem; /* Increased font size for inputs */
+  }
+
+  .container{
+    display: flex;
+    margin: auto;
+  }
+  .filter-section {
+    max-width: 100%;
+    
+    
+  }
+  .event-container {
+    width: 70%;
+    margin: auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .filters-container {
+    flex-direction: column; /* Stack filters vertically on smartphones */
+  }
+
+  .event-grid {
+    grid-template-columns: 1fr; /* Adjust grid columns for smartphones */
+  }
+
+  .container {
+    width: 90%;
+    padding: 1rem;
+  }
+
+  .date-container,
+  .email-topic-container {
     flex-direction: column;
+  }
+
+  .price-input {
+    width: 100%;
+  }
+
+  label {
+    font-size: 1.2rem;
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: 1.2rem;
   }
 
   .clear-filters-btn {
     font-size: 28px;
+  }
+  .filter-section {
+    width: 80%;
+    margin: auto;
   }
 }
