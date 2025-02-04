@@ -1,0 +1,41 @@
+<div class="modal-backdrop" *ngIf="show" (click)="close()"></div>
+<div class="modal" *ngIf="show">
+  <div class="modal-header">
+    <h2>Notifiche Admin</h2>
+    <button mat-icon-button (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="modal-content">
+    <ng-container *ngIf="sortedNotifications.length > 0; else noNotifications">
+      <div class="notification-list">
+        <div
+          *ngFor="let note of sortedNotifications"
+          class="notification-item"
+          [ngClass]="{ handled: note.status === 'HANDLED' }"
+        >
+          <div class="notification-item-text">
+            <p class="font-semibold"> {{ note?.message }}</p>
+            <p class="text-sm text-gray-500">
+              <strong>Host:</strong> {{ note?.hostEmail }} <br />
+              <strong>Data e ora:</strong> {{ note?.timestamp | date:'dd/MM/yyyy HH:mm' }} <br />
+              <strong>Stato:</strong>
+              <span *ngIf="note?.status === 'UNREAD'"> Host da gestire</span>
+              <span *ngIf="note?.status === 'HANDLED'"> Host accettato</span>
+              <span *ngIf="note?.status === 'REJECTED'"> Host rifiutato</span>
+            </p>
+          </div>
+          <div class="notification-actions" *ngIf="note.status !== 'HANDLED'">
+            <button mat-raised-button color="primary" (click)="acceptNotification(note.id)">Accetta</button>
+            <button mat-raised-button color="warn" (click)="rejectNotification(note.id)">Rifiuta</button>
+          </div>
+          <p *ngIf="note.status === 'HANDLED'" class="text-sm font-medium">Host già gestito</p>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #noNotifications>
+      <p>Nessuna notifica trovata.</p>
+    </ng-template>
+  </div>
+</div>
