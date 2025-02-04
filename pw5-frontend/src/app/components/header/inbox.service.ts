@@ -75,4 +75,29 @@ export class InboxService {
     return this.http.get<{ message: string; requests: SpeakerRequest[] }>(this.speakerRequestsUrl, { withCredentials: true })
         .pipe(map(response => response.requests));
   }
+  // PUT request to confirm a speaker request
+  confirmSpeakerRequest(requestId: string): Observable<void> {
+    const url = `${this.baseUrl}speaker-inbox/${requestId}/confirm`;
+    return this.http.put(url, {}, { withCredentials: true, responseType: 'text' as 'json' })
+      .pipe(
+        map(() => undefined),
+        catchError((error) => {
+          console.error('Error confirming speaker request:', error);
+          throw error;
+        })
+      );
+  }
+
+  // PUT request to reject a speaker request
+  rejectSpeakerRequest(requestId: string): Observable<void> {
+    const url = `${this.baseUrl}speaker-inbox/${requestId}/reject`;
+    return this.http.put(url, {}, { withCredentials: true, responseType: 'text' as 'json' })
+      .pipe(
+        map(() => undefined),
+        catchError((error) => {
+          console.error('Error rejecting speaker request:', error);
+          throw error;
+        })
+      );
+  }
 }

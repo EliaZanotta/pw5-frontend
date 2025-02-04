@@ -1,21 +1,47 @@
+<!-- (Optional) Backdrop for the modal -->
 <div class="modal-backdrop" *ngIf="show" (click)="close()"></div>
+
 <div class="modal" *ngIf="show">
   <div class="modal-header">
     <h2>Speaker Requests</h2>
-    <button class="close-btn" (click)="close()">×</button>
+    <!-- Close button now uses Font Awesome icon -->
+    <fa-icon
+      [icon]="faTimes"
+      class="fa-2x"
+      (click)="close()"
+      (mouseenter)="isHovered = true"
+      (mouseleave)="isHovered = false"
+      [ngStyle]="{ color: isHovered ? '#9b1b1b' : '#ce2424' }">
+    </fa-icon>
+
   </div>
   <div class="modal-content">
-    <ng-container *ngIf="requests.length > 0; else noRequests">
-      <ul class="notification-list">
-        <li *ngFor="let request of requests" class="notification-item">
-          <strong>Event ID:</strong> {{ request?.eventId }} <br>
-          <strong>Status:</strong> {{ request?.status }} <br>
-          <small>Speaker Email: {{ request?.speakerEmail }}</small>
-        </li>
-      </ul>
+    <ng-container *ngIf="requests && requests.length > 0; else noRequests">
+      <div class="notification-list">
+        <div *ngFor="let request of requests" class="notification-item">
+          <div class="notification-item-text">
+            <p>
+              <strong>Event ID:</strong> {{ request.eventId }} <br>
+              <strong>Speaker Email:</strong> {{ request.speakerEmail }} <br>
+              <strong>Status:</strong>
+              <span *ngIf="request.status === 'PENDING'">in attesa</span>
+              <span *ngIf="request.status === 'REJECTED'">rifiutata</span>
+              <span *ngIf="request.status === 'ACCEPTED'">Accettata</span>
+            </p>
+          </div>
+          <div class="notification-actions">
+            <button mat-raised-button color="primary" (click)="confirmRequest(request.id)">
+              Conferma
+            </button>
+            <button mat-raised-button color="warn" (click)="rejectRequest(request.id)">
+              Rifiuta
+            </button>
+          </div>
+        </div>
+      </div>
     </ng-container>
     <ng-template #noRequests>
-      <p>No requests found.</p>
+      <p>Nessuna richiesta trovata.</p>
     </ng-template>
   </div>
 </div>
