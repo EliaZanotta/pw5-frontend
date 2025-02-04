@@ -1,0 +1,81 @@
+/* Disabilita lo scorrimento del body */
+body.no-scroll {
+  overflow: hidden;
+}
+
+/* Stili della finestra modale */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  z-index: 1200;
+  width: 80%;
+  max-width: 800px;
+  max-height: 90vh; /* Evita che la finestra esca dal viewport */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+/* Abilita lo scorrimento verticale nel contenuto della modale */
+.modal-content {
+  max-height: calc(90vh - 80px);
+  overflow-y: auto;
+  padding-right: 16px; /* Impedisce che il contenuto venga tagliato dalla scrollbar */
+}
+
+/* Stile opzionale per la scrollbar */
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+/* Intestazione della modale */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+/* Lista delle notifiche */
+.notification-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Oggetto notifica */
+.notification-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s;
+}
+
+.notification-item.handled {
+  background-color: #e6f7e6; /* Verde chiaro per le notifiche gestite */
+}
+
+/* Testo della notifica */
+.notification-item-text {
+  flex-grow: 1;
+  padding-right: 16px;
+}
+
+/* Pulsanti delle azioni */
+.notification-actions button {
+  margin-left: 8px;
+}
