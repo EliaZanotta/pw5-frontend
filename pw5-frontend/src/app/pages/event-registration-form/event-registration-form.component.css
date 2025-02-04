@@ -17,13 +17,12 @@
 form {
   display: flex;
   flex-direction: column;
-  width: 100%;
   font-size: 1.2rem;
 }
 
 div {
-  margin-bottom: 1rem;
-  margin-top: 1rem;
+  margin-bottom: 0.5rem; /* Reduced space between inputs */
+  margin-top: 0.5rem; /* Reduced space between inputs */
 }
 
 label {
@@ -115,30 +114,36 @@ button:hover {
   border-radius: 8px;
 }
 
+.date-container,
+.email-topic-container {
+  display: flex;
+  gap: 20px;
+}
+
+.price-input {
+  width: 50%;
+  box-sizing: border-box;
+}
+.price-input {
+  width: 20%;
+  box-sizing: border-box;
+  margin-left: 10px;
+}
+.button-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
 /* Responsive styles for tablets (768px to 1024px) */
 @media (max-width: 1024px) and (min-width: 768px) {
   .container {
     width: 70%;
-    padding: 1.8rem;
+    padding: 1.5rem;
   }
 
   button {
     width: 50%;
-    font-size: 1.5rem;
-  }
-
-  form {
-    font-size: 1.7rem;
-  }
-  input {
-    font-size: 1.4rem;
-  }
-  .topic-tag,
-  .email-tag {
-    font-size: 1.2rem;
-  }
-  .radio-group {
-    font-size: 1.4rem;
   }
 }
 
@@ -152,21 +157,13 @@ button:hover {
   button {
     width: 70%;
   }
-  button {
-    font-size: 1.2rem;
+
+  .date-container,
+  .email-topic-container {
+    flex-direction: column;
   }
 
-  form {
-    font-size: 1.5rem;
-  }
-  input {
-    font-size: 1.2rem;
-  }
-  .topic-tag,
-  .email-tag {
-    font-size: 1rem;
-  }
-  .radio-group {
-    font-size: 1.2rem;
+  .price-input {
+    width: 100%;
   }
 }
