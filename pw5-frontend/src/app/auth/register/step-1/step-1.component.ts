@@ -31,7 +31,7 @@ export class Step1Component implements OnInit {
   async ngOnInit(): Promise<void> {
     const userChoiceCookie = document.cookie.split('; ').find(row => row.startsWith('USER_CHOICE='));
     if (userChoiceCookie) {
-      this.userChoice = userChoiceCookie.split('=')[1];
+      this.userChoice = this.wizardService.getUserChoice();
     }
 
     const loggedHost = (await this.authService.getLoggedHost()).host;

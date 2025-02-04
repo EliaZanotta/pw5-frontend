@@ -5,6 +5,7 @@ import {Router, RouterLink} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Host, HostService} from '../../../host.service';
 import {HttpErrorResponse} from '@angular/common/http';
+import {WizardService} from '../wizard.service';
 
 @Component({
   selector: 'app-step-4',
@@ -25,7 +26,7 @@ export class Step4Component implements OnInit {
   oldPsw: string = '';
   newPsw: string = '';
 
-  constructor(public authService: AuthService, private router: Router, private hostService: HostService) {
+  constructor(public authService: AuthService, private router: Router, private hostService: HostService, private wizardService: WizardService) {
   }
 
   async ngOnInit(): Promise<void> {
@@ -34,7 +35,7 @@ export class Step4Component implements OnInit {
       this.host = (await this.authService.getLoggedHost()).host;
 
       if (this.host) {
-        this.userChoice = 'host';
+        this.userChoice = this.wizardService.getUserChoice();
         console.log('User choice:', this.userChoice);
         console.log('Host:', this.host);
 

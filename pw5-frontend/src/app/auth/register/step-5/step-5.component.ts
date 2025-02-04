@@ -4,6 +4,7 @@ import {AuthService} from '../../auth.service';
 import {Host} from '../../../host.service';
 import {Router, RouterLink} from '@angular/router';
 import {HttpErrorResponse} from '@angular/common/http';
+import {WizardService} from '../wizard.service';
 
 @Component({
   selector: 'app-step-5',
@@ -20,14 +21,14 @@ export class Step5Component implements OnInit {
   currentStep: number = 5;
   host: Host | null = null;
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router, private wizardService: WizardService) {
   }
 
   async ngOnInit(): Promise<void> {
     try {
       this.host = (await this.authService.getLoggedHost()).host;
       if (this.host) {
-        this.userChoice = 'host';
+        this.userChoice = this.wizardService.getUserChoice();
       }
     } catch (e) {
       if (e instanceof HttpErrorResponse && e.status === 401) {
