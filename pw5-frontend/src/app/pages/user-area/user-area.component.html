@@ -12,12 +12,53 @@
     <p class="user-role">{{ user?.role }}</p>
   </div>
 
-  <!-- Menu di navigazione -->
-  <div class="user-menu">
+  <!-- Menu di navigazione per user.role === 'USER' -->
+  <div class="user-menu" *ngIf="user?.role === 'USER'">
     <button [class.active]="selectedTab === 'bookedEvents'" (click)="setTab('bookedEvents')">Eventi Prenotati</button>
     <button [class.active]="selectedTab === 'pastEvents'" (click)="setTab('pastEvents')">Eventi Passati</button>
     <button [class.active]="selectedTab === 'myTickets'" (click)="setTab('myTickets')">I Miei Tickets</button>
-    <button [class.active]="selectedTab === 'settings'" (click)="setTab('settings')">Impostazioni</button>
+    <button [class.active]="selectedTab === 'manageTopics'" (click)="setTab('manageTopics')">Topics Preferiti</button>
+    <div class="settings-tab">
+      <button [class.active]="selectedTab === 'settings'" (click)="setTab('settings')">Impostazioni</button>
+      <span>
+        <fa-icon [icon]="faCircleExclamation" *ngIf="user?.status === 'UNVERIFIED'"></fa-icon>
+      </span>
+    </div>
+  </div>
+
+  <!-- Menu di navigazione per user.role === 'SPEAKER' -->
+  <div class="user-menu" *ngIf="user?.role === 'SPEAKER'">
+    <button [class.active]="selectedTab === 'bookedEvents'" (click)="setTab('bookedEvents')">Eventi Prenotati</button>
+    <button [class.active]="selectedTab === 'pastEvents'" (click)="setTab('pastEvents')">Eventi Passati</button>
+    <button [class.active]="selectedTab === 'myTickets'" (click)="setTab('myTickets')">I Miei Tickets</button>
+    <button [class.active]="selectedTab === 'myEventsAsSpeaker'" (click)="setTab('myEventsAsSpeaker')">Prossimi Eventi
+      in cui Partecipo
+    </button>
+    <button [class.active]="selectedTab === 'manageTopics'" (click)="setTab('manageTopics')">Topics Preferiti</button>
+    <div class="settings-tab">
+      <button [class.active]="selectedTab === 'settings'" (click)="setTab('settings')">Impostazioni</button>
+      <span>
+        <fa-icon [icon]="faCircleExclamation" *ngIf="user?.status === 'UNVERIFIED'"></fa-icon>
+      </span>
+    </div>
+  </div>
+
+  <!-- Menu di navigazione per user.role === 'ADMIN' -->
+  <div class="user-menu" *ngIf="user?.role === 'ADMIN'">
+    <button [class.active]="selectedTab === 'bookedEvents'" (click)="setTab('bookedEvents')">Eventi Prenotati</button>
+    <button [class.active]="selectedTab === 'pastEvents'" (click)="setTab('pastEvents')">Eventi Passati</button>
+    <button [class.active]="selectedTab === 'myTickets'" (click)="setTab('myTickets')">I Miei Tickets</button>
+    <button [class.active]="selectedTab === 'manageUsers'" (click)="setTab('manageUsers')">Gestisci Utenti</button>
+    <button [class.active]="selectedTab === 'manageHosts'" (click)="setTab('manageHosts')">Gestisci Aziende/Partner
+    </button>
+    <button [class.active]="selectedTab === 'manageEvents'" (click)="setTab('manageEvents')">Gestisci Eventi</button>
+    <button [class.active]="selectedTab === 'manageTopics'" (click)="setTab('manageTopics')">Gestisci Topics</button>
+    <div class="settings-tab">
+      <button [class.active]="selectedTab === 'settings'" (click)="setTab('settings')">Impostazioni</button>
+      <span>
+        <fa-icon [icon]="faCircleExclamation" *ngIf="user?.status === 'UNVERIFIED'"></fa-icon>
+      </span>
+    </div>
   </div>
 
   <!-- Riga divisoria -->
@@ -82,30 +123,134 @@
       </div>
     </div>
 
+    <!-- Prossimi Eventi in cui Partecipo -->
+    <div *ngIf="selectedTab === 'myEventsAsSpeaker'">
+      <h2>Prossimi Eventi in cui Partecipo</h2>
+      <div class="events-list">
+        <div class="event-card2" *ngFor="let event of eventsAsSpeaker">
+          <div class="event-image">
+            <img [src]="image" alt="{{ event.title }}">
+          </div>
+          <div class="event-info">
+            <h2>{{ event.title }}</h2>
+            <p><strong>📅 Data:</strong> {{ event.startDate | date: 'dd/MM/yyyy HH:mm' }}</p>
+            <p><strong>📍 Luogo:</strong> {{ event.place }}</p>
+            <p class="description">{{ event.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Topics Preferiti (NON ADMIN) -->
+    <div *ngIf="selectedTab === 'manageTopics' && user?.role !== 'ADMIN'">
+      <h2>Topics Preferiti</h2>
+      <p *ngIf="user?.userDetails?.favouriteTopics?.length === 0">Nessun topic preferito</p>
+      <div class="topics-list">
+        <div class="user-fav-topic-card" *ngFor="let topic of user?.userDetails?.favouriteTopics">
+          <p>{{ topic.name }}</p>
+          <fa-icon [icon]="faMinus" (click)="removeFavouriteTopic(topic)"></fa-icon>
+        </div>
+      </div>
+      <div class="topics-list">
+        <div class="user-unfav-topic-card" *ngFor="let topic of userUnfavTopics">
+          <p>{{ topic.name }}</p>
+          <fa-icon [icon]="faPlus" (click)="addFavouriteTopic(topic)"></fa-icon>
+        </div>
+      </div>
+    </div>
+
+    <!-- Topics Preferiti (NON ADMIN) -->
+    <div *ngIf="selectedTab === 'manageTopics' && user?.role !== 'ADMIN'">
+      <h2>Topics Preferiti</h2>
+      <p *ngIf="user?.userDetails?.favouriteTopics?.length === 0">Nessun topic preferito</p>
+      <div class="topics-list">
+        <div class="user-fav-topic-card" *ngFor="let topic of user?.userDetails?.favouriteTopics">
+          <p>{{ topic.name }}</p>
+          <fa-icon [icon]="faMinus" (click)="removeFavouriteTopic(topic)"></fa-icon>
+        </div>
+      </div>
+      <div class="topics-list">
+        <div class="user-unfav-topic-card" *ngFor="let topic of userUnfavTopics">
+          <p>{{ topic.name }}</p>
+          <fa-icon [icon]="faPlus" (click)="addFavouriteTopic(topic)"></fa-icon>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gestisci Topics (ADMIN) -->
+    <div *ngIf="selectedTab === 'manageTopics' && user?.role === 'ADMIN'">
+      <h2>Gestisci Topics</h2>
+      <div>
+        <mat-form-field class="search-box">
+          <mat-label>Cerca topic</mat-label>
+          <input matInput [formControl]="searchControl" (keyup)="applyFilter(searchControl.value ?? '')">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Nome</th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+
     <!-- Impostazioni -->
     <div *ngIf="selectedTab === 'settings'">
       <h2>Impostazioni</h2>
-      <!-- Contenuto delle impostazioni -->
+      <div class="settings">
+        <div class="settings-user-info">
+          <p><strong>Nome:</strong> {{ user?.firstName }}</p>
+          <p><strong>Cognome:</strong> {{ user?.lastName }}</p>
+          <p><strong>Email:</strong> {{ user?.email }}</p>
+        </div>
+        <div *ngIf="user?.role !== 'SPEAKER'" class="settings-become-speaker">
+          <div>
+            <h3>Sei uno speaker?</h3>
+            <p>Clicca sul pulsante qui sotto per inviare la richiesta!</p>
+          </div>
+          <button class="become-speaker-button" (click)="becomeSpeaker()">
+            Diventa Speaker!
+          </button>
+        </div>
+        <div *ngIf="user?.status === 'UNVERIFIED'" class="settings-verify-email">
+          <p>Account non ancora verificato</p>
+          <button class="verify-email-button" routerLink="/auth/register/step-2">
+            Verifica Email
+          </button>
+        </div>
+        <button class="logout-button" (click)="logout()">Logout</button>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- Modale Conferma Ticket -->
-<div class="modal" *ngIf="isConfirmTicketModalOpen">
-  <div class="modal-content">
-    <span class="close" (click)="closeModal()">&times;</span>
-    <h3>Attiva il tuo ticket</h3>
-    <p>Premi il pulsante qui sotto per attivare il tuo ticket.</p>
-    <button class="confirm-button" (click)="activateTicket()">Attiva Ticket</button>
+  <!-- Modale Conferma Ticket -->
+  <div class="modal" *ngIf="isConfirmTicketModalOpen">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <h3>Attiva il tuo ticket</h3>
+      <p>Premi il pulsante qui sotto per attivare il tuo ticket.</p>
+      <button class="confirm-button" (click)="activateTicket()">Attiva Ticket</button>
+    </div>
   </div>
-</div>
 
-<!-- Modale Annulla Iscrizione -->
-<div class="modal" *ngIf="isRevokeEventModalOpen">
-  <div class="modal-content">
-    <span class="close" (click)="closeModal()">&times;</span>
-    <h3>Sei sicuro di voler annullare l'iscrizione?</h3>
-    <p>Premi il pulsante qui sotto per annullare l'iscrizione all'evento.</p>
-    <button class="revoke-button" (click)="revokeEvent()">Annulla Iscrizione</button>
+  <!-- Modale Annulla Iscrizione -->
+  <div class="modal" *ngIf="isRevokeEventModalOpen">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <h3>Sei sicuro di voler annullare l'iscrizione?</h3>
+      <p>Premi il pulsante qui sotto per annullare l'iscrizione all'evento.</p>
+      <button class="revoke-button" (click)="revokeEvent()">Annulla Iscrizione</button>
+    </div>
   </div>
 </div>

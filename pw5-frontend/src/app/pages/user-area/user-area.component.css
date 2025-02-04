@@ -144,21 +144,73 @@
   justify-content: center;
 }
 
-/* Pulsante impostazioni */
-.settings-button {
-  display: block;
+/* Impostazioni */
+.settings {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.settings-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2♦0px;
+}
+
+.settings-verify-email {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.settings-become-speaker {
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  gap: 10px;
+}
+
+/* Pulsante per diventare speaker */
+.become-speaker-button {
   background: #2196f3;
   color: white;
   border: none;
-  padding: 10px 15px;
-  margin: 10px 0;
+  padding: 14px 25px;
   border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
   transition: background 0.3s;
 }
 
-.settings-button:hover {
+/* Pulsante logout */
+.logout-button {
+  background: #f44336;
+  color: white;
+  border: none;
+  padding: 14px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+.logout-button:hover {
+  background: #d32f2f;
+}
+
+/* Pulsante per verifica email */
+.verify-email-button {
+  background: #2196f3;
+  color: white;
+  border: none;
+  padding: 14px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+.verify-email-button:hover {
   background: #1976d2;
 }
 
@@ -216,8 +268,6 @@
   background: #d32f2f;
 }
 
-
-
 /* Stile per la modale */
 .modal {
   display: flex;
@@ -265,4 +315,57 @@
 
 .confirm-button:hover {
   background: #388e3c;
+}
+
+/* Sezione Topics */
+.topics-list {
+  display: flex;
+  gap: 10px;
+  max-width: 80%;
+  margin-top: 20px;
+}
+
+.user-fav-topic-card {
+  max-width: max-content;
+  max-height: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background: #90f585;
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.user-fav-topic-card:hover {
+  transform: scale(1.04);
+}
+
+.user-unfav-topic-card {
+  max-width: max-content;
+  max-height: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background: #f0f0f0;
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.user-unfav-topic-card:hover {
+  transform: scale(1.04);
+}
+
+/* Stile per la notifica se status è UNVERIFIED */
+.settings-tab {
+  position: relative;
+}
+
+.settings-tab span {
+  position: absolute;
+  right: -5px;
+  top: -5px;
+  z-index: 10;
+  color: #ce2424;
 }

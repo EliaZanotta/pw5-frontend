@@ -2,11 +2,12 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {lastValueFrom} from 'rxjs';
 import {Event} from '../pages/events/events.service';
+import {Topic} from '../topic.service';
 
 class UserDetails {
   archivedEvents: Event[] | undefined;
   bookedEvents: Event[] | undefined;
-  bookedTickets: any[] | undefined;
+  favouriteTopics: Topic[] | undefined;
   constructor() {
   }
 }
