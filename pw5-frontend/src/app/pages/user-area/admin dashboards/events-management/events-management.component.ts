@@ -3,8 +3,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
-import { EventsService, Event } from '../../events/events.service';
-import { AdminTableModule } from '../../../modules/admin-table.module';
+import { EventsService, Event } from '../../../events/events.service';
+import { AdminTableModule } from '../../../../modules/admin-table.module';
 
 @Component({
   selector: 'app-events-management',

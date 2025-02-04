@@ -24,8 +24,8 @@ import {map} from 'rxjs/operators';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/material/autocomplete';
-import {EventsManagementComponent} from './events-management/events-management.component';
-import {HostManagementComponent} from './host-management/host-management.component';
+import {EventsManagementComponent} from './admin dashboards/events-management/events-management.component';
+import {HostManagementComponent} from './admin dashboards/host-management/host-management.component';
 
 
 @Component({

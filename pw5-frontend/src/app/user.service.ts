@@ -2,6 +2,47 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {lastValueFrom} from 'rxjs';
 
+export interface UserDetails {
+  bookedEvents: EventSummary[];
+  archivedEvents: EventSummary[];
+  bookedTickets: Ticket[];
+  favouriteTopics: Topic[];
+}
+
+export interface User {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  hashedPsw: string;
+  status: 'VERIFIED' | 'UNVERIFIED';
+  role: 'ADMIN' | 'SPEAKER' | 'USER';
+  userDetails: UserDetails;
+}
+
+export interface EventSummary {
+  id: string;
+  startDate: string;
+  endDate: string;
+  place: string;
+  title: string;
+  status: string;
+}
+
+export interface Ticket {
+  id: string;
+  userId: string;
+  eventId: string;
+  ticketCode: string;
+  status: string;
+}
+
+export interface Topic {
+  id: string;
+  name: string;
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,5 +58,10 @@ export class UserService {
 
   async removeFavouriteTopic(topicId: string): Promise<any> {
     return await lastValueFrom(this.http.put<any>(`${this.baseUrl}favourite-topic/remove/${topicId}`, null, { withCredentials: true }));
+  }
+
+  async getAllUsers(): Promise<User[]> {
+    const response = await lastValueFrom(this.http.get<{ users: User[], message: string }>(this.baseUrl));
+    return response.users;  // Extract the 'users' array from the response
   }
 }

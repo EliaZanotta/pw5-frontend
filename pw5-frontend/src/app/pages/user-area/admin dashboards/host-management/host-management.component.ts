@@ -3,8 +3,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import {FormControl} from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { AdminTableModule } from '../../../modules/admin-table.module';
-import {Host, PartnerCompaniesService } from '../../partner-companies/partner-companies.service';
+import { AdminTableModule } from '../../../../modules/admin-table.module';
+import {Host, PartnerCompaniesService } from '../../../partner-companies/partner-companies.service';
 
 @Component({
   selector: 'app-host-management',
