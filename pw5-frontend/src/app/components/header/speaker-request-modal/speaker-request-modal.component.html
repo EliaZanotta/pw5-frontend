@@ -1,10 +1,9 @@
-<!-- (Optional) Backdrop for the modal -->
+<!-- Modal Backdrop -->
 <div class="modal-backdrop" *ngIf="show" (click)="close()"></div>
 
 <div class="modal" *ngIf="show">
   <div class="modal-header">
     <h2>Speaker Requests</h2>
-    <!-- Close button now uses Font Awesome icon -->
     <fa-icon
       [icon]="faTimes"
       class="fa-2x"
@@ -14,45 +13,74 @@
       [ngStyle]="{ color: isHovered ? '#9b1b1b' : '#ce2424' }">
     </fa-icon>
   </div>
+
   <div class="modal-content">
-    <ng-container *ngIf="requests && requests.length > 0; else noRequests">
-      <div class="notification-list">
-        <div *ngFor="let request of requests" class="notification-item">
-          <div class="notification-item-text">
-            <p>
-              <strong>Event ID:</strong> {{ request.eventId }} <br>
-              <strong>Speaker Email:</strong> {{ request.speakerEmail }} <br>
+    <ng-container *ngIf="requests && requests.length; else noRequests">
+      <!-- Iterate over the already sorted requests -->
+      <div
+        *ngFor="let request of requests"
+        class="request-item"
+        [ngClass]="{
+          'pending': request.status === 'PENDING',
+          'confirmed': request.status === 'CONFIRMED',
+          'rejected': request.status === 'REJECTED'
+        }">
+        <!-- Summary row: shows event title, status and action buttons -->
+        <div class="request-summary" (click)="toggleExpanded(request.id)">
+          <div class="summary-info">
+            <span>
+              <strong>Event:</strong>
+              {{ request.event?.title || 'Loading...' }}
+            </span>
+            <span>
               <strong>Status:</strong>
-              <span *ngIf="request.status === 'PENDING'">in attesa</span>
-              <span *ngIf="request.status === 'REJECTED'">rifiutata</span>
-              <span *ngIf="request.status === 'ACCEPTED'">Accettata</span>
-            </p>
+              <ng-container *ngIf="request.status === 'PENDING'">In attesa</ng-container>
+              <ng-container *ngIf="request.status === 'CONFIRMED'">Confermato</ng-container>
+              <ng-container *ngIf="request.status === 'REJECTED'">Rifiutato</ng-container>
+            </span>
           </div>
-          <div class="notification-actions">
+
+          <!-- Action Buttons only appear for pending requests -->
+          <div class="summary-actions" *ngIf="request.status === 'PENDING'" (click)="$event.stopPropagation()">
             <button mat-raised-button color="primary" (click)="confirmRequest(request.id)">
               Conferma
             </button>
             <button mat-raised-button color="warn" (click)="rejectRequest(request.id)">
               Rifiuta
             </button>
-            <!-- Dropdown toggle button -->
-            <button mat-button (click)="toggleEventDetails(request)">
-              {{ dropdownOpen[request.id] ? 'Nascondi Dettagli Evento' : 'Mostra Dettagli Evento' }}
-            </button>
           </div>
-          <!-- Event details dropdown (do not show the image) -->
-          <div class="event-details" *ngIf="selectedEvent?.id === request.eventId">
-            <p><strong>Titolo:</strong> {{ selectedEvent?.title }}</p>
-            <p><strong>Descrizione:</strong> {{ selectedEvent?.description }}</p>
-            <p><strong>Luogo:</strong> {{ selectedEvent?.place }}</p>
-            <p><strong>Data Inizio:</strong> {{ selectedEvent?.startDate }}</p>
-            <p><strong>Data Fine:</strong> {{ selectedEvent?.endDate }}</p>
-          </div>
+
+          <!-- Expand/Collapse Button -->
+          <button class="expand-btn" (click)="toggleExpanded(request.id); $event.stopPropagation()">
+            {{ isExpanded(request.id) ? 'Collapse ▲' : 'Expand ▼' }}
+          </button>
+        </div>
+
+        <!-- Expanded row: displays detailed event information -->
+        <div class="request-details" *ngIf="isExpanded(request.id)">
+          <p>
+            <strong>Descrizione:</strong>
+            {{ request.event?.description || 'No description available.' }}
+          </p>
+          <p>
+            <strong>Luogo:</strong>
+            {{ request.event?.place || 'No location provided.' }}
+          </p>
+          <p>
+            <strong>Data Inizio:</strong>
+            {{ request.event?.startDate | date:'medium' }}
+          </p>
+          <p>
+            <strong>Data Fine:</strong>
+            {{ request.event?.endDate | date:'medium' }}
+          </p>
         </div>
       </div>
     </ng-container>
+
+    <!-- Fallback when there are no requests -->
     <ng-template #noRequests>
-      <p>Nessuna richiesta trovata.</p>
+      <p>No speaker requests available.</p>
     </ng-template>
   </div>
 </div>

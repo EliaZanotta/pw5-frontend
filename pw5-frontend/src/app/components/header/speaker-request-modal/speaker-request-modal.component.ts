@@ -1,37 +1,36 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { InboxService, SpeakerRequest } from '../inbox.service';
+import { InboxService, SpeakerRequestWithEvent } from '../inbox.service';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import {Event, EventsService} from '../../../pages/events/events.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-speaker-request-modal',
   standalone: true,
   templateUrl: './speaker-request-modal.component.html',
   styleUrls: ['./speaker-request-modal.component.css'],
-  imports: [CommonModule, NgIf, NgForOf, MatButton, FaIconComponent]
+  imports: [
+    CommonModule,
+    NgIf,
+    NgForOf,
+    MatButton,
+    FaIconComponent
+  ]
 })
 export class SpeakerRequestModalComponent implements OnChanges {
-  @Input() requests: SpeakerRequest[] = [];
+  // We now expect that each request will have an event property available.
+  // Adjust the type if you plan to display more event details.
+  @Input() requests: SpeakerRequestWithEvent[] = [];
   @Input() show: boolean = false;
   @Output() closeModal: EventEmitter<void> = new EventEmitter<void>();
 
-  // If you wish to use only one selected event at a time
-  selectedEvent: Event | null = null;
-
   isHovered: boolean = false;
   loading: boolean = false;
+  expandedRequests: { [requestId: string]: boolean } = {};
 
-  // Dictionaries to track dropdown state and event details by request id.
-  dropdownOpen: { [requestId: string]: boolean } = {};
-  eventDetails: { [requestId: string]: Event } = {};
-
-  constructor(
-    private inboxService: InboxService,
-    private eventsService: EventsService
-  ) {}
+  constructor(private inboxService: InboxService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['show'] && changes['show'].currentValue) {
@@ -47,67 +46,65 @@ export class SpeakerRequestModalComponent implements OnChanges {
     this.closeModal.emit();
   }
 
-  private fetchRequests(): void {
+  private async fetchRequests(): Promise<void> {
     this.loading = true;
-    this.inboxService.getSpeakerRequests().subscribe(
-      (requests) => {
-        // Sort requests so that PENDING requests come first
-        this.requests = requests.sort((a, b) => {
-          if (a.status === 'PENDING' && b.status !== 'PENDING') {
-            return -1;
-          } else if (a.status !== 'PENDING' && b.status === 'PENDING') {
-            return 1;
-          }
-          return 0;
-        });
-        this.loading = false;
-      },
-      (err) => {
-        console.error('Error fetching speaker requests:', err);
-        this.loading = false;
-      }
-    );
-  }
-
-  confirmRequest(requestId: string): void {
-    this.inboxService.confirmSpeakerRequest(requestId).subscribe(
-      () => {
-        console.log(`Conferma clicked for request ID: ${requestId}`);
-        // Optionally remove the confirmed request from the list.
-        this.requests = this.requests.filter(request => request.id !== requestId);
-      },
-      error => {
-        console.error('Error confirming speaker request:', error);
-      }
-    );
-  }
-
-  rejectRequest(requestId: string): void {
-    this.inboxService.rejectSpeakerRequest(requestId).subscribe(
-      () => {
-        console.log(`Rifiuta clicked for request ID: ${requestId}`);
-        // Optionally remove the rejected request from the list.
-        this.requests = this.requests.filter(request => request.id !== requestId);
-      },
-      error => {
-        console.error('Error rejecting speaker request:', error);
-      }
-    );
-  }
-
-
-  async toggleEventDetails(request: SpeakerRequest): Promise<void> {
-    // If the selected event is already open for this request, close it.
-    if (this.selectedEvent && this.selectedEvent.id === request.eventId) {
-      this.selectedEvent = null;
-      return;
-    }
     try {
-      this.selectedEvent = await this.eventsService.getEventById(request.eventId);
-      console.log('Fetched event details:', this.selectedEvent);
-    } catch (error) {
-      console.error('Error fetching event details for event id:', request.eventId, error);
+      const requestsWithEvent: SpeakerRequestWithEvent[] = await firstValueFrom(
+        this.inboxService.getSpeakerRequestsWithEventInfo()
+      );
+      console.log('Speaker Requests with Event Info:', requestsWithEvent);
+
+      // Define the custom sort order for statuses
+      const statusOrder = {
+        'PENDING': 2,
+        'CONFIRMED': 3,
+        'REJECTED': 0
+      };
+
+      // Sort the requests accordingly
+      this.requests = requestsWithEvent.sort(
+        (a, b) => (statusOrder[a.status as keyof typeof statusOrder] || 99) - (statusOrder[b.status as keyof typeof statusOrder] || 99)      );
+    } catch (err) {
+      console.error('Error fetching speaker requests with event info:', err);
+    } finally {
+      this.loading = false;
     }
+  }
+
+
+  // This helper returns the event for the given request.
+  // Adjust your template to use request.event directly if desired.
+  getEvent(eventId: string): any {
+    const req = this.requests.find(r => r.event?.id === eventId);
+    return req ? req.event : undefined;
+  }
+
+  async confirmRequest(requestId: string): Promise<void> {
+    try {
+      await firstValueFrom(this.inboxService.confirmSpeakerRequest(requestId));
+      console.log(`Confirm clicked for request ID: ${requestId}`);
+      this.requests = this.requests.filter(request => request.id !== requestId);
+    } catch (error) {
+      console.error('Error confirming speaker request:', error);
+    }
+  }
+
+  async rejectRequest(requestId: string): Promise<void> {
+    try {
+      await firstValueFrom(this.inboxService.rejectSpeakerRequest(requestId));
+      console.log(`Reject clicked for request ID: ${requestId}`);
+      this.requests = this.requests.filter(request => request.id !== requestId);
+    } catch (error) {
+      console.error('Error rejecting speaker request:', error);
+    }
+  }
+
+  toggleExpanded(requestId: string): void {
+    this.expandedRequests[requestId] = !this.expandedRequests[requestId];
+  }
+
+  isExpanded(requestId: string): boolean {
+    return this.expandedRequests[requestId];
   }
 
   protected readonly faTimes = faTimes;

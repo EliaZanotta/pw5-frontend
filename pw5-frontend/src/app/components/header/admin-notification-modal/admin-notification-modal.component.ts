@@ -41,38 +41,33 @@ export class AdminNotificationModalComponent implements OnChanges {
     this.closeModal.emit();
   }
 
-  // Chiamata API per accettare la notifica
-  acceptNotification(notificationId: string): void {
-    from(this.inboxService.acceptNotification(notificationId))
-      .pipe(
-        catchError((error) => {
-          console.error('Errore durante l\'accettazione della notifica:', error);
-          return of(null);
-        })
-      )
-      .subscribe(() => {
-        // Rimuove la notifica dalla lista visualizzata
-        this.removeNotification(notificationId);
-      });
+// Chiamata API per accettare la notifica
+  async acceptNotification(notificationId: string): Promise<void> {
+    try {
+      await this.inboxService.acceptNotification(notificationId);
+      // Rimuove la notifica dalla lista visualizzata
+      this.removeNotification(notificationId);
+    } catch (error) {
+      console.error('Errore durante l\'accettazione della notifica:', error);
+    }
   }
 
-  // Chiamata API per rifiutare la notifica
-  rejectNotification(notificationId: string): void {
-    this.inboxService.rejectNotification(notificationId).subscribe({
-      next: () => {
-        console.log('Notifica rifiutata con successo.');
-        // Rimuove la notifica dalla lista visualizzata
-        this.removeNotification(notificationId);
-      },
-      error: (err) => {
-        if (err.message === 'Unauthorized: User is not an admin.') {
-          alert('Non hai il permesso di rifiutare questa notifica.');
-        } else {
-          console.error('Errore durante il rifiuto della notifica:', err);
-        }
+// Chiamata API per rifiutare la notifica
+  async rejectNotification(notificationId: string): Promise<void> {
+    try {
+      await this.inboxService.rejectNotification(notificationId);
+      console.log('Notifica rifiutata con successo.');
+      // Rimuove la notifica dalla lista visualizzata
+      this.removeNotification(notificationId);
+    } catch (err: any) {
+      if (err.message === 'Unauthorized: User is not an admin.') {
+        alert('Non hai il permesso di rifiutare questa notifica.');
+      } else {
+        console.error('Errore durante il rifiuto della notifica:', err);
       }
-    });
+    }
   }
+
 
   // Rimuove la notifica dalla lista corrente
   private removeNotification(notificationId: string): void {

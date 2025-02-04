@@ -79,3 +79,95 @@ body.no-scroll {
 .notification-actions button {
   margin-left: 8px;
 }
+.request-item {
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.request-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.summary-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.summary-actions button {
+  margin-left: 5px;
+}
+
+.expand-btn {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.request-item {
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  /* Default background (for pending or unspecified statuses) */
+  background-color: #ffffff;
+}
+
+/* Very faint green background for accepted/confirmed requests */
+.request-item.confirmed {
+  background-color: #e6ffe6;
+}
+
+/* Very faint red background for rejected requests */
+.request-item.rejected {
+  background-color: #ffe6e6;
+}
+
+/* Optionally, you can style pending items (or leave as default) */
+.request-item.pending {
+  background-color: #ffffff;
+}
+
+/* Existing styles... */
+.request-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.summary-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.summary-actions button {
+  margin-left: 5px;
+}
+
+.expand-btn {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.request-details {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #ccc;
+}
+
+
+
+
+
