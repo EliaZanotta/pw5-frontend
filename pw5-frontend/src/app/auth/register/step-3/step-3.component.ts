@@ -41,21 +41,26 @@ export class Step3Component implements OnInit {
       this.userChoice = userChoiceCookie.split('=')[1];
     }
 
-    const loggedHost = (await this.authService.getLoggedHost()).host;
-    if (loggedHost) {
-      await this.router.navigate(['/auth/register/step-4']);
-    }
-
-
-    try{
-      this.user = (await this.authService.getLoggedUser()).user;
+    try {
+      let loggedHost = (await this.authService.getLoggedHost()).host;
+      if (loggedHost) {
+        await this.router.navigate(['/auth/register/step-4']);
+      }
     } catch (errorResponse) {
       if (errorResponse instanceof HttpErrorResponse) {
-        if (errorResponse.status === 401) {
-          // Wait 3 seconds before redirecting to step 2
-          setTimeout(() => {
-            this.router.navigate(['/auth/register/step-2']);
-          }, 3000);
+        if (errorResponse.status === 404) {
+          try {
+            this.user = (await this.authService.getLoggedUser()).user;
+          } catch (errorResponse) {
+            if (errorResponse instanceof HttpErrorResponse) {
+              if (errorResponse.status === 401) {
+                // Wait 3 seconds before redirecting to step 2
+                setTimeout(() => {
+                  this.router.navigate(['/auth/register/step-2']);
+                }, 3000);
+              }
+            }
+          }
         }
       }
     }
@@ -68,7 +73,7 @@ export class Step3Component implements OnInit {
     }
 
     const payload = {
-      type : 'COMPANY',
+      type: 'COMPANY',
       name: this.companyName,
       email: this.companyEmail
     }
@@ -95,7 +100,7 @@ export class Step3Component implements OnInit {
     }
 
     const payload = {
-      type : 'PARTNER',
+      type: 'PARTNER',
       name: this.partnerName,
       email: this.partnerEmail
     }

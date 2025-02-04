@@ -54,6 +54,7 @@ export class AdminNotificationModalComponent implements OnChanges {
   }
 
   rejectNotification(notificationId: string): void {
+    console.log('Rejecting notification:', notificationId);
     this.inboxService.rejectNotification(notificationId).subscribe({
       next: () => {
         console.log('Notification rejected successfully.');

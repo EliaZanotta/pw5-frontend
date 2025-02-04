@@ -51,7 +51,7 @@ export class InboxService {
 // PUT request to reject a notification
   rejectNotification(notificationId: string): Observable<void> {
     const url = `${this.baseUrl}user/notification/${notificationId}/reject`;
-    return this.http.put(url, {}, { withCredentials: true, responseType: 'text' as 'json' })
+    return this.http.put(url, {}, { withCredentials: true})
         .pipe(
             map(() => undefined),
             catchError((error) => {
