@@ -13,7 +13,6 @@
       (mouseleave)="isHovered = false"
       [ngStyle]="{ color: isHovered ? '#9b1b1b' : '#ce2424' }">
     </fa-icon>
-
   </div>
   <div class="modal-content">
     <ng-container *ngIf="requests && requests.length > 0; else noRequests">
@@ -36,6 +35,18 @@
             <button mat-raised-button color="warn" (click)="rejectRequest(request.id)">
               Rifiuta
             </button>
+            <!-- Dropdown toggle button -->
+            <button mat-button (click)="toggleEventDetails(request)">
+              {{ dropdownOpen[request.id] ? 'Nascondi Dettagli Evento' : 'Mostra Dettagli Evento' }}
+            </button>
+          </div>
+          <!-- Event details dropdown (do not show the image) -->
+          <div class="event-details" *ngIf="selectedEvent?.id === request.eventId">
+            <p><strong>Titolo:</strong> {{ selectedEvent?.title }}</p>
+            <p><strong>Descrizione:</strong> {{ selectedEvent?.description }}</p>
+            <p><strong>Luogo:</strong> {{ selectedEvent?.place }}</p>
+            <p><strong>Data Inizio:</strong> {{ selectedEvent?.startDate }}</p>
+            <p><strong>Data Fine:</strong> {{ selectedEvent?.endDate }}</p>
           </div>
         </div>
       </div>

@@ -1,9 +1,10 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { InboxService, SpeakerRequest } from '../inbox.service';
-import { NgForOf, NgIf, CommonModule } from '@angular/common';
-import {MatButton} from '@angular/material/button';
-import {FaIconComponent} from '@fortawesome/angular-fontawesome';
-import {faTimes} from '@fortawesome/free-solid-svg-icons';
+import { CommonModule, NgForOf, NgIf } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import {Event, EventsService} from '../../../pages/events/events.service';
 
 @Component({
   selector: 'app-speaker-request-modal',
@@ -16,10 +17,21 @@ export class SpeakerRequestModalComponent implements OnChanges {
   @Input() requests: SpeakerRequest[] = [];
   @Input() show: boolean = false;
   @Output() closeModal: EventEmitter<void> = new EventEmitter<void>();
+
+  // If you wish to use only one selected event at a time
+  selectedEvent: Event | null = null;
+
   isHovered: boolean = false;
   loading: boolean = false;
 
-  constructor(private inboxService: InboxService) {}
+  // Dictionaries to track dropdown state and event details by request id.
+  dropdownOpen: { [requestId: string]: boolean } = {};
+  eventDetails: { [requestId: string]: Event } = {};
+
+  constructor(
+    private inboxService: InboxService,
+    private eventsService: EventsService
+  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['show'] && changes['show'].currentValue) {
@@ -82,5 +94,21 @@ export class SpeakerRequestModalComponent implements OnChanges {
       }
     );
   }
+
+
+  async toggleEventDetails(request: SpeakerRequest): Promise<void> {
+    // If the selected event is already open for this request, close it.
+    if (this.selectedEvent && this.selectedEvent.id === request.eventId) {
+      this.selectedEvent = null;
+      return;
+    }
+    try {
+      this.selectedEvent = await this.eventsService.getEventById(request.eventId);
+      console.log('Fetched event details:', this.selectedEvent);
+    } catch (error) {
+      console.error('Error fetching event details for event id:', request.eventId, error);
+    }
+  }
+
   protected readonly faTimes = faTimes;
 }
