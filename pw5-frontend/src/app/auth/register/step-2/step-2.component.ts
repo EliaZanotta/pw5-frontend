@@ -5,6 +5,7 @@ import {FormsModule} from '@angular/forms';
 import {Router} from '@angular/router';
 import {User} from '../../auth.service';
 import {HttpErrorResponse} from '@angular/common/http';
+import {WizardService} from '../wizard.service';
 
 @Component({
   selector: 'app-step-2',
@@ -23,13 +24,13 @@ export class Step2Component implements OnInit {
   errorMessage: string | null = null;
   newMailSent: boolean = false;
 
-  constructor(public authService: AuthService, private router: Router) {
+  constructor(public authService: AuthService, private router: Router, private wizardService: WizardService) {
   }
 
   async ngOnInit(): Promise<void> {
     const userChoiceCookie = document.cookie.split('; ').find(row => row.startsWith('USER_CHOICE='));
     if (userChoiceCookie) {
-      this.userChoice = userChoiceCookie.split('=')[1];
+      this.userChoice = this.wizardService.getUserChoice();
     }
 
     try {
