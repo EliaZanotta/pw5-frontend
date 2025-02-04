@@ -5,14 +5,13 @@ import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { EventsService, Event } from '../../events/events.service';
 import { AdminTableModule } from '../../../modules/admin-table.module';
-import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-events-management',
   templateUrl: './events-management.component.html',
   standalone: true,
   styleUrls: ['./events-management.component.css'],
-  imports: [AdminTableModule, MatAutocomplete, MatOption, MatAutocompleteTrigger],
+  imports: [AdminTableModule],
 })
 export class EventsManagementComponent implements OnInit {
   displayedColumns: string[] = ['title', 'startDate', 'endDate', 'place', 'maxParticipants', 'host', 'actions'];

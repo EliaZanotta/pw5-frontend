@@ -1,0 +1,38 @@
+.filters-container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+mat-form-field {
+  flex: 1 1 auto;
+  min-width: 220px;
+  max-width: 400px;
+}
+
+.mat-table {
+  width: 100%;
+  overflow: auto;
+}
+
+.mat-header-row, .mat-row {
+  display: flex;
+}
+
+.mat-header-cell, .mat-cell {
+  flex: 1;
+  padding: 16px;
+  text-align: left;
+}
+
+.mat-header-cell {
+  font-weight: bold;
+  background-color: #f5f5f5;
+}
+
+.mat-cell {
+  border-bottom: 1px solid #e0e0e0;
+}

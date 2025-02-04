@@ -12,8 +12,10 @@ import {
 } from '@angular/material/table';
 import {MatButton} from '@angular/material/button';
 import {MatFormField, MatLabel} from "@angular/material/form-field";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInput} from "@angular/material/input";
+import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from "@angular/material/autocomplete";
+import {MatSelect} from "@angular/material/select";
 
 
 
@@ -37,7 +39,12 @@ import {MatInput} from "@angular/material/input";
     MatLabel,
     MatFormField,
     ReactiveFormsModule,
-    MatInput
+    MatInput,
+    MatAutocomplete,
+    MatOption,
+    MatAutocompleteTrigger,
+    MatSelect,
+    FormsModule
   ],
   exports: [
     CommonModule,
@@ -57,7 +64,12 @@ import {MatInput} from "@angular/material/input";
     MatLabel,
     MatFormField,
     ReactiveFormsModule,
-    MatInput
+    MatInput,
+    MatAutocomplete,
+    MatOption,
+    MatAutocompleteTrigger,
+    MatSelect,
+    FormsModule
   ]
 })
 export class AdminTableModule { }

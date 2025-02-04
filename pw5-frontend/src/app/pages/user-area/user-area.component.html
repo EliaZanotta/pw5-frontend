@@ -210,6 +210,11 @@
       <app-events-management></app-events-management>
       </div>
 
+    <!-- Gestisci Host (ADMIN) -->
+    <div *ngIf="selectedTab === 'manageHosts' && user?.role === 'ADMIN'">
+      <app-host-management></app-host-management>
+    </div>
+
     <!-- Impostazioni -->
     <div *ngIf="selectedTab === 'settings'">
       <h2>Impostazioni</h2>

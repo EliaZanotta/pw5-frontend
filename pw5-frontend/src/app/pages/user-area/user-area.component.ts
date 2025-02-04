@@ -25,13 +25,14 @@ import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/material/autocomplete';
 import {EventsManagementComponent} from './events-management/events-management.component';
+import {HostManagementComponent} from './host-management/host-management.component';
 
 
 @Component({
   selector: 'app-user-area',
   templateUrl: './user-area.component.html',
   styleUrls: ['./user-area.component.css'],
-  imports: [DatePipe, NgForOf, NgIf, FontAwesomeModule, RouterLink, MatFormField, MatLabel, MatInput, ReactiveFormsModule, MatAutocompleteTrigger, MatAutocomplete, MatOption, MatTable, MatColumnDef, MatHeaderCell, MatHeaderCellDef, MatCell, MatCellDef, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatPaginator, AsyncPipe, EventsManagementComponent],
+  imports: [DatePipe, NgForOf, NgIf, FontAwesomeModule, RouterLink, MatFormField, MatLabel, MatInput, ReactiveFormsModule, MatAutocompleteTrigger, MatAutocomplete, MatOption, MatTable, MatColumnDef, MatHeaderCell, MatHeaderCellDef, MatCell, MatCellDef, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatPaginator, AsyncPipe, EventsManagementComponent, HostManagementComponent],
   standalone: true
 })
 export class UserAreaComponent implements OnInit, AfterViewInit {
