@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Event, EventsService } from './events.service';
-import { RouterLink } from '@angular/router';
-import { CommonModule, NgForOf, NgIf, registerLocaleData } from '@angular/common';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faSackDollar, faFilterCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import {Component, OnInit} from '@angular/core';
+import {Event, EventsService} from './events.service';
+import {RouterLink} from '@angular/router';
+import {CommonModule, NgForOf, NgIf, registerLocaleData} from '@angular/common';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {faSackDollar, faFilterCircleXmark} from '@fortawesome/free-solid-svg-icons';
 import localeIt from '@angular/common/locales/it';
 import { FiltersModule } from '../../modules/filters.module';
 import { EventFilterComponent } from '../../components/event-filter/event-filter.component';
@@ -15,7 +15,6 @@ registerLocaleData(localeIt);
   selector: 'app-events',
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.css'],
-  providers: [{ provide: LOCALE_ID, useValue: 'it-IT' }],
   standalone: true,
   imports: [
     RouterLink,
@@ -25,13 +24,13 @@ registerLocaleData(localeIt);
     FiltersModule,
     CommonModule,
     EventFilterComponent
-  ]
+  ],
+  providers: [{provide: 'LOCALE_ID', useValue: 'it-IT'}]
 })
 export class EventsComponent implements OnInit {
   // These two properties store the full events list and the currently displayed (filtered) events
   allEvents: Event[] = [];
-  eventsByCategory: { [key: string]: Event[] } = { future: [], past: [] };
-
+  eventsByCategory: { [key: string]: Event[] } = {future: [], past: []};
 
   // Filter options for the autocomplete components
   allTitles: string[] = [];
@@ -48,28 +47,26 @@ export class EventsComponent implements OnInit {
   };
 
   faSackDollar = faSackDollar;
-  constructor(private eventsService: EventsService) {}
 
-  ngOnInit(): void {
-    this.fetchEvents();
+  constructor(private eventsService: EventsService) {
+  }
+
+  async ngOnInit(): Promise<void> {
+    await this.fetchEvents();
   }
 
   // Fetch events once and then cache them in allEvents.
-  fetchEvents(): void {
-    this.eventsService.getEvents().subscribe((events: Event[]) => {
-      this.allEvents = events;
-      // Initialize filter options once based on the full list of events.
-      this.initializeFilterOptions(events);
-      // Categorize the events initially.
-      this.eventsByCategory = this.categorizeEvents(events);
-    });
+  async fetchEvents(): Promise<void> {
+    this.allEvents = (await this.eventsService.getEvents()).events;
+    this.initializeFilterOptions(this.allEvents);
+    this.eventsByCategory = this.categorizeEvents(this.allEvents);
   }
 
   // Categorize events into "future" and "past"
   private categorizeEvents(events: Event[]): { future: Event[]; past: Event[] } {
     const futureEvents = events.filter(event => event.status === 'CONFIRMED');
     const pastEvents = events.filter(event => event.status === 'ARCHIVED');
-    return { future: futureEvents, past: pastEvents };
+    return {future: futureEvents, past: pastEvents};
   }
 
   // Initialize the autocomplete option lists.

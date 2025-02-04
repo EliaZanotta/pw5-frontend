@@ -11,7 +11,7 @@
 
       <div class="event-header">
         <div class="image-wrapper">
-          <img [src]="eventData.image || 'img/code_cheers.png'" class="event-image" />
+          <img [src]="eventData.image || 'img/code_cheers.png'" class="event-image"  alt="eventImage"/>
           <div class="event-overlay">
             <h1 class="event-title">{{ eventData.title || 'Titolo non disponibile' }}</h1>
             <div class="host-info">
@@ -61,7 +61,7 @@
               tendenze, fai networking con professionisti e ottieni preziose informazioni sul futuro della tecnologia.
             </p>
           </ng-template>
-          <button class="register-button" (click)="showBookingDialog(eventData.title)">Iscriviti ora</button>
+          <button class="register-button" (click)="showBookingDialog()">Iscriviti ora</button>
         </div>
 
         <div class="list-container">

@@ -1,4 +1,8 @@
 /* Hero Section */
+body {
+  overflow: hidden; /* Ensure content does not overflow */
+
+}
 .heroSection {
   position: relative;
   background-image: url("https://www.laramind.com/blog/wp-content/uploads/2020/09/montegrappa-varese.jpg");
