@@ -1,90 +1,100 @@
 <div class="user-container">
-  <!-- Immagine di copertina full-width -->
-  <div class="user-banner">
-      <img class="banner-image" src="https://wallpapers.com/images/hd/banner-background-jcd538z62euhfpkx.jpg" alt="Cover Image">
-  </div>
+    <!-- Immagine di copertina full-width -->
+    <div class="user-banner">
+        <img class="banner-image" src="https://wallpapers.com/images/hd/banner-background-jcd538z62euhfpkx.jpg" alt="Cover Image">
+    </div>
 
-  <!-- Sezione profilo utente -->
-  <div class="user-profile">
-      <img class="user-avatar" [src]="user.avatar" alt="{{ user.name }}">
-      <h1 class="user-name">{{ user.name }}</h1>
-      <p class="user-role">{{ user.role }}</p>
-  </div>
+    <!-- Sezione profilo utente -->
+    <div class="user-profile">
+        <img class="user-avatar" [src]="user.avatar" alt="{{ user.name }}">
+        <h1 class="user-name">{{ user.name }}</h1>
+        <p class="user-role">{{ user.role }}</p>
+    </div>
 
-  <!-- Menu di navigazione -->
-  <div class="user-menu">
-      <button [class.active]="selectedTab === 'bookedEvents'" (click)="setTab('bookedEvents')">Eventi Prenotati</button>
-      <button [class.active]="selectedTab === 'pastEvents'" (click)="setTab('pastEvents')">Eventi Passati</button>
-      <button [class.active]="selectedTab === 'myTickets'" (click)="setTab('myTickets')">My Tickets</button>
-  </div>
+    <!-- Menu di navigazione -->
+        <div class="user-menu">
+            <button [class.active]="selectedTab === 'bookedEvents'" (click)="setTab('bookedEvents')">Eventi Prenotati</button>
+            <button [class.active]="selectedTab === 'pastEvents'" (click)="setTab('pastEvents')">Eventi Passati</button>
+            <button [class.active]="selectedTab === 'myTickets'" (click)="setTab('myTickets')">My Tickets</button>
+        </div>  
 
-  <!-- Riga divisoria -->
-  <div class="divider"></div>
+    <!-- Riga divisoria -->
+    <div class="divider"></div>
 
-  <!-- Contenuto dinamico -->
-  <div class="user-content">
-      
-      <!-- Eventi Prenotati -->
-      @if (selectedTab === 'bookedEvents') {
-          <h2>Eventi Prenotati</h2>
-          <div class="events-list">
-              @for (event of user.bookedEvents; track event) {
-                  <div class="event-card">
-                      <div class="event-image">
-                          <img [src]="event.image" alt="{{ event.title }}">
-                      </div>
-                      <div class="event-info">
-                          <h2>{{ event.title }}</h2>
-                          <p><strong>📅 Data:</strong> {{ event.date }}</p>
-                          <p><strong>📍 Luogo:</strong> {{ event.location }}</p>
-                          <p class="description">{{ event.description }}</p>
-                      </div>
-                  </div>
-              }
-          </div>
-      }
+    <!-- Contenuto dinamico -->
+    <div class="user-content">
+        
+        <!-- Eventi Prenotati -->
+        @if (selectedTab === 'bookedEvents') {
+            <h2>Eventi Prenotati</h2>
+            <div class="events-list">
+                @for (event of user.bookedEvents; track event) {
+                    <div class="event-card">
+                        <div class="event-image">
+                            <img [src]="event.image" alt="{{ event.title }}">
+                        </div>
+                        <div class="event-info">
+                            <h2>{{ event.title }}</h2>
+                            <p><strong>📅 Data:</strong> {{ event.date }}</p>
+                            <p><strong>📍 Luogo:</strong> {{ event.location }}</p>
+                            <p class="description">{{ event.description }}</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
 
-      <!-- Eventi Passati -->
-      @if (selectedTab === 'pastEvents') {
-          <h2>Eventi Passati</h2>
-          <div class="events-list">
-              @for (event of user.pastEvents; track event) {
-                  <div class="event-card">
-                      <div class="event-image">
-                          <img [src]="event.image" alt="{{ event.title }}">
-                      </div>
-                      <div class="event-info">
-                          <h2>{{ event.title }}</h2>
-                          <p><strong>📅 Data:</strong> {{ event.date }}</p>
-                          <p><strong>📍 Luogo:</strong> {{ event.location }}</p>
-                          <p class="description">{{ event.description }}</p>
-                      </div>
-                  </div>
-              }
-          </div>
-      }
+        <!-- Eventi Passati -->
+        @if (selectedTab === 'pastEvents') {
+            <h2>Eventi Passati</h2>
+            <div class="events-list">
+                @for (event of user.pastEvents; track event) {
+                    <div class="event-card">
+                        <div class="event-image">
+                            <img [src]="event.image" alt="{{ event.title }}">
+                        </div>
+                        <div class="event-info">
+                            <h2>{{ event.title }}</h2>
+                            <p><strong>📅 Data:</strong> {{ event.date }}</p>
+                            <p><strong>📍 Luogo:</strong> {{ event.location }}</p>
+                            <p class="description">{{ event.description }}</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
 
-      <!-- My Tickets -->
-      @if (selectedTab === 'myTickets') {
-          <h2>I Miei Ticket</h2>
-          <div class="events-list">
-              @for (event of tickets; track event) {
-                  <div class="event-card2">
-                      <div class="event-image">
-                          <img [src]="event.image" alt="{{ event.title }}">
-                      </div>
-                      <div class="event-info">
-                          <h2>{{ event.title }}</h2>
-                          <p><strong>📅 Data:</strong> {{ event.date }}</p>
-                          <p><strong>📍 Luogo:</strong> {{ event.location }}</p>
-                          <p class="description">{{ event.description }}</p>
-                          <button class="download-button">🎟 Vai all'attivazione</button>
-                      </div>
-                  </div>
-              }
-          </div>
-      }
-
-      
-  </div>
+        <!-- My Tickets -->
+        @if (selectedTab === 'myTickets') {
+            <h2>I Miei Ticket</h2>
+            <div class="events-list">
+                @for (event of tickets; track event) {
+                    <div class="event-card2">
+                        <div class="event-image">
+                            <img [src]="event.image" alt="{{ event.title }}">
+                        </div>
+                        <div class="event-info">
+                            <h2>{{ event.title }}</h2>
+                            <p><strong>📅 Data:</strong> {{ event.date }}</p>
+                            <p><strong>📍 Luogo:</strong> {{ event.location }}</p>
+                            <p class="description">{{ event.description }}</p>
+                            <button class="download-button" (click)="openModal(event)">🎟 Vai all'attivazione</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
 </div>
+
+<!-- Modale (Una sola istanza) -->
+@if (isModalOpen) {
+    <div class="modal">
+        <div class="modal-content">
+            <span class="close" (click)="closeModal()">&times;</span>
+            <h3>Attiva il tuo ticket</h3>
+            <p>Premi il pulsante qui sotto per attivare il tuo ticket.</p>
+            <button class="confirm-button" (click)="activateTicket()">Attiva Ticket</button>
+        </div>
+    </div>
+}

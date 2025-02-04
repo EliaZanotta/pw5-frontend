@@ -11,7 +11,6 @@
   width: 100%;
   height: 300px;
   overflow: hidden;
-  margin-top: 70px;
 }
 
 .banner-image {
@@ -206,12 +205,12 @@
 .modal {
   display: flex;
   position: fixed;
-  z-index: 1000;
+  z-index: 9999;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6); /* Scuro per evidenziare la modale */
   justify-content: center;
   align-items: center;
 }
@@ -224,6 +223,7 @@
   width: 400px;
   text-align: center;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  position: relative;
 }
 
 /* Pulsante per chiudere la modale */

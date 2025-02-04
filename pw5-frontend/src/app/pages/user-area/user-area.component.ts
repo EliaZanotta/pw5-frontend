@@ -49,20 +49,35 @@ export class UserAreaComponent {
     ]
   };
 
-  // Combiniamo eventi passati e prenotati per la sezione My Tickets
   get tickets() {
     return [...this.user.pastEvents, ...this.user.bookedEvents];
   }
 
   selectedTab: string = 'bookedEvents';
-
+  isModalOpen: boolean = false;
+  selectedEvent: any = null;
+  
   constructor(private router: Router) {}
-
+  
   setTab(tab: string): void {
     this.selectedTab = tab;
   }
 
-  goBack(): void {
-    this.router.navigate(['/']);
+  openModal(event?: any): void {
+    if (!this.isModalOpen) {
+      this.selectedEvent = event;
+      this.isModalOpen = true;
+    }
   }
+  
+  closeModal(): void {
+    this.isModalOpen = false;
+    this.selectedEvent = null;
+  }
+  
+  activateTicket(): void {
+    alert(`✅ Ticket attivato per: ${this.selectedEvent?.title || "evento"}!`);
+    this.closeModal();
+  }
+  
 }
