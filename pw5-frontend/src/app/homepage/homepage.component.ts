@@ -7,6 +7,7 @@ import {DatePipe, NgForOf, registerLocaleData} from '@angular/common';
 import localeIt from '@angular/common/locales/it';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {RouterLink} from '@angular/router';
+import { SpeakerCtaComponent } from '../components/speaker-cta/speaker-cta.component';
 
 registerLocaleData(localeIt);
 
@@ -20,7 +21,8 @@ Swiper.use([Navigation, Autoplay]);
     NgForOf,
     DatePipe,
     FontAwesomeModule,
-    RouterLink
+    RouterLink,
+    SpeakerCtaComponent
   ],
   standalone: true,
   providers: [{provide: LOCALE_ID, useValue: 'it-IT'}]

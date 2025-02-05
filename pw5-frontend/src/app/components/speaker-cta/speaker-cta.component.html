@@ -1,0 +1,14 @@
+<!-- Sezione per gli utenti loggati -->
+<section class="speaker-cta" *ngIf="isLoggedIn && isUser">
+    <mat-card-content>
+        <h2>Diventa un relatore</h2>
+        <p>Condividi la tua esperienza e ispira gli altri. Unisciti alla nostra comunità di relatori oggi stesso!
+        </p>
+
+        <!-- Mostra il pulsante solo se l'utente è un USER -->
+        <button mat-raised-button routerLink="/user-area">
+            <mat-icon>mic</mat-icon>
+            Vai!
+        </button>
+    </mat-card-content>
+</section>
