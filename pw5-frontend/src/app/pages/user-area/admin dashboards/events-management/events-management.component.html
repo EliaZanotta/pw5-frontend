@@ -7,7 +7,6 @@
       [matAutocomplete]="titleAuto"
       [formControl]="titleSearchControl"
       (keyup)="applyTitleFilter()"
-      [matAutocompletePosition]="'above'"
     >
     <mat-autocomplete #titleAuto="matAutocomplete">
       <mat-option *ngFor="let title of filteredTitleOptions | async" [value]="title">
@@ -24,7 +23,6 @@
       [matAutocomplete]="hostAuto"
       [formControl]="hostSearchControl"
       (keyup)="applyHostFilter()"
-      [matAutocompletePosition]="'above'"
     >
     <mat-autocomplete #hostAuto="matAutocomplete">
       <mat-option *ngFor="let host of filteredHostOptions | async" [value]="host">
