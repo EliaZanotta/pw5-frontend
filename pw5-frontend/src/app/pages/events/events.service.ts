@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {lastValueFrom, Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 export interface Event {
   id: string;
@@ -60,29 +60,19 @@ export interface CategorizedEvents {
   providedIn: 'root'
 })
 export class EventsService {
-  private baseUrl = 'http://localhost:8080/';
-  private apiUrl = this.baseUrl + 'event';
+  private baseUrl = 'http://localhost:8080/event';
 
-  constructor(private http: HttpClient) { }
-
-  // Updated to extract events from the response format
-  getEvents(): Observable<Event[]> {
-    return this.http.get<{ events: Event[] }>(this.apiUrl).pipe(
-      map(response => response.events)
-    );
+  constructor(private http: HttpClient) {
   }
 
-  // Updated method to get categorized events
-  getCategorizedEvents(): Observable<CategorizedEvents> {
-    return this.getEvents().pipe(
-      map((events: Event[]) => this.categorizeEvents(events))
-    );
+  async getEvents(): Promise<any> {
+    return await lastValueFrom(this.http.get<Event[]>(this.baseUrl));
+  }
+  async getEventById(id: string): Promise<any> {
+    return await lastValueFrom(this.http.get<Event>(`${this.baseUrl}/${id}`));
   }
 
-  // Private helper method to categorize events
-  private categorizeEvents(events: Event[]): CategorizedEvents {
-    const futureEvents = events.filter(event => event.status === 'CONFIRMED');
-    const pastEvents = events.filter(event => event.status === 'ARCHIVED');
-    return { future: futureEvents, past: pastEvents };
+  async bookEvent(payload: { id: string }): Promise<any> {
+    return await lastValueFrom(this.http.put<any>(`${this.baseUrl}/book`, payload, {withCredentials: true}));
   }
 }

@@ -1,122 +1,197 @@
 /* Contenitore generale */
+.container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 70px;
+}
+
 .future-events-container {
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 20px;
-    text-align: center;
+  width: 80%;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
 }
 
 /* Titolo della pagina */
 .page-title {
-    font-size: 28px;
-    font-weight: bold;
-    margin-bottom: 30px;
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  margin-top: 30px;
 }
 
 .page-subtitle {
   font-size: 20px;
   margin-bottom: 60px;
+  margin-top: 30px;
 }
 
 /* Lista eventi */
 .events-list {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  display: flex;
+  width: 70%;
+  flex-direction: column;
+  gap: 20px;
+  margin: auto;
 }
 
 /* Card evento */
 .event-card {
-    display: flex;
-    align-items: stretch; /* Allinea perfettamente l'immagine e il contenuto */
-    background: #f0f0f0;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
-    height: 250px; /* Altezza fissa per uniformità */
+  display: flex;
+  align-items: stretch; /* Allinea perfettamente l'immagine e il contenuto */
+  background: #f0f0f0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  height: 250px; /* Altezza fissa per uniformità */
 }
 
 .event-card:hover {
-    transform: scale(1.02);
+  transform: scale(1.02);
 }
 
 /* Immagine dell'evento */
 .event-image {
-    width: 30%;
-    height: 100%;
-    display: flex;
+  width: 30%;
+  height: 100%;
+  display: flex;
 }
 
 .event-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Assicura che l'immagine riempia lo spazio */
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Assicura che l'immagine riempia lo spazio */
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
 /* Dettagli evento */
 .event-info {
-    width: 70%;
-    padding: 20px;
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Centra il testo verticalmente */
+  width: 70%;
+  padding: 20px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centra il testo verticalmente */
 }
 
 .event-info h2 {
-    font-size: 22px;
-    margin-bottom: 10px;
+  font-size: 22px;
+  margin-bottom: 10px;
 }
 
 .event-info p {
-    font-size: 16px;
-    color: #555;
-    margin: 5px 0;
+  font-size: 16px;
+  color: #555;
+  margin: 5px 0;
 }
 
 /* Bottone dettagli */
 .details-button {
-    background: #ce2424;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background 0.3s ease-in-out;
-    align-self: start; /* Allinea il bottone a sinistra */
-    margin-top: 15px;
+  background: #ce2424;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s ease-in-out;
+  align-self: start; /* Allinea il bottone a sinistra */
+  margin-top: 15px;
 }
 
 .details-button:hover {
-    background: #3a001e;
+  background: #3a001e;
+}
+
+.no-events-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.2rem;
+  margin: 20px 0;
+  padding: 20px;
+  font-weight: bold;
+}
+
+/* Add extra padding at the bottom if no events */
+.no-events-message.add-extra-padding {
+  padding-top: 100px;
+  padding-bottom: 100px; /* Add 100px padding when this class is present */
+}
+
+/* Apply padding when there are fewer than 4 events */
+.event-card.add-padding {
+  margin-bottom: 100px; /* Extra spacing below the last card */
+}
+
+.events-list {
+  padding-bottom: 0px; /* Consistent bottom padding for all event lists */
+}
+.details-button {
+  display: inline-block;
+  background: #ce2424;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.details-button:hover {
+  background: #a11b1b;
+}
+
+@media (max-width: 1025px) {
+  .events-list {
+    width: 100%
+  }
+  .event-image {
+    width: 100%;
+  }
+
+  .event-image img {
+    border-radius: 10px 10px 0 0;
+  }
+
+  .details-button {
+    align-self: center;
+  }
+  .event-info {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+  }
 }
 
 /* Responsività */
 @media (max-width: 768px) {
-    .event-card {
-        flex-direction: column;
-        height: auto;
-    }
+  .event-card {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+  }
+  .events-list {
+    display: flex;
+    width: 100%;
+  }
 
-    .event-image {
-        width: 100%;
-        height: 200px;
-    }
+  .event-image {
+    width: 100%;
+    height: 200px;
+  }
 
-    .event-image img {
-        border-radius: 10px 10px 0 0;
-    }
+  .event-image img {
+    border-radius: 10px 10px 0 0;
+  }
 
-    .event-info {
-        width: 100%;
-        text-align: center;
-    }
+  .event-info {
+    width: 100%;
+    padding: 10px;
+  }
 
-    .details-button {
-        align-self: center;
-    }
+  .details-button {
+    align-self: center;
+  }
 }

@@ -1,35 +1,56 @@
-<!-- future-events.component.html -->
+<div class="container">
 
-<div class="future-events-container">
-  <h1 class="page-title">Eventi Futuri</h1>
-  <p class="page-subtitle">Sfoglia gli eventi che stanno per arrivare, scopri cosa ti aspetta e prenota il tuo posto!</p>
+  <div class="future-events-container">
+    <h1 class="page-title">Eventi Futuri</h1>
+    <p class="page-subtitle">
+      Sfoglia gli eventi che stanno per arrivare, scopri cosa ti aspetta e prenota il tuo posto!
+    </p>
 
-  <!-- Loading Indicator -->
-  <div *ngIf="isLoading" class="loading">
-    <p>Caricamento eventi...</p>
-  </div>
+    <!-- Filters Section -->
+    <app-event-filter [allTitles]="allTitles" [allTopics]="allTopics" [allHosts]="allHosts"
+      (filtersChanged)="applyFilters($event)" (clearFiltersEvent)="clearFilters()"></app-event-filter>
 
-  <!-- Error Message -->
-  <div *ngIf="errorMessage" class="error">
-    <p>{{ errorMessage }}</p>
-  </div>
+    <!-- Loading Indicator -->
+    <div *ngIf="isLoading" class="loading">
+      <p>Caricamento eventi...</p>
+    </div>
 
-  <!-- Events List -->
-  <div class="events-list" *ngIf="!isLoading && !errorMessage">
-    <div class="event-card" *ngFor="let event of futureEvents">
-      <!-- Immagine Evento -->
-      <div class="event-image">
-        <img [src]="event.image || 'https://eosmarketing.it/upload/img/c/1000x667-Eventi-aziendali-guida-alle-tipologie-e-a-come-organizzarli-post-Coronavirus.jpg'" alt="{{ event.title }}">
-      </div>
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="error">
+      <p>{{ errorMessage }}</p>
+    </div>
 
-      <!-- Dettagli Evento -->
-      <div class="event-info">
-        <h2>{{ event.title }}</h2>
-        <p><strong>📅 Data:</strong> {{ formatDate(event.startDate) }}</p>
-        <p><strong>📍 Luogo:</strong> {{ event.place }}</p>
-        <p class="description">{{ event.description }}</p>
-        <button class="details-button" (click)="bookEvent(event.id)">Scopri di più</button>
+    <!-- No Events Message -->
+    <div *ngIf="!isLoading && !errorMessage && filteredEvents.length === 0" class="no-events-message add-extra-padding">
+      Non ci sono eventi corrispondenti ai filtri selezionati.
+    </div>
+
+    <!-- Events List -->
+    <div class="events-list" *ngIf="!isLoading && !errorMessage && filteredEvents.length > 0">
+      <div class="event-card" *ngFor="let event of filteredEvents"
+        [class.add-padding]="filteredEvents.length < 4 && event === filteredEvents[filteredEvents.length - 1]">
+        <!-- Immagine Evento -->
+        <div class="event-image">
+          <img [src]="
+              event.image ||
+              'https://eosmarketing.it/upload/img/c/1000x667-Eventi-aziendali-guida-alle-tipologie-e-a-come-organizzarli-post-Coronavirus.jpg'
+            " alt="{{ event.title }}">
+        </div>
+
+        <!-- Dettagli Evento -->
+        <div class="event-info">
+          <h2>{{ event.title }}</h2>
+          <p><strong>📅 Data:</strong> {{ formatDate(event.startDate) }}</p>
+          <p><strong>📍 Luogo:</strong> {{ event.place }}</p>
+          <p class="description">{{ event.description }}</p>
+          <a routerLink="/events/{{ event.id }}" class="details-button">Scopri di più</a>
+        </div>
       </div>
     </div>
   </div>
+
+
+
+
+
 </div>

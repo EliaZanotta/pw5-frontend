@@ -1,0 +1,77 @@
+<div class="filters-container">
+  <!-- Title filter with autocomplete -->
+  <mat-form-field appearance="outline">
+    <mat-label>Titolo</mat-label>
+    <input
+      matInput
+      [matAutocomplete]="titleAuto"
+      [(ngModel)]="filters.title"
+      (ngModelChange)="applyFilters()"
+    >
+    <mat-autocomplete #titleAuto="matAutocomplete">
+      <mat-option *ngFor="let title of filteredTitles" [value]="title">
+        {{ title }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <!-- Date filter with datepicker -->
+  <mat-form-field appearance="outline">
+    <mat-label>Data evento</mat-label>
+    <input
+      matInput
+      [matDatepicker]="picker"
+      [(ngModel)]="filters.date"
+      (ngModelChange)="applyFilters()"
+    >
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <!-- Topic filter with autocomplete -->
+  <mat-form-field appearance="outline">
+    <mat-label>Filtra per topic</mat-label>
+    <input
+      matInput
+      [matAutocomplete]="topicAuto"
+      [(ngModel)]="filters.topic"
+      (ngModelChange)="applyFilters()"
+    >
+    <mat-autocomplete #topicAuto="matAutocomplete">
+      <mat-option *ngFor="let topic of filteredTopic" [value]="topic">
+        {{ topic }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <!-- Host filter with autocomplete -->
+  <mat-form-field appearance="outline">
+    <mat-label>Filtra per host</mat-label>
+    <input
+      matInput
+      [matAutocomplete]="hostAuto"
+      [(ngModel)]="filters.host"
+      (ngModelChange)="applyFilters()"
+    >
+    <mat-autocomplete #hostAuto="matAutocomplete">
+      <mat-option *ngFor="let host of filteredHosts" [value]="host">
+        {{ host }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <!-- Subscription type filter with dropdown -->
+  <mat-form-field appearance="outline">
+    <mat-label>Tipo evento</mat-label>
+    <mat-select [(value)]="filters.subscription" (selectionChange)="applyFilters()">
+      <mat-option value="">Tutti</mat-option>
+      <mat-option value="FREE">Gratuito</mat-option>
+      <mat-option value="PAID">A pagamento</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Clear Filters Button -->
+  <button class="clear-filters-btn" (click)="clearFilters()" matTooltip="Azzera filtri">
+    <fa-icon [icon]="faFilterCircleXmark"></fa-icon>
+  </button>
+</div>

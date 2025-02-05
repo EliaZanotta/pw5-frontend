@@ -1,0 +1,28 @@
+<div class="hero">
+    <h1>Scopri i nostri speaker</h1>
+    <p class="hero-description">
+        Esplora i profili dei nostri speaker esperti e lasciati ispirare dalle loro conoscenze.
+    </p>
+</div>
+
+<!-- Sezione lista speaker -->
+<section class="speaker-container" *ngIf="speakers.length > 0">
+    <div class="speaker-grid">
+        <div *ngFor="let speaker of speakers" class="speaker-card">
+            <div class="image-container">
+                <img src="img/speaker.jpg" alt="Foto di {{ speaker.firstName }}"
+                    class="speaker-image">
+            </div>
+            <div class="card-content">
+                <h3 class="speaker-name">{{ speaker.firstName }} {{ speaker.lastName }}</h3>
+                <p class="speaker-email">{{ speaker.email }}</p>
+                <p class="speaker-role">{{ speaker.role }}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Messaggio se non ci sono speaker -->
+<div *ngIf="speakers.length === 0" class="no-speakers-message">
+    <p>Al momento non ci sono speaker disponibili.</p>
+</div>

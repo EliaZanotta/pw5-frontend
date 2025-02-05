@@ -67,3 +67,76 @@ a {
 .icon {
     color: #3a001e;
 }
+
+/* Tablet e dispositivi medi (fino a 1024px) */
+@media (max-width: 1023px) {
+    .register-types-container {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .register-type {
+        width: 200px;
+        margin-top: 20px;
+        transform: none !important;
+        /* Disattiva l'effetto di zoom */
+        transition: none !important;
+        /* Disattiva la transizione */
+    }
+
+    .register-title {
+        font-size: 1.2rem;
+        padding: 0.8rem;
+    }
+}
+
+/* Telefono grande (fino a 768px) */
+@media (max-width: 768px) {
+    .register-types-container {
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .register-type {
+        width: 90%;
+        /* Adatta la larghezza al contenitore */
+        max-width: 250px;
+        text-align: center;
+        margin-top: 15px;
+    }
+
+    .register-title {
+        font-size: 1rem;
+        padding: 0.6rem;
+    }
+}
+
+/* Telefono piccolo (fino a 480px) */
+@media (max-width: 480px) {
+    .register-types-container {
+        align-items: center;
+        min-height: 667px;
+    }
+
+    .register-type {
+        width: 100%;
+        /* Occupa tutta la larghezza disponibile */
+        max-width: 220px;
+        margin-bottom: 0px;
+
+    }
+
+    .register-type h3 {
+        font-size: 1.5rem;
+        text-align: center;
+        color: #000000;
+        background: rgba(255, 246, 244, 0.7);
+        border-radius: 1rem;
+        padding: 0px;
+    }
+
+    .register-title {
+        font-size: 0.9rem;
+        padding: 0.5rem;
+    }
+}

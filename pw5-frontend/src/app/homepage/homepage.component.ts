@@ -2,7 +2,7 @@ import {Component, AfterViewInit, OnInit, LOCALE_ID} from '@angular/core';
 import {EventsService} from '../pages/events/events.service';
 import Swiper from 'swiper';
 import {Navigation, Autoplay} from 'swiper/modules';
-import { Event } from '../pages/events/events.service';
+import {Event} from '../pages/events/events.service';
 import {DatePipe, NgForOf, registerLocaleData} from '@angular/common';
 import localeIt from '@angular/common/locales/it';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
@@ -26,15 +26,14 @@ Swiper.use([Navigation, Autoplay]);
   providers: [{provide: LOCALE_ID, useValue: 'it-IT'}]
 })
 export class HomepageComponent implements AfterViewInit, OnInit {
-  incomingEvents: Event[] = [];
+  incomingEvents: Event[] | null = null;
 
   constructor(private eventsService: EventsService) {
   }
 
-  ngOnInit(): void {
-    this.eventsService.getEvents().subscribe((events: Event[]) => {
-      this.incomingEvents = events.filter(event => event.status === 'CONFIRMED').slice(0, 3);
-    });
+  async ngOnInit(): Promise<void> {
+    this.incomingEvents = (await this.eventsService.getEvents())
+      .events.filter((event: Event) => event.status === 'CONFIRMED').slice(0, 3);
   }
 
   ngAfterViewInit(): void {

@@ -1,6 +1,17 @@
 <div class="past-events-container">
   <h1 class="page-title">Eventi Passati</h1>
-  <p class="page-subtitle">Rivedi gli eventi che hanno avuto luogo e scopri quali esperienze si sono già svolte!</p>
+  <p class="page-subtitle">
+    Rivedi gli eventi che hanno avuto luogo e scopri quali esperienze si sono già svolte!
+  </p>
+
+  <!-- Event Filters -->
+  <app-event-filter
+    [allTitles]="allTitles"
+    [allTopics]="allTopics"
+    [allHosts]="allHosts"
+    (filtersChanged)="applyFilters($event)"
+    (clearFiltersEvent)="clearFilters()"
+  ></app-event-filter>
 
   <!-- Loading Indicator -->
   <div *ngIf="isLoading" class="loading">
@@ -12,12 +23,24 @@
     <p>{{ errorMessage }}</p>
   </div>
 
+  <!-- No Events Message -->
+  <div *ngIf="!isLoading && !errorMessage && filteredEvents.length === 0" class="no-events-message add-extra-padding">
+    Non ci sono eventi corrispondenti ai filtri selezionati.
+  </div>
+
   <!-- Events List -->
-  <div class="events-list" *ngIf="!isLoading && !errorMessage">
-    <div class="event-card" *ngFor="let event of pastEvents">
+  <div class="events-list" *ngIf="!isLoading && !errorMessage && filteredEvents.length > 0">
+    <div
+      class="event-card"
+      *ngFor="let event of filteredEvents"
+      [class.add-padding]="filteredEvents.length < 4 && event === filteredEvents[filteredEvents.length - 1]"
+    >
       <!-- Immagine Evento -->
       <div class="event-image">
-        <img [src]="event.image || 'https://eosmarketing.it/upload/img/c/1000x667-Eventi-aziendali-guida-alle-tipologie-e-a-come-organizzarli-post-Coronavirus.jpg'" alt="{{ event.title }}">
+        <img
+          [src]="event.image || 'https://eosmarketing.it/upload/img/c/1000x667-Eventi-aziendali-guida-alle-tipologie-e-a-come-organizzarli-post-Coronavirus.jpg'"
+          alt="{{ event.title }}"
+        >
       </div>
 
       <!-- Dettagli Evento -->
@@ -26,7 +49,7 @@
         <p><strong>📅 Data:</strong> {{ formatDate(event.startDate) }}</p>
         <p><strong>📍 Luogo:</strong> {{ event.place }}</p>
         <p class="description">{{ event.description }}</p>
-        <button class="details-button" (click)="bookEvent(event.id)">Scopri di più</button>
+        <a routerLink="/events/{{ event.id }}" class="details-button">Scopri di più</a>
       </div>
     </div>
   </div>

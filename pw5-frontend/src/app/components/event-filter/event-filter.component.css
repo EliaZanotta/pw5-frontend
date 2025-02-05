@@ -1,0 +1,73 @@
+.filters-container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20px;
+  align-items: center;
+  justify-content: center; /* Center the content horizontally */
+  padding: 0; /* Remove padding inside the container itself */
+  margin: 0 -30px; /* Use negative margins to cancel out the card's padding */
+  width: calc(100% + 60px); /* Extend the container's width to match the full page width */
+}
+
+mat-form-field {
+  flex: 1 1 auto;
+  min-width: 220px;
+  max-width: 400px;
+}
+
+.clear-filters-btn {
+  background-color: transparent;
+  color: #f44336;
+  border: none;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-left: 20px; /* Add margin to separate from inputs */
+}
+
+mat-label {
+  overflow: hidden;
+  padding-right: 8px;
+}
+
+.clear-filters-btn fa-icon {
+  font-size: 24px;
+}
+
+.clear-filters-btn:hover {
+  background-color: rgba(244, 67, 54, 0.1);
+  color: black;
+}
+
+@media (max-width: 768px) {
+  .filters-container {
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+  }
+
+  mat-form-field {
+    flex: 1 1 100%; /* Full width on small screens */
+    max-width: 100%;
+  }
+
+
+}
+
+@media screen and (max-width: 1025px) and (min-width: 768px) {
+
+ 
+ 
+  .filters-container {
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+  }
+
+  mat-form-field {
+    flex: 2 2;
+    max-width: 100%;
+  }
+  
+}

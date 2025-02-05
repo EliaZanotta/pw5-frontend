@@ -3,25 +3,79 @@
     <h1 class="full-logo">Varese Developer Group</h1>
     <h1 class="short-logo">VDG</h1>
   </div>
-  <!-- Navigazione -->
+
   <nav class="navigation" [ngClass]="{ 'active': isMenuOpen }">
     <ul>
       <li><a routerLink="/">Home</a></li>
       <li><a routerLink="/events">Eventi</a></li>
       <li><a routerLink="/partner-companies">Aziende Partner</a></li>
-      <li><a routerLink="/user-area">Area Utente</a></li>
       <li><a routerLink="/contact">Contatti</a></li>
     </ul>
   </nav>
 
   <div class="header-right">
-    <!-- Pulsante Accedi -->
-    <button routerLink="/auth/login" class="login-btn">Accedi</button>
+    <!-- Speaker inbox icon -->
+    <ng-container *ngIf="isSpeaker">
+      <a (click)="openSpeakerModal()" class="profile-icon fa-2x inbox-icon-btn" style="padding-right: 100px; position: relative;">
+        <fa-icon
+          [icon]="faInboxSolid"
+          (mouseenter)="isHoveredInbox = true"
+          (mouseleave)="isHoveredInbox = false"
+          [ngStyle]="{ color: isHoveredInbox ? '#9b1b1b' : '#ce2424' }">
+        </fa-icon>
+        <!-- Red dot for pending speaker requests -->
+        <span *ngIf="hasPendingRequests" style="position: absolute; top: 0; right: 100px; width: 10px; height: 10px; background: red; border-radius: 50%;"></span>
+      </a>
+    </ng-container>
 
-    <!-- Pulsante Menu Hamburger -->
+    <!-- Admin inbox icon with red dot indicator -->
+    <ng-container *ngIf="isAdmin">
+      <a (click)="openAdminModal()" class="profile-icon fa-2x inbox-icon-btn" style="padding-right: 100px; position: relative;">
+        <fa-icon
+          [icon]="faInboxSolid"
+          (mouseenter)="isHoveredAdminInbox = true"
+          (mouseleave)="isHoveredAdminInbox = false"
+          [ngStyle]="{ color: isHoveredAdminInbox ? '#1b6f9b' : '#2447ce' }">
+        </fa-icon>
+        <!-- Red dot for unread notifications -->
+        <span *ngIf="hasUnreadNotifications" style="position: absolute; top: 0; right: 100px; width: 10px; height: 10px; background: red; border-radius: 50%;"></span>
+      </a>
+    </ng-container>
+
+
+
+    <!-- User and handshake icons -->
+    <ng-container *ngIf="user; else loginBtn">
+      <a [routerLink]="isHost ? '/single-companies' : '/user-area'">
+        <fa-icon
+          [icon]="
+          isHoveredUser
+            ? (isHost ? faHandshakeSolid : faUserSolid)
+            : (isHost ? faHandshakeRegular : faUserRegular)
+        "
+          (mouseenter)="isHoveredUser = true"
+          (mouseleave)="isHoveredUser = false"
+          class="profile-icon fa-2x"
+          style="color: #ce2424;">
+        </fa-icon>
+      </a>
+    </ng-container>
+
+    <!-- "Accedi" button for non-logged in users -->
+    <ng-template #loginBtn>
+      <button routerLink="/auth/login" class="login-btn">Accedi</button>
+    </ng-template>
+
+    <!-- Hamburger Menu Toggle -->
     <button class="menu-toggle" (click)="toggleMenu()" aria-label="Toggle menu">
       ☰
     </button>
   </div>
 
+  <!-- Modal component for speaker requests -->
+  <app-speaker-request-modal [show]="showSpeakerModal" (closeModal)="closeSpeakerModal()"></app-speaker-request-modal>
+  <!-- Modal component for admin notifications (you can create this similar to speaker modal) -->
+  <app-admin-notification-modal [show]="showAdminModal" (closeModal)="closeAdminModal()"></app-admin-notification-modal>
+
 </header>
+

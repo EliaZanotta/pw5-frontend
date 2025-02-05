@@ -1,94 +1,93 @@
-<!-- <div class="single-event">
-    @if (event) {
-    <div class="event-container">
-        <img class="event-background" [src]="event.image" alt="{{ event.title }}" />
+<div class="event-page">
+  <ng-container *ngIf="eventData || errorMessage; else loading">
 
-        <mat-card class="event-details">
-            <mat-card-header>
-                <mat-card-title> {{ event.title }}</mat-card-title>
-                <mat-card-subtitle>Data: {{ event.date }}</mat-card-subtitle>
-                <mat-card-subtitle>Ora: {{ event.time }}</mat-card-subtitle>
-                <mat-card-subtitle>Luogo: {{ event.location }}</mat-card-subtitle>
-                <mat-card-subtitle>Partecipanti: {{ event.participants }}</mat-card-subtitle>
-                <mat-card-subtitle>
-                    Relatori:
-                    <a [routerLink]="['/speaker', event.speakerId]" class="speaker-link">
-                        {{ event.speaker }}
-                    </a>
-                </mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-                <p>
-                    Benvenuti all'evento "{{ event.title }}". Ulteriori dettagli saranno disponibili qui!
-                </p>
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-raised-button color="primary" (click)="goBooking()">Prenota il tuo posto</button>
-                <button mat-raised-button color="primary" (click)="goBack()">Torna indietro</button>
-            </mat-card-actions>
-        </mat-card>
-    </div>
-    }
-
-    @if (!event) {
-    <p>Evento non trovato.</p>
-    }
-</div>
- -->
-
-<div class="container">
-    <div class="hero-section">
-        <img [src]="event.image" alt="{{ event.title }}" class="hero-image" />
-        <div class="overlay"></div>
+    <!-- Error message -->
+    <div *ngIf="errorMessage" class="error-message">
+      <p>{{ errorMessage }}</p>
     </div>
 
-    <main class="content">
-        <div class="event-card">
-            <h1 class="event-title">{{ event.title }}</h1>
+    <!-- Event details -->
+    <ng-container *ngIf="eventData">
 
-            <div class="event-info">
-
-                <span>Luogo: {{ event.location }}</span>
+      <div class="event-header">
+        <div class="image-wrapper">
+          <img [src]="eventData.image || 'img/code_cheers.png'" class="event-image"  alt="eventImage"/>
+          <div class="event-overlay">
+            <h1 class="event-title">{{ eventData.title || 'Titolo non disponibile' }}</h1>
+            <div class="host-info">
+              <fa-icon [icon]="faUser" class="icon"></fa-icon>
+              <span>Ospitato da {{ eventData.host || 'Ospite non disponibile' }}</span>
             </div>
-
-            <div class="event-info">
-
-                <span>Data: {{ event.date }} Ora: {{ event.time }} </span>
-            </div>
-
-            <div class="event-info">
-
-                <span>Partecipanti: {{ event.participants }}</span>
-            </div>
-
-            <div class="event-info">
-                <span>
-
-                    Relatori:
-                    <a [routerLink]="['/speaker', event.speakerId]">
-                        {{ event.speaker }}
-                    </a>
-                </span>
-
-            </div>
-
-            <div class="event-info">
-                <span>Partecipanti: {{ event.participants }}</span>
-            </div>
-
-            <div class="event-info">
-                <span>Status: {{ event.status }}</span>
-            </div>
-
-            <p class="event-description">
-                Benvenuti all'evento "{{ event.title }}". Ulteriori dettagli saranno disponibili qui!
-            </p>
-
-            <mat-card-actions class="button-group">
-                <button class="btn" (click)="goBooking()">Prenota il tuo posto</button>
-                <!-- se l'evento è passato non si può prenotare -->
-                <button class="btn" (click)="goBack()">Torna indietro</button>
-            </mat-card-actions>
+          </div>
         </div>
-    </main>
+      </div>
+
+      <div class="details-container">
+        <div class="details">
+          <div class="detail-item">
+            <fa-icon [icon]="faCalendarDays" class="icon text-primary"></fa-icon>
+            <div>
+              <div>Inizio: {{ formatDate(eventData.startDate) }}</div>
+              <div>Fine: {{ formatDate(eventData.endDate) }}</div>
+            </div>
+          </div>
+
+          <div class="detail-item">
+            <fa-icon [icon]="faMapPin" class="icon text-primary"></fa-icon>
+            <div>
+              <div>{{ eventData.place || 'Luogo non disponibile' }}</div>
+            </div>
+          </div>
+
+          <div class="detail-item">
+            <fa-icon [icon]="faUsers" class="icon text-primary"></fa-icon>
+            <div>
+              <div>{{ eventData.registeredParticipants || '0' }} / {{ formatMaxParticipants(eventData.maxParticipants) }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-container">
+        <div>
+          <h2>Informazioni sull'evento</h2>
+
+          <p *ngIf="eventData.description; else defaultDescription">
+            {{ eventData.description }}
+          </p>
+          <ng-template #defaultDescription>
+            <p>
+              Unisciti a noi per un evento emozionante che riunisce leader del settore e innovatori. Scopri le ultime
+              tendenze, fai networking con professionisti e ottieni preziose informazioni sul futuro della tecnologia.
+            </p>
+          </ng-template>
+          <button class="register-button" (click)="showBookingDialog()">Iscriviti ora</button>
+        </div>
+
+        <div class="list-container">
+          <div>
+            <h3>Argomenti</h3>
+            <ul>
+              <li *ngFor="let topic of eventData.topics || []">{{ topic }}</li>
+            </ul>
+            <p *ngIf="!(eventData.topics && eventData.topics.length)">Nessun argomento disponibile</p>
+          </div>
+
+          <div>
+            <h3>Speaker</h3>
+            <ul>
+              <li *ngFor="let speaker of eventData.speakers || []">{{ speaker }}</li>
+            </ul>
+            <p *ngIf="!(eventData.speakers && eventData.speakers.length)">Ancora nessuno speaker</p>
+          </div>
+        </div>
+      </div>
+
+    </ng-container>
+  </ng-container>
+
+  <!-- Loading message -->
+  <ng-template #loading>
+    <p class="loading-message">Caricamento in corso...</p>
+  </ng-template>
 </div>

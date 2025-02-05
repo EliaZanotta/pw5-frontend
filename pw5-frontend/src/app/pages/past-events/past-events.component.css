@@ -93,6 +93,45 @@
 .details-button:hover {
   background: #3a001e;
 }
+/* Message for no events */
+.no-events-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.2rem;
+  margin: 20px 0;
+  padding: 20px;
+  font-weight: bold;
+}
+
+/* Add extra padding at the bottom for no events */
+.no-events-message.add-extra-padding {
+  padding-bottom: 100px;
+}
+
+/* Apply padding when there are fewer than 4 events */
+.event-card.add-padding {
+  margin-bottom: 40px;
+}
+
+/* Ensure bottom padding for all event lists */
+.events-list {
+  padding-bottom: 40px;
+}
+.details-button {
+  display: inline-block;
+  background: #ce2424;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.details-button:hover {
+  background: #a11b1b;
+}
+
 
 /* Responsività */
 @media (max-width: 768px) {

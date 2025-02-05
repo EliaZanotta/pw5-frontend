@@ -115,3 +115,47 @@ input:focus {
   text-align: center;
 }
 
+/* Per schermi piccoli (fino a 600px) */
+@media (max-width: 600px) {
+  .login-box {
+    max-width: 90%;
+    padding: 1.5rem;
+  }
+
+  h1 {
+    font-size: 1.25rem;
+  }
+
+  .tabs {
+    grid-template-columns: 1fr;
+  }
+
+  .tab {
+    padding: 0.75rem;
+  }
+}
+
+/* Per tablet e dispositivi medi (601px - 900px) */
+@media (max-width: 900px) {
+  .login-box {
+    max-width: 80%;
+  }
+
+}
+
+/* Per schermi molto piccoli (fino a 400px) */
+@media (max-width: 400px) {
+  .login-box {
+    max-width: 95%;
+    padding: 1rem;
+  }
+
+  .submit-button {
+    font-size: 0.875rem;
+    padding: 0.5rem;
+  }
+
+  input {
+    font-size: 0.875rem;
+  }
+}

@@ -1,0 +1,46 @@
+.confirmation-modal {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 30px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  column-gap: 15px;
+  margin-top: 15px;
+}
+
+.cancel {
+  background-color: white;
+  color: #ce2424;
+  border-color: #ce2424;
+  border-radius: 10px;
+  padding: 5px 10px;
+  font-size: 15px;
+}
+
+.cancel:hover {
+  background-color: #ce2424;
+  color: white;
+  border-color: #ce2424;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.confirm {
+  background-color: white;
+  color: green;
+  border-color: green;
+  border-radius: 10px;
+  padding: 5px 10px;
+  font-size: 15px;
+}
+
+.confirm:hover {
+  background-color: green;
+  color: white;
+  border-color: green;
+  cursor: pointer;
+  transition: 0.3s;
+}

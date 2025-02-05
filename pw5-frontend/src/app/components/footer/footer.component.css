@@ -28,7 +28,7 @@ cursor: pointer;
 }
   .footerAbout h3 {
     font-size: 1.8rem;
-    color: #F29C11;
+    color: #ce2424;
     margin-bottom: 10px;
   }
 
@@ -41,7 +41,7 @@ cursor: pointer;
   .footerSocial h4 {
     font-size: 1.2rem;
     margin-bottom: 10px;
-    color: #F29C11;
+    color: #ce2424;
   }
 
   .footerLinks ul {
