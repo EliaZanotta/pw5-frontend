@@ -401,3 +401,46 @@ mat-label {
   overflow: hidden;
   padding-right: 8px;
 }
+/* Allow horizontal scrolling for the tab list and table on smaller screens */
+.scrollable-tabs {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* for smooth scrolling on iOS */
+  /* Optionally, remove default padding/margin */
+  padding: 0;
+  margin: 0;
+}
+
+.table-wrapper {
+  /* By default, no horizontal scroll is applied.
+     You can always enable it to ensure a consistent behavior. */
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* for smooth scrolling on iOS */
+}
+
+/* Optional: Add some spacing or styling to the scrollable container */
+.scrollable-tabs {
+  padding: 0 10px;
+  margin-bottom: 10px;
+}
+
+/* Hide the paginator on mobile and tablet devices (up to 1024px) */
+@media (max-width: 1024px) {
+  mat-paginator {
+    display: none;
+  }
+  .user-menu {
+    display: flex;
+    flex-wrap: nowrap;       /* Keep buttons on one line */
+    justify-content: flex-start; /* Align items to the left */
+    gap: 10px;               /* Optional: add spacing between buttons */
+  }
+  .user-menu button {
+    margin: 0;  /* Remove any unintended margins */
+    white-space: nowrap; /* Prevent text from wrapping inside buttons */
+  }
+  /* Ensure horizontal scrolling is enabled on smaller devices */
+  .scrollable-tabs,
+  .table-wrapper {
+    overflow-x: auto;
+  }
+}
