@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import {FormControl} from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { AdminTableModule } from '../../../../modules/admin-table.module';
-import {Host, PartnerCompaniesService } from '../../../partner-companies/partner-companies.service';
+import { Host, PartnerCompaniesService } from '../../../partner-companies/partner-companies.service';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { HostService } from '../../../../host.service';
 
 @Component({
   selector: 'app-host-management',
@@ -13,10 +16,13 @@ import {Host, PartnerCompaniesService } from '../../../partner-companies/partner
   standalone: true,
   imports: [
     AdminTableModule,
+    MatIconModule,
+    MatButtonModule,
   ]
 })
 export class HostManagementComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'type', 'email', 'status'];
+  // Added the new "azioni" column to the displayedColumns array.
+  displayedColumns: string[] = ['name', 'type', 'email', 'status', 'azioni'];
   dataSource = new MatTableDataSource<Host>();
 
   // Filters and autocomplete options
@@ -27,9 +33,16 @@ export class HostManagementComponent implements OnInit {
   filteredNames!: Observable<string[]>;
   nameSearchControl = new FormControl('');
 
+  // For delete modal
+  isDeleteModalOpen = false;
+  hostToDelete: number | null = null;
+
   allHosts: Host[] = [];
 
-  constructor(private partnerCompaniesService: PartnerCompaniesService) {}
+  constructor(
+    private partnerCompaniesService: PartnerCompaniesService,
+    private hostService: HostService
+  ) {}
 
   async ngOnInit(): Promise<void> {
     await this.fetchHosts();
@@ -37,7 +50,8 @@ export class HostManagementComponent implements OnInit {
     // Initialize filtered options for autocomplete
     this.filteredNames = this.nameSearchControl.valueChanges.pipe(
       startWith(''),
-      map(value => this.filterOptions(value ?? '', this.allHosts.map(host => host.name || ''))));
+      map(value => this.filterOptions(value ?? '', this.allHosts.map(host => host.name || '')))
+    );
   }
 
   async fetchHosts(): Promise<void> {
@@ -55,7 +69,7 @@ export class HostManagementComponent implements OnInit {
 
   applyFilters(): void {
     this.dataSource.data = this.allHosts.filter(host => {
-      const matchesName = host.name.toLowerCase().includes(this.filters.name.toLowerCase());
+      const matchesName = host.name?.toLowerCase().includes(this.filters.name.toLowerCase()) ?? false;
       const matchesType = this.filters.type ? host.type === this.filters.type : true;
       return matchesName && matchesType;
     });
@@ -64,5 +78,30 @@ export class HostManagementComponent implements OnInit {
   private filterOptions(value: string, options: string[]): string[] {
     const filterValue = value.toLowerCase();
     return options.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
+  openDeleteModal(hostId: number): void {
+    this.hostToDelete = hostId;
+    this.isDeleteModalOpen = true;
+  }
+
+  closeDeleteModal(): void {
+    this.isDeleteModalOpen = false;
+    this.hostToDelete = null;
+  }
+
+  async confirmDelete(): Promise<void> {
+    if (this.hostToDelete !== null) {
+      try {
+        // Convert the host ID to string if needed by the hostService.
+        await this.hostService.deleteHost(String(this.hostToDelete));
+        console.log('Host deleted successfully');
+        await this.fetchHosts();
+      } catch (error) {
+        console.error('Error deleting host:', error);
+      } finally {
+        this.closeDeleteModal();
+      }
+    }
   }
 }
