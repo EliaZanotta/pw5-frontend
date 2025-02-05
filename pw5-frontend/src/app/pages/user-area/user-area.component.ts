@@ -18,7 +18,7 @@ import {
   MatTableDataSource
 } from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
-import {FormControl, ReactiveFormsModule} from '@angular/forms';
+import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {async, Observable, startWith} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
@@ -27,13 +27,19 @@ import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/mater
 import {EventsManagementComponent} from './admin dashboards/events-management/events-management.component';
 import {HostManagementComponent} from './admin dashboards/host-management/host-management.component';
 import {UserManagementComponent} from './admin dashboards/user-management/user-management.component';
+import {MatCheckbox} from '@angular/material/checkbox';
 
 
 @Component({
   selector: 'app-user-area',
   templateUrl: './user-area.component.html',
   styleUrls: ['./user-area.component.css'],
-  imports: [DatePipe, NgForOf, NgIf, FontAwesomeModule, RouterLink, MatFormField, MatLabel, MatInput, ReactiveFormsModule, MatAutocompleteTrigger, MatAutocomplete, MatOption, MatTable, MatColumnDef, MatHeaderCell, MatHeaderCellDef, MatCell, MatCellDef, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatPaginator, AsyncPipe, EventsManagementComponent, HostManagementComponent, UserManagementComponent],
+  imports: [DatePipe, NgForOf, NgIf, FontAwesomeModule, RouterLink,
+    MatFormField, MatLabel, MatInput, ReactiveFormsModule,
+    MatAutocomplete, MatOption,
+    MatTable, MatColumnDef, MatHeaderCell, MatCell, MatHeaderRow, MatHeaderRowDef, MatRow,
+    MatRowDef, MatPaginator, AsyncPipe, EventsManagementComponent,
+    HostManagementComponent, UserManagementComponent, MatCheckbox, FormsModule],
   standalone: true
 })
 export class UserAreaComponent implements OnInit, AfterViewInit {
@@ -60,6 +66,7 @@ export class UserAreaComponent implements OnInit, AfterViewInit {
   isConfirmTicketModalOpen: boolean = false;
   isRevokeEventModalOpen: boolean = false;
   selectedEvent: any = null;
+  isSpeaker = false;
 
   constructor(private router: Router, private authService: AuthService, private eventsService: EventsService, private snackBar: MatSnackBar, private topicService: TopicService, private userService: UserService) {
   }
@@ -72,6 +79,9 @@ export class UserAreaComponent implements OnInit, AfterViewInit {
         this.userUnfavTopics = this.allTopics.filter(topic =>
           !this.user?.userDetails?.favouriteTopics?.some(favTopic => favTopic.id === topic.id)
         );
+        if (this.user) {
+          this.isSpeaker = this.user.role === 'SPEAKER';
+        }
       }
       const savedTab = localStorage.getItem('selectedTab');
       if (savedTab) {
@@ -105,7 +115,6 @@ export class UserAreaComponent implements OnInit, AfterViewInit {
       } else {
         localStorage.setItem('selectedTab', this.selectedTab);
       }
-      // TODO: Se l'utente è SPEAKER, carica gli eventi associati utilizzando la inbox
     } catch (errorResponse: any) {
       if (errorResponse.status === 401) {
         await this.router.navigate(['/auth/login']);
@@ -169,7 +178,7 @@ export class UserAreaComponent implements OnInit, AfterViewInit {
       let event = response.event;
       if (event) {
         this.snackBar.open('Evento revocato con successo!', 'Chiudi', {
-          duration: 20000,
+          duration: 2000,
           verticalPosition: 'top',
           horizontalPosition: 'right',
           panelClass: 'success-snackbar'
@@ -181,7 +190,7 @@ export class UserAreaComponent implements OnInit, AfterViewInit {
     } catch (errorResponse) {
       if (errorResponse instanceof HttpErrorResponse) {
         this.snackBar.open("Errore durante la revoca dell'evento", 'Chiudi', {
-          duration: 20000,
+          duration: 2000,
           verticalPosition: 'top',
           horizontalPosition: 'right',
           panelClass: 'error-snackbar'
@@ -204,7 +213,7 @@ export class UserAreaComponent implements OnInit, AfterViewInit {
         let response = await this.userService.removeFavouriteTopic(topic.id);
         if (response.user) {
           this.snackBar.open('Argomento rimosso dai preferiti con successo!', 'Chiudi', {
-            duration: 20000,
+            duration: 2000,
             verticalPosition: 'top',
             horizontalPosition: 'right',
             panelClass: 'success-snackbar'
@@ -217,7 +226,7 @@ export class UserAreaComponent implements OnInit, AfterViewInit {
     } catch (errorResponse: any) {
       if (errorResponse instanceof HttpErrorResponse) {
         this.snackBar.open('Errore durante la rimozione dell\'argomento dai preferiti', 'Chiudi', {
-          duration: 20000,
+          duration: 2000,
           verticalPosition: 'top',
           horizontalPosition: 'right',
           panelClass: 'error-snackbar'
@@ -232,7 +241,7 @@ export class UserAreaComponent implements OnInit, AfterViewInit {
         let response = await this.userService.addFavouriteTopic(topic.id);
         if (response.user) {
           this.snackBar.open('Argomento aggiunto ai preferiti con successo!', 'Chiudi', {
-            duration: 20000,
+            duration: 2000,
             verticalPosition: 'top',
             horizontalPosition: 'right',
             panelClass: 'success-snackbar'
@@ -245,7 +254,7 @@ export class UserAreaComponent implements OnInit, AfterViewInit {
     } catch (errorResponse: any) {
       if (errorResponse instanceof HttpErrorResponse) {
         this.snackBar.open('Errore durante l\'aggiunta dell\'argomento ai preferiti', 'Chiudi', {
-          duration: 20000,
+          duration: 2000,
           verticalPosition: 'top',
           horizontalPosition: 'right',
           panelClass: 'error-snackbar'
@@ -254,8 +263,56 @@ export class UserAreaComponent implements OnInit, AfterViewInit {
     }
   }
 
-  becomeSpeaker() {
-    alert('🎤 Richiesta inviata con successo! Attendere la conferma da parte dell\'amministratore');
+  async toggleSpeaker(checked: boolean): Promise<void> {
+    try {
+      if (checked && this.user?.role !== 'SPEAKER') {
+        // Call service to become speaker
+        await this.userService.becomeSpeaker();
+        if (this.user) {
+          this.user.role = 'SPEAKER';
+          this.isSpeaker = true;
+        }
+        this.snackBar.open(
+          '🎤 Sei diventato uno speaker, puoi essere ora invitato a parlare agli eventi!',
+          'Chiudi',
+          {
+            duration: 2000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+            panelClass: 'success-snackbar'
+          }
+        );
+      } else if (!checked && this.user?.role !== 'USER') {
+        // Call service to revert role to user
+        await this.userService.becomeSpeaker();
+        if (this.user) {
+          this.user.role = 'USER';
+          this.isSpeaker = false;
+        }
+        this.snackBar.open(
+          '😢 Sei diventato uno user, non puoi più essere invitato a parlare agli eventi!',
+          'Chiudi',
+          {
+            duration: 2000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+            panelClass: 'error-snackbar'
+          }
+        );
+      }
+    } catch (error) {
+      console.error('Errore durante il cambio di ruolo', error);
+      // Optionally, display an error snackbar here
+      this.snackBar.open(
+        'Si è verificato un errore durante il cambio di ruolo!',
+        'Chiudi',
+        {
+          duration: 2000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right'
+        }
+      );
+    }
   }
 
   protected readonly async = async;

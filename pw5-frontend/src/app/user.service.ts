@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {lastValueFrom} from 'rxjs';
 
 export interface UserDetails {
@@ -66,5 +66,11 @@ export class UserService {
   async deleteUser(userId: string): Promise<void> {
     const url = `${this.baseUrl}${userId}`;
     await lastValueFrom(this.http.delete(url, { withCredentials: true }));
+  }
+  async becomeSpeaker(): Promise<any> {
+    const url = `${this.baseUrl}`;
+    return await lastValueFrom(
+      this.http.put<any>(url, null, {withCredentials: true})
+    );
   }
 }

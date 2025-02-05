@@ -229,14 +229,14 @@
           <p><strong>Cognome:</strong> {{ user?.lastName }}</p>
           <p><strong>Email:</strong> {{ user?.email }}</p>
         </div>
-        <div *ngIf="user?.role !== 'SPEAKER'" class="settings-become-speaker">
+        <div class="settings-become-speaker">
           <div>
             <h3>Sei uno speaker?</h3>
             <p>Clicca sul pulsante qui sotto per inviare la richiesta!</p>
           </div>
-          <button class="become-speaker-button" (click)="becomeSpeaker()">
+          <mat-checkbox [(ngModel)]="isSpeaker" (change)="toggleSpeaker($event.checked)">
             Diventa Speaker!
-          </button>
+          </mat-checkbox>
         </div>
         <div *ngIf="user?.status === 'UNVERIFIED'" class="settings-verify-email">
           <p>Account non ancora verificato</p>
