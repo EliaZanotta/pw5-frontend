@@ -10,35 +10,24 @@ import {faPlus, faMinus, faCircleExclamation} from '@fortawesome/free-solid-svg-
 import {Topic, TopicService} from '../../topic.service';
 import {UserService} from '../../user.service';
 import {
-  MatCell, MatCellDef,
-  MatColumnDef,
-  MatHeaderCell,
-  MatHeaderCellDef, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef,
-  MatTable,
   MatTableDataSource
 } from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
-import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormControl, FormsModule} from '@angular/forms';
 import {async, Observable, startWith} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {MatFormField, MatLabel} from '@angular/material/form-field';
-import {MatInput} from '@angular/material/input';
-import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/material/autocomplete';
 import {EventsManagementComponent} from './admin dashboards/events-management/events-management.component';
 import {HostManagementComponent} from './admin dashboards/host-management/host-management.component';
 import {UserManagementComponent} from './admin dashboards/user-management/user-management.component';
 import {MatCheckbox} from '@angular/material/checkbox';
+import {AdminTableModule} from '../../modules/admin-table.module';
 
 
 @Component({
   selector: 'app-user-area',
   templateUrl: './user-area.component.html',
   styleUrls: ['./user-area.component.css'],
-  imports: [DatePipe, NgForOf, NgIf, FontAwesomeModule, RouterLink,
-    MatFormField, MatLabel, MatInput, ReactiveFormsModule,
-    MatAutocomplete, MatOption,
-    MatTable, MatColumnDef, MatHeaderCell, MatCell, MatHeaderRow, MatHeaderRowDef, MatRow,
-    MatRowDef, MatPaginator, AsyncPipe, EventsManagementComponent,
+  imports: [ AdminTableModule, FontAwesomeModule, RouterLink, AsyncPipe, EventsManagementComponent,
     HostManagementComponent, UserManagementComponent, MatCheckbox, FormsModule],
   standalone: true
 })
@@ -204,6 +193,7 @@ export class UserAreaComponent implements OnInit, AfterViewInit {
     let response = await this.authService.logout();
     if (response) {
       await this.router.navigate(['/']);
+      window.location.reload();
     }
   }
 
