@@ -37,8 +37,4 @@ export class SpeakerCtaComponent implements OnInit {
       this.isUser = false;
     }
   }
-
-  navigateToSpeakerApplication() {
-    console.log('Navigating to speaker application page');
-  }
 }
