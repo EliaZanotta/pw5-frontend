@@ -88,3 +88,31 @@ mat-label {
   }
 }
 
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS */
+}
+
+
+@media (max-width: 768px) {
+  .filters-container {
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+  }
+
+  mat-form-field {
+    flex: 1 1 100%; /* Full width form field on small screens */
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  mat-paginator {
+    display: none;
+  }
+}
+@media (max-width: 1024px) {
+  mat-paginator {
+    display: none;
+  }
+}

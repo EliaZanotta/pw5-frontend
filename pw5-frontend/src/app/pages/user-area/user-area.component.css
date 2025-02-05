@@ -444,3 +444,12 @@ mat-label {
     overflow-x: auto;
   }
 }
+
+@media (max-width: 768px) {
+  .event-card2 {
+    height: 200px;
+  }
+  .settings {
+    flex-direction: column;
+  }
+}
