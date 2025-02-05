@@ -86,5 +86,9 @@ export class EventsService {
       this.http.delete(url, { responseType: 'text' })
     );
   }
-
+  async createEvent(event: Partial<Event>): Promise<any> {
+    return await lastValueFrom(
+      this.http.post<any>(this.baseUrl, event, { withCredentials: true })
+    );
+  }
 }

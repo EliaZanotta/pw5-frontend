@@ -1,12 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import {EventsService} from '../events/events.service';
 
 @Component({
   selector: 'app-event-registration-form',
   imports: [CommonModule, FormsModule],
   templateUrl: './event-registration-form.component.html',
   styleUrls: ['./event-registration-form.component.css'],
+  standalone: true
 })
 export class EventRegistrationFormComponent {
   event = {
@@ -14,6 +16,7 @@ export class EventRegistrationFormComponent {
     description: '',
     startDate: '',
     endDate: '',
+    place: '',
     speakerEmails: [] as string[],
     topics: [] as string[],
     maxParticipants: 0,
@@ -22,6 +25,8 @@ export class EventRegistrationFormComponent {
   };
   newTopic: string = '';
   newSpeakerEmail: string = '';
+
+  constructor(private eventsService: EventsService) {}
 
   addTopic() {
     if (this.newTopic.trim()) {
@@ -59,8 +64,28 @@ export class EventRegistrationFormComponent {
     }
   }
 
-  onSubmit() {
-    console.log('Event Data:', this.event);
-    // Add your form submission logic here
+  async onSubmit() {
+    const formattedEvent = {
+      startDate: this.event.startDate,
+      endDate: this.event.endDate,
+      place: this.event.place,
+      pendingSpeakerRequests: this.event.speakerEmails.map(email => ({
+        email: email,
+      })), topics: [...this.event.topics],
+      title: this.event.title,
+      maxParticipants: this.event.maxParticipants,
+      registeredParticipants: 0,
+      eventSubscription: this.event.eventType.toUpperCase() === 'FREE' ? 'FREE' : 'PAID',
+      description: this.event.description,
+    };
+
+    console.log('Formatted Event Data:', formattedEvent);
+
+    try {
+      await this.eventsService.createEvent(formattedEvent);
+      alert('Event created successfully!');
+    } catch (error) {
+      alert('Failed to create event. Please try again later.');
+    }
   }
 }

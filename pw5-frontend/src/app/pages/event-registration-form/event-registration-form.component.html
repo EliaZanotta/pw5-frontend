@@ -20,6 +20,16 @@
           name="description"
         ></textarea>
       </div>
+      <div>
+        <label for="place">Luogo:</label>
+        <input
+          type="text"
+          id="place"
+          required
+          [(ngModel)]="event.place"
+          name="place"
+        />
+      </div>
       <div class="date-container">
         <div>
           <label for="startDate">Data inizio:</label>
@@ -50,25 +60,20 @@
             id="speakerEmail"
             [(ngModel)]="newSpeakerEmail"
             name="newSpeakerEmail"
-            (keyup.enter)="addSpeakerEmail()"
+            (keydown.enter)="$event.preventDefault(); addSpeakerEmail()"
             placeholder="Clicca invio per aggiungere email"
           />
           <div class="emails-list">
-            <span
-              *ngFor="let email of event.speakerEmails; let i = index"
-              class="email-tag"
-            >
-              {{ email }}
-              <button
-                type="button"
-                class="delete-email"
-                (click)="removeSpeakerEmail(i)"
-              >
-                ×
-              </button>
-            </span>
+    <span
+      *ngFor="let email of event.speakerEmails; let i = index"
+      class="email-tag"
+    >
+      {{ email }}
+      <button type="button" class="delete-email" (click)="removeSpeakerEmail(i)">×</button>
+    </span>
           </div>
         </div>
+
         <div>
           <label for="topics">Topic:</label>
           <input
@@ -76,23 +81,17 @@
             id="topics"
             [(ngModel)]="newTopic"
             name="newTopic"
-            (keyup.enter)="addTopic()"
+            (keydown.enter)="$event.preventDefault(); addTopic()"
             placeholder="Clicca invio per aggiungere topic"
           />
           <div class="topics-list">
-            <span
-              *ngFor="let topic of event.topics; let i = index"
-              class="topic-tag"
-            >
-              {{ topic }}
-              <button
-                type="button"
-                class="delete-topic"
-                (click)="removeTopic(i)"
-              >
-                ×
-              </button>
-            </span>
+    <span
+      *ngFor="let topic of event.topics; let i = index"
+      class="topic-tag"
+    >
+      {{ topic }}
+      <button type="button" class="delete-topic" (click)="removeTopic(i)">×</button>
+    </span>
           </div>
         </div>
       </div>
