@@ -1,13 +1,14 @@
-<section class="speaker-cta" *ngIf="isLoggedIn">
-    <mat-card>
-        <mat-card-content>
-            <h2>Diventa un relatore</h2>
-            <p>Condividi la tua esperienza e ispira gli altri. Unisciti alla nostra comunità di relatori oggi stesso!
-            </p>
-            <button mat-raised-button color="primary" (click)="navigateToSpeakerApplication()">
-                <mat-icon>mic</mat-icon>
-                Candidati per parlare
-            </button>
-        </mat-card-content>
-    </mat-card>
+<!-- Sezione per gli utenti loggati -->
+<section class="speaker-cta" *ngIf="isLoggedIn && isUser">
+    <mat-card-content>
+        <h2>Diventa un relatore</h2>
+        <p>Condividi la tua esperienza e ispira gli altri. Unisciti alla nostra comunità di relatori oggi stesso!
+        </p>
+
+        <!-- Mostra il pulsante solo se l'utente è un USER -->
+        <button mat-raised-button (click)="navigateToSpeakerApplication()">
+            <mat-icon>mic</mat-icon>
+            Candidati per parlare
+        </button>
+    </mat-card-content>
 </section>

@@ -1,6 +1,6 @@
 .speaker-cta {
-    padding: 2rem;
-    background-color: #f5f5f5;
+    padding: 3rem;
+    background: radial-gradient(circle, rgba(58, 0, 30, 1) 0%, rgba(206, 36, 36, 1) 100%);
     text-align: center;
 }
 
@@ -11,25 +11,29 @@
 }
 
 h2 {
-    color: #ce2424;
-    margin-bottom: 1rem;
+    color: #ffffff;
+    font-size: 32px;
 }
 
 p {
-    color: #3a001e;
-    margin-bottom: 1.5rem;
+    color: #ffffff;
+    font-size: 19.2px;
 }
 
 button {
-    font-size: 1.1rem;
+    background: white;
+    color: #3a001e;
+    padding: 10px 20px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: transform 0.3s, background 0.3s;
+    text-align: center;
+}
+
+button:hover {
+    transform: scale(1.05);
 }
 
 mat-icon {
     margin-right: 0.5rem;
-}
-
-.mat-mdc-raised-button.mat-primary {
-    --mdc-protected-button-container-color: #ce2424;
-    --mdc-protected-button-label-text-color: white;
-    font-family: 'Montserrat', sans-serif;
 }
