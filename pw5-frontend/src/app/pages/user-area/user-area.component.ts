@@ -68,7 +68,7 @@ export class UserAreaComponent implements OnInit, AfterViewInit {
       this.allTopics = (await this.topicService.getALlTopics()).topics;
       if (this.allTopics) {
         this.userUnfavTopics = this.allTopics.filter(topic =>
-          !this.user?.userDetails?.favouriteTopics?.some(favTopic => favTopic.id === topic.id)
+          !this.user?.userDetails?.favouriteTopics?.some((favTopic: Topic) => favTopic.id === topic.id)
         );
         if (this.user) {
           this.isSpeaker = this.user.role === 'SPEAKER';
