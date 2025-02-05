@@ -4,10 +4,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService, User } from '../../auth/auth.service';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-speaker-cta',
-  imports: [NgIf, MatCardModule, MatButtonModule, MatIconModule],
+  imports: [NgIf, MatCardModule, MatButtonModule, MatIconModule, RouterLink],
   templateUrl: './speaker-cta.component.html',
   styleUrl: './speaker-cta.component.css'
 })
@@ -37,4 +38,6 @@ export class SpeakerCtaComponent implements OnInit {
       this.isUser = false;
     }
   }
+
+  protected readonly localStorage = localStorage;
 }
