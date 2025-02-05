@@ -5,7 +5,9 @@
   padding: 0;
   text-align: center;
 }
-
+.padding-bottom {
+  padding-bottom: 100px; /* Adjust the value as needed */
+}
 /* Immagine di copertina - Full Width */
 .user-banner {
   width: 100%;

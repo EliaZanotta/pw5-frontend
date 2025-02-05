@@ -62,6 +62,7 @@ export class UserAreaComponent implements OnInit, AfterViewInit {
   }
 
   async ngOnInit(): Promise<void> {
+    this.dataSource.paginator = this.paginator;
     try {
       this.user = (await this.authService.getLoggedUser()).user;
       this.allTopics = (await this.topicService.getALlTopics()).topics;
@@ -79,7 +80,6 @@ export class UserAreaComponent implements OnInit, AfterViewInit {
       } else {
         localStorage.setItem('selectedTab', this.selectedTab);
       }
-      // TODO: Se l'utente è SPEAKER, carica gli eventi associati utilizzando la inbox
       if (this.isSpeaker) {
         const speakerRequestsWithEvent = await firstValueFrom(this.inboxservice.getSpeakerRequestsWithEventInfo());
         this.eventsAsSpeaker = speakerRequestsWithEvent.filter(request => request.status === 'CONFIRMED' && !!request.event
@@ -126,6 +126,7 @@ export class UserAreaComponent implements OnInit, AfterViewInit {
   }
 
   applyFilter(value: string | null) {
+    this.dataSource.paginator = this.paginator;
     this.dataSource.filter = (value ?? '').trim().toLowerCase();
   }
 

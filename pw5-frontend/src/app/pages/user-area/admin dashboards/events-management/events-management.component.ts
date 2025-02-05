@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { EventsService, Event } from '../../../events/events.service';
 import { AdminTableModule } from '../../../../modules/admin-table.module';
+import {MatPaginator} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-events-management',
@@ -34,6 +35,7 @@ export class EventsManagementComponent implements OnInit {
     await this.fetchEvents();
 
     // Initialize autocomplete filtering for both fields
+    this.dataSource.paginator = this.paginator;
     this.filteredTitleOptions = this.titleSearchControl.valueChanges.pipe(
       startWith(''),
       map(value => this.filterOptions(value || '', Array.from(new Set(this.allEvents.map(event => event.title || '')))))
@@ -59,8 +61,12 @@ export class EventsManagementComponent implements OnInit {
     const filterValue = value.toLowerCase();
     return options.filter(option => option.toLowerCase().includes(filterValue));
   }
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   // Filter the table based on title search input
   applyTitleFilter(): void {
+    this.dataSource.paginator = this.paginator;
     const filterValue = this.titleSearchControl.value?.trim().toLowerCase() || '';
     this.dataSource.data = this.allEvents.filter(event =>
       event.title?.toLowerCase().includes(filterValue)

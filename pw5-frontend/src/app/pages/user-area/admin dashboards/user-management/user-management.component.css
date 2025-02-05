@@ -10,6 +10,9 @@
   align-items: center;
   z-index: 1000;
 }
+.padding-bottom {
+  padding-bottom: 100px; /* Adjust the value as needed */
+}
 .autocomplete-panel-top {
   transform: translateY(-100%);
 }

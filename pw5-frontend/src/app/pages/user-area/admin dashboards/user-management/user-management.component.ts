@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -7,6 +7,7 @@ import { AdminTableModule } from '../../../../modules/admin-table.module';
 import { User, UserService } from '../../../../user.service';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-user-management',
@@ -35,11 +36,15 @@ export class UserManagementComponent implements OnInit {
   filteredNames!: Observable<string[]>;
   nameSearchControl = new FormControl('');
 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+
   constructor(private userService: UserService) {}
 
   async ngOnInit(): Promise<void> {
     try {
       await this.fetchUsers();
+      this.dataSource.paginator = this.paginator;
       this.dataSource.data = this.allUsers;
 
       // Initialize filtered options for autocomplete
@@ -51,6 +56,7 @@ export class UserManagementComponent implements OnInit {
       console.error('Error fetching users:', error);
     }
   }
+
 
   async fetchUsers(): Promise<void> {
     try {
@@ -64,11 +70,13 @@ export class UserManagementComponent implements OnInit {
   }
 
   applyFilters(): void {
+    this.dataSource.paginator = this.paginator;
     this.dataSource.data = this.allUsers.filter(user => {
       const matchesName = (user.firstName + ' ' + user.lastName).toLowerCase().includes(this.filters.name.toLowerCase());
       const matchesRole = this.filters.role ? user.role === this.filters.role : true;
       const matchesStatus = this.filters.status ? user.status === this.filters.status : true;
       return matchesName && matchesRole && matchesStatus;
+
     });
   }
 

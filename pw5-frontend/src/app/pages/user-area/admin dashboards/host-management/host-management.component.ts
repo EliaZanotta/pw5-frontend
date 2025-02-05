@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -8,6 +8,7 @@ import { Host, PartnerCompaniesService } from '../../../partner-companies/partne
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { HostService } from '../../../../host.service';
+import {MatPaginator} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-host-management',
@@ -48,6 +49,7 @@ export class HostManagementComponent implements OnInit {
     await this.fetchHosts();
 
     // Initialize filtered options for autocomplete
+    this.dataSource.paginator = this.paginator;
     this.filteredNames = this.nameSearchControl.valueChanges.pipe(
       startWith(''),
       map(value => this.filterOptions(value ?? '', this.allHosts.map(host => host.name || '')))
@@ -67,7 +69,10 @@ export class HostManagementComponent implements OnInit {
     }
   }
 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   applyFilters(): void {
+    this.dataSource.paginator = this.paginator;
     this.dataSource.data = this.allHosts.filter(host => {
       const matchesName = host.name?.toLowerCase().includes(this.filters.name.toLowerCase()) ?? false;
       const matchesType = this.filters.type ? host.type === this.filters.type : true;
