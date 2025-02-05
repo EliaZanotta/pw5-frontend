@@ -41,6 +41,7 @@
 .event-title {
   font-weight: bold;
   margin-top: 8px;
+  margin-bottom: 8px;
   color: black;
   display: flex;
   align-items: center; /* Center title and icon vertically */
@@ -66,7 +67,7 @@
 .event-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  gap: 20px;
 }
 
 /* Hero section */
@@ -110,7 +111,9 @@
 
 /* Event section */
 .event-container {
-  padding: 20px;
+  padding: 25px;
+  
+ 
 }
 
 .category-header {
@@ -164,45 +167,12 @@ justify-content: center;
 
 
 
-
-/* Responsive styles */
-@media (max-width: 1000px) and (min-width: 768px) {
-  .filters-container {
-    flex-direction: column; /* Stack filters vertically on tablets */
-  }
-
+@media screen and (max-width: 1025px) and (min-width: 768px) {
   .event-grid {
-    grid-template-columns: repeat(2, 1fr); /* Adjust grid columns for tablets */
+    grid-template-columns: repeat(3, 1fr);
   }
-
-  .container {
-    width: 50%;
-    padding: 1.5rem;
-  }
-
-  label {
-    font-size: 1.2rem; /* Increased font size for labels */
-  }
-
-  input,
-  textarea,
-  select {
-    font-size: 1.2rem; /* Increased font size for inputs */
-  }
-
-  .container{
-    display: flex;
-    margin: auto;
-  }
-  .filter-section {
-    max-width: 100%;
-    
-    
-  }
-  .event-container {
-    width: 70%;
-    margin: auto;
-  }
+ 
+  
 }
 
 @media (max-width: 767px) {
@@ -211,7 +181,9 @@ justify-content: center;
   }
 
   .event-grid {
-    grid-template-columns: 1fr; /* Adjust grid columns for smartphones */
+    display: grid;
+    grid-template-columns: 1fr; 
+    gap:20px;/* Adjust grid columns for smartphones */
   }
 
   .container {

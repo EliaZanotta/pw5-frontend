@@ -53,4 +53,21 @@ mat-label {
     flex: 1 1 100%; /* Full width on small screens */
     max-width: 100%;
   }
+
+
+}
+
+@media screen and (max-width: 1025px) and (min-width: 768px) {
+
+ 
+ 
+  .filters-container {
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+  }
+
+  mat-form-field {
+    flex: 2 2;
+    max-width: 100%;
+  }
+  
 }
