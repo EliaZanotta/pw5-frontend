@@ -2,7 +2,7 @@ import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {Router, RouterLink} from '@angular/router';
 import {AuthService, User} from '../../auth/auth.service';
 import {Event, EventsService} from '../events/events.service';
-import {AsyncPipe, DatePipe, NgForOf, NgIf} from '@angular/common';
+import {AsyncPipe} from '@angular/common';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {HttpErrorResponse} from '@angular/common/http';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
@@ -14,11 +14,12 @@ import {
 } from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {FormControl, FormsModule} from '@angular/forms';
-import {async, Observable, startWith} from 'rxjs';
+import {async, Observable, startWith, firstValueFrom} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {EventsManagementComponent} from './admin dashboards/events-management/events-management.component';
 import {HostManagementComponent} from './admin dashboards/host-management/host-management.component';
 import {UserManagementComponent} from './admin dashboards/user-management/user-management.component';
+import {InboxService} from '../../components/header/inbox.service';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {AdminTableModule} from '../../modules/admin-table.module';
 
@@ -57,7 +58,7 @@ export class UserAreaComponent implements OnInit, AfterViewInit {
   selectedEvent: any = null;
   isSpeaker = false;
 
-  constructor(private router: Router, private authService: AuthService, private eventsService: EventsService, private snackBar: MatSnackBar, private topicService: TopicService, private userService: UserService) {
+  constructor(private router: Router, private authService: AuthService, private eventsService: EventsService, private snackBar: MatSnackBar, private topicService: TopicService, private userService: UserService, private inboxservice: InboxService) {
   }
 
   async ngOnInit(): Promise<void> {
@@ -79,6 +80,12 @@ export class UserAreaComponent implements OnInit, AfterViewInit {
         localStorage.setItem('selectedTab', this.selectedTab);
       }
       // TODO: Se l'utente è SPEAKER, carica gli eventi associati utilizzando la inbox
+      if (this.isSpeaker) {
+        const speakerRequestsWithEvent = await firstValueFrom(this.inboxservice.getSpeakerRequestsWithEventInfo());
+        this.eventsAsSpeaker = speakerRequestsWithEvent.filter(request => request.status === 'CONFIRMED' && !!request.event
+        ).map(request => request.event as Event);
+
+      }
     } catch (errorResponse: any) {
       if (errorResponse.status === 401) {
         await this.router.navigate(['/auth/login']);
