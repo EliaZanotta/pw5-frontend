@@ -159,23 +159,6 @@
       </div>
     </div>
 
-    <!-- Topics Preferiti (NON ADMIN) -->
-    <div *ngIf="selectedTab === 'manageTopics' && user?.role !== 'ADMIN'">
-      <h2>Topics Preferiti</h2>
-      <p *ngIf="user?.userDetails?.favouriteTopics?.length === 0">Nessun topic preferito</p>
-      <div class="topics-list">
-        <div class="user-fav-topic-card" *ngFor="let topic of user?.userDetails?.favouriteTopics">
-          <p>{{ topic.name }}</p>
-          <fa-icon [icon]="faMinus" (click)="removeFavouriteTopic(topic)"></fa-icon>
-        </div>
-      </div>
-      <div class="topics-list">
-        <div class="user-unfav-topic-card" *ngFor="let topic of userUnfavTopics">
-          <p>{{ topic.name }}</p>
-          <fa-icon [icon]="faPlus" (click)="addFavouriteTopic(topic)"></fa-icon>
-        </div>
-      </div>
-    </div>
 
     <!-- Gestisci Topics (ADMIN) -->
     <div *ngIf="selectedTab === 'manageTopics' && user?.role === 'ADMIN'">
