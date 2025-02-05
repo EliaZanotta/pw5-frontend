@@ -17,11 +17,13 @@ export class WizardService {
         this.userChoice = choice;
     }
 
-    getUserChoice() {
-        return this.userChoice;
-    }
+  getUserChoice(): string {
+    const userChoiceCookie = document.cookie.split('; ').find(row => row.startsWith('USER_CHOICE='));
+    return userChoiceCookie ? userChoiceCookie.split('=')[1] : '';
+  }
 
-    setStep(step: number) {
+
+  setStep(step: number) {
         this.step = step;
     }
 

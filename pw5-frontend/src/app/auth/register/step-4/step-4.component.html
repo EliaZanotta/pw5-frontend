@@ -2,7 +2,7 @@
   <img class="background-image" src="/assets/registerImage.jpg" alt="Register Image"/>
 
   <!--wizard section-->
-  <section class="wizard-nav" *ngIf="host?.hostStatus === 'APPROVED'">
+  <section class="wizard-nav" >
     <div class="wizard-nav-container" [attr.data-user-choice]="userChoice">
       <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= 1}"
            *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(1))">
