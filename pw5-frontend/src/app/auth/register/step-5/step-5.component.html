@@ -37,7 +37,7 @@
       <p *ngIf="host?.type === 'COMPANY'">Il tuo account aziendale è stato creato con successo.</p>
       <p *ngIf="host?.type === 'PARTNER'">Il tuo account partner è stato creato con successo.</p>
       <p>Accesso effettuato come {{ host?.type === 'COMPANY' ? 'Azienda' : 'Partner' }}</p>
-      <p>Stai per essere reindirizzato alla home.</p>
+      <a routerLink="/" class="congratulation-button">Vai alla home</a>
     </div>
   </section>
 </div>

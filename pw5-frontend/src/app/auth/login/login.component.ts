@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {NgIf} from '@angular/common';
 import {Router, RouterLink} from '@angular/router';
@@ -17,7 +17,7 @@ import {HttpErrorResponse} from '@angular/common/http';
   styleUrls: ['./login.component.css']
 })
 
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   activeTab: string = 'utente';
   utenteEmail: string = '';
   utentePassword: string = '';
@@ -30,6 +30,15 @@ export class LoginComponent {
   }
 
   constructor(private authService: AuthService, private router: Router) {
+  }
+
+  async ngOnInit() {
+    if (document.cookie.includes('SESSION_ID')) {
+      await this.router.navigate(['/']);
+    }
+    if (localStorage.getItem('userChoice')) {
+      localStorage.removeItem('userChoice');
+    }
   }
 
   async handleUtenteSubmit() {

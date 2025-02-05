@@ -35,10 +35,6 @@ export class Step5Component implements OnInit {
               this.host = response.host;
               if (this.host?.hashedPsw === this.host?.provvisoryPsw) {
                 await this.router.navigate(['/auth/register/step-4']);
-              } else {
-                setTimeout(async () => {
-                  await this.router.navigate(['/']);
-                }, 3000);
               }
             }
           } catch (errorResponse) {

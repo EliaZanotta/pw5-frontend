@@ -57,11 +57,7 @@ export class Step3Component implements OnInit {
 
                   if (response.user) {
                     this.user = response.user;
-                    if (this.user?.status === 'VERIFIED') {
-                      setTimeout(async () => {
-                        localStorage.removeItem('userChoice');
-                      }, 3000);
-                    } else {
+                    if (this.user?.status !== 'VERIFIED') {
                       await this.router.navigate(['/auth/register/step-2']);
                     }
                   }
