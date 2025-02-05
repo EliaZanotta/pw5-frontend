@@ -12,11 +12,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 })
 export class BookingComponent {
 
-  constructor(public dialogRef: MatDialogRef<BookingComponent>, @Inject(MAT_DIALOG_DATA) public data: {
-    id: string,
-    eventName: string
-  }, private snackBar: MatSnackBar, private eventsService: EventsService) {
-  }
+  constructor(public dialogRef: MatDialogRef<BookingComponent>, @Inject(MAT_DIALOG_DATA) public data: { id: string, eventName: string }, private snackBar: MatSnackBar, private eventsService: EventsService) {}
 
   closeDialog() {
     this.dialogRef.close();
@@ -26,8 +22,6 @@ export class BookingComponent {
     const payload = {
       id: this.data.id
     }
-
-    console.log(payload);
 
     try {
       let response = await this.eventsService.bookEvent(payload);

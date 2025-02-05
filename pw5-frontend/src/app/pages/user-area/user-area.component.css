@@ -1,0 +1,455 @@
+/* Contenitore principale */
+.user-container {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+.padding-bottom {
+  padding-bottom: 100px; /* Adjust the value as needed */
+}
+/* Immagine di copertina - Full Width */
+.user-banner {
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+}
+
+.banner-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Profilo Utente */
+.user-profile {
+  margin-top: -60px;
+  text-align: center;
+}
+
+.user-avatar {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  border: 5px solid white;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.user-name {
+  font-size: 26px;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+.user-role {
+  font-size: 18px;
+  color: #777;
+}
+
+/* Menu */
+.user-menu {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin: 20px 0;
+}
+
+.user-menu button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 10px 15px;
+  border-radius: 20px;
+  transition: background 0.3s;
+}
+
+.user-menu .active {
+  background: #f0f0f0;
+  font-weight: bold;
+}
+
+/* Riga divisoria */
+.divider {
+  width: 90%;
+  height: 1px;
+  background: #ddd;
+  margin: 10px auto;
+}
+
+/* Contenuti */
+.user-content {
+  max-width: 80%;
+  margin: auto auto 30px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 8px;
+  text-align: left;
+}
+
+/* Card evento */
+.event-card {
+  display: flex;
+  align-items: stretch;
+  background: #f9f9f9;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  height: 290px;
+  margin-bottom: 20px;
+}
+
+.event-card:hover {
+  transform: scale(1.02);
+}
+
+/* Card 2 evento */
+.event-card2 {
+  display: flex;
+  align-items: stretch;
+  background: #f9f9f9;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  height: 290px;
+  margin-bottom: 20px;
+}
+
+.event-card2:hover {
+  transform: scale(1.02);
+}
+
+/* Immagine dell'evento */
+.event-image {
+  width: 30%;
+  height: 100%;
+  display: flex;
+}
+
+.event-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+/* Dettagli evento */
+.event-info {
+  width: 70%;
+  padding: 20px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Impostazioni */
+.settings {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.settings-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.settings-verify-email {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.settings-become-speaker {
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  gap: 10px;
+}
+
+/* Pulsante per diventare speaker */
+.become-speaker-button {
+  background: #2196f3;
+  color: white;
+  border: none;
+  padding: 14px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+/* Pulsante logout */
+.logout-button {
+  background: #f44336;
+  color: white;
+  border: none;
+  padding: 14px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+.logout-button:hover {
+  background: #d32f2f;
+}
+
+/* Pulsante per verifica email */
+.verify-email-button {
+  background: #2196f3;
+  color: white;
+  border: none;
+  padding: 14px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+.verify-email-button:hover {
+  background: #1976d2;
+}
+
+/* Pulsante indietro */
+.back-section {
+  margin-top: 30px;
+}
+
+.back-button {
+  background: #ff5722;
+  color: white;
+  border: none;
+  padding: 14px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+.back-button:hover {
+  background: #e65100;
+}
+
+/* Pulsante per scaricare il ticket */
+.download-button {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s ease-in-out;
+  align-self: start;
+}
+
+.download-button:hover {
+  background: #388e3c;
+}
+
+/* Pulsante per eliminare il ticket */
+.revoke-button {
+  background: #f44336;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s ease-in-out;
+  align-self: start;
+}
+
+.revoke-button:hover {
+  background: #d32f2f;
+}
+
+/* Stile per la modale */
+.modal {
+  display: flex;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Scuro per evidenziare la modale */
+  justify-content: center;
+  align-items: center;
+}
+
+/* Contenuto della modale */
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+/* Pulsante per chiudere la modale */
+.close {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Pulsante di conferma */
+.confirm-button {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.confirm-button:hover {
+  background: #388e3c;
+}
+
+/* Sezione Topics */
+.topics-list {
+  display: flex;
+  gap: 10px;
+  max-width: 80%;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.user-fav-topic-card {
+  max-width: max-content;
+  max-height: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background: #90f585;
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.user-fav-topic-card:hover {
+  transform: scale(1.04);
+}
+
+.user-unfav-topic-card {
+  max-width: max-content;
+  max-height: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background: #f0f0f0;
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.user-unfav-topic-card:hover {
+  transform: scale(1.04);
+}
+
+/* Stile per la notifica se status è UNVERIFIED */
+.settings-tab {
+  position: relative;
+}
+
+.settings-tab span {
+  position: absolute;
+  right: -5px;
+  top: -5px;
+  z-index: 10;
+  color: #ce2424;
+}
+.filters-container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0 -30px;
+  width: calc(100% + 60px); /* Adjust width to match page container */
+}
+mat-form-field {
+  flex: 1 1 auto;
+  min-width: 220px;
+  max-width: 400px;
+}
+@media (max-width: 768px) {
+  .filters-container {
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+  }
+
+  mat-form-field {
+    flex: 1 1 100%; /* Full width form field on small screens */
+    max-width: 100%;
+  }
+}
+mat-label {
+  overflow: hidden;
+  padding-right: 8px;
+}
+/* Allow horizontal scrolling for the tab list and table on smaller screens */
+.scrollable-tabs {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* for smooth scrolling on iOS */
+  /* Optionally, remove default padding/margin */
+  padding: 0;
+  margin: 0;
+}
+
+.table-wrapper {
+  /* By default, no horizontal scroll is applied.
+     You can always enable it to ensure a consistent behavior. */
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* for smooth scrolling on iOS */
+}
+
+/* Optional: Add some spacing or styling to the scrollable container */
+.scrollable-tabs {
+  padding: 0 10px;
+  margin-bottom: 10px;
+}
+
+/* Hide the paginator on mobile and tablet devices (up to 1024px) */
+@media (max-width: 1024px) {
+  mat-paginator {
+    display: none;
+  }
+  .user-menu {
+    display: flex;
+    flex-wrap: nowrap;       /* Keep buttons on one line */
+    justify-content: flex-start; /* Align items to the left */
+    gap: 10px;               /* Optional: add spacing between buttons */
+  }
+  .user-menu button {
+    margin: 0;  /* Remove any unintended margins */
+    white-space: nowrap; /* Prevent text from wrapping inside buttons */
+  }
+  /* Ensure horizontal scrolling is enabled on smaller devices */
+  .scrollable-tabs,
+  .table-wrapper {
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .event-card2 {
+    height: 200px;
+  }
+  .settings {
+    flex-direction: column;
+  }
+}

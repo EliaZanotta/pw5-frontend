@@ -1,17 +1,27 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {lastValueFrom} from 'rxjs';
+import {Event} from '../pages/events/events.service';
+import {Topic} from '../topic.service';
 
-export class User {
-  id: number | undefined;
-  firstName: string | undefined;
-  lastName: string | undefined;
-  email: string | undefined;
-  status: string | undefined;
-  role: string | undefined;
-
+class UserDetails {
+  archivedEvents: Event[] | undefined;
+  bookedEvents: Event[] | undefined;
+  favouriteTopics: Topic[] | undefined;
   constructor() {
   }
+}
+
+export class User {
+    id: number | undefined;
+    firstName: string | undefined;
+    lastName: string | undefined;
+    email: string | undefined;
+    status: string | undefined;
+    role: string | undefined;
+    userDetails: UserDetails | undefined;
+    constructor() {
+    }
 }
 
 @Injectable({

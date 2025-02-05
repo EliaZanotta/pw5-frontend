@@ -1,0 +1,106 @@
+.delete-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.autocomplete-panel-top {
+  transform: translateY(-100%);
+}
+.padding-bottom {
+  padding-bottom: 100px; /* Adjust the value as needed */
+}
+
+.delete-modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  text-align: center;
+}
+
+.modal-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.filters-container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0 -30px;
+  width: calc(100% + 60px); /* Adjust width to match page container */
+}
+
+mat-form-field {
+  flex: 1 1 auto;
+  min-width: 220px;
+  max-width: 400px;
+}
+
+.clear-filters-btn {
+  background-color: transparent;
+  color: #f44336;
+  border: none;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-left: 20px;
+}
+
+mat-label {
+  overflow: hidden;
+  padding-right: 8px;
+}
+
+.clear-filters-btn fa-icon {
+  font-size: 24px;
+}
+
+.clear-filters-btn:hover {
+  background-color: rgba(244, 67, 54, 0.1);
+  color: black;
+}
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS */
+}
+
+
+@media (max-width: 768px) {
+  .filters-container {
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+  }
+
+  mat-form-field {
+    flex: 1 1 100%; /* Full width form field on small screens */
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  mat-paginator {
+    display: none;
+  }
+}
+@media (max-width: 1024px) {
+  mat-paginator {
+    display: none;
+  }
+}

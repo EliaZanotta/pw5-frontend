@@ -32,4 +32,7 @@ export class HostService {
   async changePassword(payload:{ oldPsw: string, newPsw: string }): Promise<any> {
     return await lastValueFrom(this.http.put<any>(`${this.baseUrl}change-password`, payload, { withCredentials: true }));
   }
+  async deleteHost(hostId: string): Promise<void> {
+    return await lastValueFrom(this.http.delete<any>(`${this.baseUrl}${hostId}`, { withCredentials: true }));
+  }
 }

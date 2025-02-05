@@ -30,21 +30,19 @@ export class PartnerCompaniesComponent implements OnInit {
     private partnerCompaniesService: PartnerCompaniesService
   ) {}
 
-  ngOnInit(): void {
-    // Fetch partner companies from the service
-    this.partnerCompaniesService.getAllHosts().subscribe(
-      (companies: Host[]) => {
-        this.partnerCompanies = companies;
-        this.filteredCompanies = companies;
-        this.filteredNames = companies.map(c => c.name);
-        this.isLoading = false;
-      },
-      (error: any) => {
-        console.error('Error fetching companies:', error);
-        this.errorMessage = 'Errore nel recupero delle aziende. Riprova più tardi.';
-        this.isLoading = false;
-      }
-    );
+  async ngOnInit(): Promise<void> {
+    try {
+      // Fetch partner companies from the service
+      const companies = ((await this.partnerCompaniesService.getAllHosts()).hosts);
+      this.partnerCompanies = companies;
+      this.filteredCompanies = companies;
+      this.filteredNames = companies.map(c => c.name);
+      this.isLoading = false;
+    } catch (error) {
+      console.error('Error fetching companies:', error);
+      this.errorMessage = 'Errore nel recupero delle aziende. Riprova più tardi.';
+      this.isLoading = false;
+    }
   }
 
   applyFilters(): void {
