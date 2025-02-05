@@ -180,17 +180,23 @@
     <!-- Gestisci Topics (ADMIN) -->
     <div *ngIf="selectedTab === 'manageTopics' && user?.role === 'ADMIN'">
       <h2>Gestisci Topics</h2>
-      <div>
-        <mat-form-field class="search-box">
+      <div class="filters-container">
+        <mat-form-field appearance="outline" class="search-box" floatLabel="auto">
           <mat-label>Cerca topic</mat-label>
-          <input matInput [formControl]="searchControl" (keyup)="applyFilter(searchControl.value ?? '')">
-          <mat-autocomplete #auto="matAutocomplete">
+          <input
+            matInput
+            [formControl]="searchControl"
+            [matAutocomplete]="topicAuto"
+            (keyup)="applyFilter(searchControl.value ?? '')"
+          >
+          <mat-autocomplete #topicAuto="matAutocomplete">
             <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
               {{ option }}
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
       </div>
+
 
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
         <ng-container matColumnDef="name">

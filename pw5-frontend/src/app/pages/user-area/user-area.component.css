@@ -154,7 +154,7 @@
 .settings-user-info {
   display: flex;
   flex-direction: column;
-  gap: 2♦0px;
+  gap: 20px;
 }
 
 .settings-verify-email {
@@ -368,4 +368,33 @@
   top: -5px;
   z-index: 10;
   color: #ce2424;
+}
+.filters-container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0 -30px;
+  width: calc(100% + 60px); /* Adjust width to match page container */
+}
+mat-form-field {
+  flex: 1 1 auto;
+  min-width: 220px;
+  max-width: 400px;
+}
+@media (max-width: 768px) {
+  .filters-container {
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+  }
+
+  mat-form-field {
+    flex: 1 1 100%; /* Full width form field on small screens */
+    max-width: 100%;
+  }
+}
+mat-label {
+  overflow: hidden;
+  padding-right: 8px;
 }
