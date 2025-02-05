@@ -24,23 +24,61 @@ export class Step5Component implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    try {
-      this.host = (await this.authService.getLoggedHost()).host;
-      if (this.host) {
-        this.userChoice = 'host';
+    if (document.cookie.includes('SESSION_ID')) {
+      const userChoice = localStorage.getItem('userChoice');
+      if (userChoice) {
+        this.userChoice = userChoice;
+        if (this.userChoice === 'host') {
+          try {
+            let response = await this.authService.getLoggedHost();
+            if (response.host) {
+              this.host = response.host;
+              if (this.host?.hashedPsw === this.host?.provvisoryPsw) {
+                await this.router.navigate(['/auth/register/step-4']);
+              } else {
+                setTimeout(async () => {
+                  await this.router.navigate(['/']);
+                }, 3000);
+              }
+            }
+          } catch (errorResponse) {
+            if (errorResponse instanceof HttpErrorResponse) {
+              if (errorResponse.status === 404) {
+                try {
+                  let response = await this.authService.getLoggedUser();
+                  if (response.user) {
+                    let user = response.user;
+                    if (user.status !== 'VERIFIED') {
+                      await this.router.navigate(['/auth/register/step-2']);
+                    }
+                  }
+                } catch (errorResponse) {
+                  if (errorResponse instanceof HttpErrorResponse) {
+                    console.error('Error getting logged user:', errorResponse);
+                    await this.router.navigate(['/auth/login']);
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        if (this.userChoice === 'user') {
+          try {
+            let response = await this.authService.getLoggedUser();
+            if (response.user) {
+              await this.router.navigate(['/']);
+            }
+          } catch (errorResponse) {
+            if (errorResponse instanceof HttpErrorResponse) {
+              console.error('Error getting logged user:', errorResponse);
+              await this.router.navigate(['/auth/login']);
+            }
+          }
+        }
       }
-    } catch (e) {
-      if (e instanceof HttpErrorResponse && e.status === 401) {
-        await this.router.navigate(['/auth/register']);
-        document.cookie = 'USER_CHOICE=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
-      }
-      console.error('Error while getting logged host:', e);
+    } else {
+      await this.router.navigate(['/auth/login']);
     }
-
-  }
-
-  deleteUserChoiceCookie() {
-    document.cookie = 'USER_CHOICE=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
-    this.userChoice = '';
   }
 }

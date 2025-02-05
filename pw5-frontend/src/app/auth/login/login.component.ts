@@ -4,6 +4,7 @@ import {NgIf} from '@angular/common';
 import {Router, RouterLink} from '@angular/router';
 import {AuthService} from '../auth.service';
 import {firstValueFrom} from 'rxjs';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -43,17 +44,21 @@ export class LoginComponent {
     }
 
     try {
-        await this.authService.login(payload);
-      await this.router.navigate(['/']);
-    } catch (error) {
-      // // if response is a 401 error, add an error message
-      if (typeof error === 'object' && error !== null && 'status' in error && (error as any).status === 401) {
-        this.showErrorMessage('Credenziali non valide');
-      } else {
-        this.showErrorMessage('Errore durante il login');
+      let response = await this.authService.login(payload);
+      if (response.user) {
+        await this.router.navigate(['/']);
+        localStorage.setItem('userChoice', 'user');
+      }
+    } catch (errorResponse) {
+      if (errorResponse instanceof HttpErrorResponse) {
+        if (errorResponse.status === 401) {
+          this.showErrorMessage('Credenziali non valide');
+        } else {
+          this.showErrorMessage('Errore durante il login');
+        }
       }
     }
-  };
+  }
 
   async handleAziendaSubmit() {
     if (!this.aziendaEmail || !this.aziendaPassword) {
@@ -67,14 +72,18 @@ export class LoginComponent {
     }
 
     try {
-      await this.authService.loginHost(payload);
-      await this.router.navigate(['/']);
-    } catch (error) {
-      // if response is a 401 error, add an error message
-      if (typeof error === 'object' && error !== null && 'status' in error && (error as any).status === 401) {
-        this.showErrorMessage('Credenziali non valide');
-      } else {
-        this.showErrorMessage('Errore durante il login');
+      let response = await this.authService.loginHost(payload);
+      if (response.host) {
+        await this.router.navigate(['/']);
+        localStorage.setItem('userChoice', 'host');
+      }
+    } catch (errorResponse) {
+      if (errorResponse instanceof HttpErrorResponse) {
+        if (errorResponse.status === 401) {
+          this.showErrorMessage('Credenziali non valide');
+        } else {
+          this.showErrorMessage('Errore durante il login');
+        }
       }
     }
   };

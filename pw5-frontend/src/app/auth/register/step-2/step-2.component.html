@@ -7,7 +7,7 @@
       <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= 1}"
            *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(1))">
         <div class="wizard-nav-item-circle">1</div>
-        <p>Registrazione Utente</p>
+        <p>Crea Utente</p>
       </div>
       <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= 2}"
            *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(2))">
@@ -25,7 +25,7 @@
       <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= (userChoice === 'user' ? 3 : 5)}"
            *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(5))">
         <div class="wizard-nav-item-circle">{{ userChoice === 'user' ? 3 : 5 }}</div>
-        <p>Vai al Login</p>
+        <p>Registrazione Completata</p>
       </div>
     </div>
   </section>
@@ -34,7 +34,8 @@
   <section class="verification-container">
     <div class="verification-box">
       <h1>Verifica Account Utente</h1>
-      <p>Ti abbiamo inviato un'email di verifica all'indirizzo <strong>{{ user?.email }}</strong>. Controlla la tua casella di
+      <p>Ti abbiamo inviato un'email di verifica all'indirizzo <strong>{{ user?.email }}</strong>. Controlla la tua
+        casella di
         posta elettronica e clicca sul link per confermare il tuo account. Quando hai confermato il tuo account, clicca
         sul pulsante qui sotto per continuare.</p>
       <button class="btn-verify" (click)="handleVerify()">Continua</button>

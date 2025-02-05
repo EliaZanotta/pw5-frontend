@@ -36,86 +36,133 @@ export class Step3Component implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    const userChoiceCookie = document.cookie.split('; ').find(row => row.startsWith('USER_CHOICE='));
-    if (userChoiceCookie) {
-      this.userChoice = userChoiceCookie.split('=')[1];
-    }
+    if (document.cookie.includes('SESSION_ID')) {
+      try {
+        let response = await this.authService.getLoggedHost();
+        if (response.host) {
+          await this.router.navigate(['/auth/register/step-4']);
+        }
+      } catch (errorResponse) {
+        if (errorResponse instanceof HttpErrorResponse) {
+          if (errorResponse.status === 404) {
+            const userChoice = localStorage.getItem('userChoice');
 
-    const loggedHost = (await this.authService.getLoggedHost()).host;
-    if (loggedHost) {
-      await this.router.navigate(['/auth/register/step-4']);
-    }
+            if (userChoice) {
+              console.log('User choice:', userChoice);
+              this.userChoice = userChoice;
 
+              if (this.userChoice === 'user') {
+                try {
+                  let response = await this.authService.getLoggedUser();
 
-    try{
-      this.user = (await this.authService.getLoggedUser()).user;
-    } catch (errorResponse) {
-      if (errorResponse instanceof HttpErrorResponse) {
-        if (errorResponse.status === 401) {
-          // Wait 3 seconds before redirecting to step 2
-          setTimeout(() => {
-            this.router.navigate(['/auth/register/step-2']);
-          }, 3000);
+                  if (response.user) {
+                    this.user = response.user;
+                    if (this.user?.status === 'VERIFIED') {
+                      setTimeout(async () => {
+                        localStorage.removeItem('userChoice');
+                      }, 3000);
+                    } else {
+                      await this.router.navigate(['/auth/register/step-2']);
+                    }
+                  }
+                } catch (errorResponse) {
+                  if (errorResponse instanceof HttpErrorResponse) {
+                    console.error('Error getting logged user:', errorResponse);
+                    await this.router.navigate(['/auth/login']);
+                  }
+                }
+              }
+
+              if (this.userChoice === 'host') {
+                try {
+                  let response = await this.authService.getLoggedUser();
+                  if (response.user) {
+                    this.user = response.user;
+                    if (this.user?.status !== 'VERIFIED') {
+                      setTimeout(async () => {
+                        await this.router.navigate(['/auth/register/step-2']);
+                      }, 3000);
+                    }
+                  }
+                } catch (errorResponse) {
+                  if (errorResponse instanceof HttpErrorResponse) {
+                    console.error('Error getting logged user:', errorResponse);
+                    await this.router.navigate(['/auth/login']);
+                  }
+                }
+              }
+            } else {
+              console.log('User choice not found');
+              await this.router.navigate(['/auth/register']);
+            }
+          }
         }
       }
+    } else {
+      await this.router.navigate(['/auth/login']);
     }
   }
 
   async handleAziendaSubmit() {
-    if (!this.companyName || !this.companyEmail) {
-      this.showErrorMessage('Tutti i campi sono obbligatori');
-      return;
-    }
-
     const payload = {
-      type : 'COMPANY',
+      type: 'COMPANY',
       name: this.companyName,
       email: this.companyEmail
     }
 
     try {
-      await this.authService.registerHost(payload);
-      await this.router.navigate(['/auth/register/step-4']);
-    } catch (error) {
-      // if response is a 401 error, add an error message
-      if (typeof error === 'object' && error !== null && 'status' in error && (error as any).status === 401) {
-        this.showErrorMessage('Non sei autorizzato a effettuare questa operazione');
-        console.log('Error:', error);
-      } else {
-        this.showErrorMessage('Errore durante il login');
-        console.log('Error:', error);
+      let response = await this.authService.registerHost(payload);
+      if (response.host) {
+        await this.router.navigate(['/auth/register/step-4']);
+      }
+    } catch (errorResponse) {
+      if (errorResponse instanceof HttpErrorResponse) {
+        switch (errorResponse.status) {
+          case 400:
+            this.showErrorMessage('Email non valida o uno o più campi vuoti');
+            break;
+          case 409:
+            this.showErrorMessage('Azienda/Partner già esistente');
+            break;
+          case 500:
+            this.showErrorMessage('Errore interno del server');
+            break;
+          default:
+            this.showErrorMessage('Errore durante la registrazione');
+        }
       }
     }
   }
 
   async handlePartnerSubmit() {
-    if (!this.partnerName || !this.partnerEmail) {
-      this.showErrorMessage('Tutti i campi sono obbligatori');
-      return;
-    }
-
     const payload = {
-      type : 'PARTNER',
+      type: 'PARTNER',
       name: this.partnerName,
       email: this.partnerEmail
     }
 
     try {
-      await this.authService.registerHost(payload);
-      await this.router.navigate(['/auth/register/step-4']);
-    } catch (error) {
-      // if response is a 401 error, add an error message
-      if (typeof error === 'object' && error !== null && 'status' in error && (error as any).status === 401) {
-        this.showErrorMessage('Non sei autorizzato a effettuare questa operazione');
-      } else {
-        this.showErrorMessage('Errore durante il login');
+      let response = await this.authService.registerHost(payload);
+      if (response.host) {
+        await this.router.navigate(['/auth/register/step-4']);
       }
-      console.log('Error:', error);
+    } catch (errorResponse) {
+      if (errorResponse instanceof HttpErrorResponse) {
+        switch (errorResponse.status) {
+          case 400:
+            this.showErrorMessage('Email non valida o uno o più campi vuoti');
+            break;
+          case 409:
+            this.showErrorMessage('Azienda/Partner già esistente');
+            break;
+          case 500:
+            this.showErrorMessage('Errore interno del server');
+            break;
+          default:
+            this.showErrorMessage('Errore durante la registrazione');
+        }
+      }
     }
-  }
-
-  deleteUserChoiceCookie() {
-    document.cookie = 'USER_CHOICE=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
   }
 
   private showErrorMessage(message: string) {

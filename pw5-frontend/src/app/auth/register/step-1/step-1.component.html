@@ -1,5 +1,5 @@
 <div class="step-1-container">
-  <img class="background-image" src="/assets/registerImage.jpg" alt="Register Image" />
+  <img class="background-image" src="/assets/registerImage.jpg" alt="Register Image"/>
 
   <!--wizard section-->
   <section class="wizard-nav">
@@ -7,7 +7,7 @@
       <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= 1}"
            *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(1))">
         <div class="wizard-nav-item-circle">1</div>
-        <p>Registrazione Utente</p>
+        <p>Crea Utente</p>
       </div>
       <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= 2}"
            *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(2))">
@@ -25,7 +25,7 @@
       <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= (userChoice === 'user' ? 3 : 5)}"
            *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(5))">
         <div class="wizard-nav-item-circle">{{ userChoice === 'user' ? 3 : 5 }}</div>
-        <p>Vai al Login</p>
+        <p>Registrazione Completata</p>
       </div>
     </div>
   </section>

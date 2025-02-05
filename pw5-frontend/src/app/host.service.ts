@@ -29,7 +29,7 @@ export class HostService {
 
   private baseUrl = 'http://localhost:8080/host/';
 
-  async changePassword(payload:{ oldPsw: string, newPsw: string }): Promise<void> {
+  async changePassword(payload:{ oldPsw: string, newPsw: string }): Promise<any> {
     return await lastValueFrom(this.http.put<any>(`${this.baseUrl}change-password`, payload, { withCredentials: true }));
   }
 }

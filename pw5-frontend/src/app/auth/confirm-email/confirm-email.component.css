@@ -1,6 +1,10 @@
 .container {
   background: rgb(206,36,36);
   background: radial-gradient(circle, rgba(206,36,36,1) 0%, rgba(58,0,30,1) 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .confirmation-box {
@@ -13,19 +17,12 @@
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
 .confirmation-box p {
   font-size: 1.2rem;
   font-weight: 400;
 }
 
-.btn-login {
+.btn-home {
   padding: 10px;
   background-color: #ce2424;
   color: white;
@@ -37,6 +34,6 @@
   font-weight: 400;
 }
 
-.btn-login:hover {
+.btn-home:hover {
   background-color: #ad1919;
 }
