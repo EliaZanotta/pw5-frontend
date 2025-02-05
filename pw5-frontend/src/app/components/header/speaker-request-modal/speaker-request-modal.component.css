@@ -13,25 +13,27 @@ body.no-scroll {
   padding: 24px;
   border-radius: 12px;
   z-index: 1200;
-  width: 80%;
-  max-width: 800px;
-  max-height: 90vh; /* Evita che la finestra esca dal viewport */
+  width: 90%;
+  max-width: 700px;
+  max-height: 85vh;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Abilita lo scorrimento verticale nel contenuto della modale */
 .modal-content {
-  max-height: calc(90vh - 80px);
+  flex-grow: 1;
+  max-height: calc(85vh - 60px);
   overflow-y: auto;
-  padding-right: 16px; /* Impedisce che il contenuto venga tagliato dalla scrollbar */
+  padding-right: 12px;
 }
 
 /* Stile opzionale per la scrollbar */
 .modal-content::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
-
 .modal-content::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 4px;
@@ -42,117 +44,77 @@ body.no-scroll {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #ddd;
 }
 
-/* Lista delle notifiche */
-.notification-list {
+.modal-header h2 {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+/* Lista delle richieste */
+.request-list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
 }
 
-/* Oggetto notifica */
-.notification-item {
+/* Oggetto richiesta */
+.request-item {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 12px;
   background-color: #f9f9f9;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s;
+  margin-bottom: 30px;
 }
 
-.notification-item.handled {
-  background-color: #e6f7e6; /* Verde chiaro per le notifiche gestite */
-}
-
-/* Testo della notifica */
-.notification-item-text {
-  flex-grow: 1;
-  padding-right: 16px;
-}
-
-/* Pulsanti delle azioni */
-.notification-actions button {
-  margin-left: 8px;
-}
-.request-item {
-  border: 1px solid #ddd;
-  margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-}
-
-.request-summary {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-}
-
-.summary-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.summary-actions button {
-  margin-left: 5px;
-}
-
-.expand-btn {
-  background: none;
-  border: none;
-  color: #007bff;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.request-item {
-  border: 1px solid #ddd;
-  margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-  /* Default background (for pending or unspecified statuses) */
-  background-color: #ffffff;
-}
-
-/* Very faint green background for accepted/confirmed requests */
 .request-item.confirmed {
   background-color: #e6ffe6;
 }
 
-/* Very faint red background for rejected requests */
 .request-item.rejected {
   background-color: #ffe6e6;
 }
 
-/* Optionally, you can style pending items (or leave as default) */
-.request-item.pending {
-  background-color: #ffffff;
-}
-
-/* Existing styles... */
+/* Allinea titolo, stato e pulsanti su una riga */
 .request-summary {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  cursor: pointer;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
+/* Mantiene Event e Status vicini e in colonna */
 .summary-info {
   display: flex;
   flex-direction: column;
+  gap: 4px;
+  flex-grow: 1;
 }
 
+/* Pulsanti allineati a sinistra sotto le scritte */
+.summary-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-start; /* Pulsanti a sinistra */
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+/* Riduce le dimensioni dei pulsanti */
 .summary-actions button {
-  margin-left: 5px;
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  min-width: 80px;
 }
 
+/* Pulsante di espansione */
 .expand-btn {
   background: none;
   border: none;
@@ -162,12 +124,41 @@ body.no-scroll {
 }
 
 .request-details {
-  margin-top: 10px;
-  padding-top: 10px;
+  margin-top: 12px;
+  padding-top: 12px;
   border-top: 1px solid #ccc;
 }
 
+/* Responsive design per schermi piccoli */
+@media (max-width: 480px) {
+  .modal {
+    width: 95%;
+    max-height: 90vh;
+  }
 
+  .modal-header h2 {
+    font-size: 1rem;
+  }
 
+  /* Mantiene il layout compatto */
+  .request-summary {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
+  /* Sposta i pulsanti sotto "Event" e "Status" */
+  .summary-actions {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    margin-top: 12px;
+  }
 
+  /* Riduci ulteriormente i pulsanti su mobile */
+  .summary-actions button {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    min-width: 80px;
+  }
+}
