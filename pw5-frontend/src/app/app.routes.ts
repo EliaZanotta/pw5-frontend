@@ -18,7 +18,7 @@ import { Step2Component } from './auth/register/step-2/step-2.component';
 import { Step3Component } from './auth/register/step-3/step-3.component';
 import { Step4Component } from './auth/register/step-4/step-4.component';
 import { Step5Component } from './auth/register/step-5/step-5.component';
-import { AllSpeakerComponent } from './all-speaker/all-speaker.component';
+import { AllSpeakerComponent } from './pages/all-speaker/all-speaker.component';
 import { EventRegistrationFormComponent } from './pages/event-registration-form/event-registration-form.component';
 
 export const routes: Routes = [
