@@ -37,10 +37,6 @@
     text-align: center;
 }
 
-.speaker-card:hover {
-    transform: scale(1.05);
-}
-
 .image-container {
     height: 150px;
     display: flex;

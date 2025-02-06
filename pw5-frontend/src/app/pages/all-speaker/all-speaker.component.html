@@ -8,7 +8,7 @@
 <!-- Sezione lista speaker -->
 <section class="speaker-container" *ngIf="speakers.length > 0">
     <div class="speaker-grid">
-        <div *ngFor="let speaker of speakers" class="speaker-card">
+        <div *ngFor="let speaker of speakers" class="speaker-card" [routerLink]="['/speaker', speaker.id]">
             <div class="image-container">
                 <img src="img/speaker.jpg" alt="Foto di {{ speaker.firstName }}"
                     class="speaker-image">
