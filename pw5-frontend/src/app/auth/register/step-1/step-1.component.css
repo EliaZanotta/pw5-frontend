@@ -1,8 +1,9 @@
 .step-1-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .background-image {
@@ -18,8 +19,9 @@
 
 .wizard-nav {
   display: flex;
+  width: 100%;
   justify-content: center;
-  margin-top: 50px;
+  margin: 50px 0;
   position: relative;
 }
 
@@ -104,6 +106,7 @@
 
 .register-container {
   display: flex;
+  width: 80%;
   align-items: center;
   justify-content: center;
   margin-bottom: 100px;
