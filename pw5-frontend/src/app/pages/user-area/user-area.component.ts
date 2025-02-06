@@ -55,7 +55,7 @@ export class UserAreaComponent implements OnInit, AfterViewInit {
   selectedTab: string = 'bookedEvents';
   isConfirmTicketModalOpen: boolean = false;
   isRevokeEventModalOpen: boolean = false;
-  selectedEvent: any = null;
+  selectedEvent: Event | null = null;
   isSpeaker = false;
 
   constructor(private router: Router, private authService: AuthService, private eventsService: EventsService, private snackBar: MatSnackBar, private topicService: TopicService, private userService: UserService, private inboxservice: InboxService) {
@@ -140,14 +140,14 @@ export class UserAreaComponent implements OnInit, AfterViewInit {
     localStorage.setItem('selectedTab', tab);
   }
 
-  openConfirmTicketModal(event?: Event): void {
+  openConfirmTicketModal(event: Event) {
     if (!this.isConfirmTicketModalOpen) {
       this.selectedEvent = event;
       this.isConfirmTicketModalOpen = true;
     }
   }
 
-  openRevokeEventModal(event?: Event) {
+  openRevokeEventModal(event: Event) {
     if (!this.isRevokeEventModalOpen) {
       this.selectedEvent = event;
       this.isRevokeEventModalOpen = true;

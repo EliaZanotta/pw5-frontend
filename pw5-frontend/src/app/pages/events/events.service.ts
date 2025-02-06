@@ -69,7 +69,7 @@ export class EventsService {
     return await lastValueFrom(this.http.put<any>(`${this.baseUrl}/book`, payload, {withCredentials: true}));
   }
 
-  async revokeEvent(payload: { id: string }): Promise<any> {
+  async revokeEvent(payload: { id: string | undefined }): Promise<any> {
     return await lastValueFrom(this.http.put<any>(`${this.baseUrl}/revoke`, payload, {withCredentials: true}));
   }
 
@@ -82,6 +82,12 @@ export class EventsService {
   async createEvent(payload: { startDate: string; endDate: string; place: string; pendingSpeakerRequests: { email: string }[]; topics: string[]; title: string; maxParticipants: number; eventSubscription: string; description: string }): Promise<any> {
     return await lastValueFrom(
       this.http.post<any>(this.baseUrl, payload, { withCredentials: true })
+    );
+  }
+
+  async updateEvent(eventId: string, payload: { startDate: string; endDate: string; place: string; pendingSpeakerRequests: { email: string }[]; topics: string[]; title: string; maxParticipants: number; eventSubscription: string; description: string }): Promise<any> {
+    return await lastValueFrom(
+      this.http.put<any>(`${this.baseUrl}/${eventId}`, payload, { withCredentials: true })
     );
   }
 }
