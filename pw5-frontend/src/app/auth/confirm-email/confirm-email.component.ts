@@ -22,12 +22,6 @@ export class ConfirmEmailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     try {
-      if (document.cookie.includes('SESSION_ID')) {
-        let response = await this.auth.getLoggedUser();
-        this.user = response.user;
-      } else {
-        this.errorMessage = 'You are not logged in';
-      }
       const token = window.location.pathname.split('/confirm-email/')[1];
       await this.auth.confirmEmail(token);
     } catch (errorResponse) {

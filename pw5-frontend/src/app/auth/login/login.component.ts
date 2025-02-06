@@ -3,8 +3,9 @@ import {FormsModule} from '@angular/forms';
 import {NgIf} from '@angular/common';
 import {Router, RouterLink} from '@angular/router';
 import {AuthService} from '../auth.service';
-import {firstValueFrom} from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-login',
@@ -12,18 +13,23 @@ import {HttpErrorResponse} from '@angular/common/http';
   imports: [
     FormsModule,
     NgIf,
-    RouterLink
+    RouterLink,
+    FontAwesomeModule
   ],
   styleUrls: ['./login.component.css']
 })
 
 export class LoginComponent implements OnInit {
+  protected readonly faEyeSlash = faEyeSlash;
+  protected readonly faEye = faEye;
+
   activeTab: string = 'utente';
   utenteEmail: string = '';
   utentePassword: string = '';
   aziendaEmail: string = '';
   aziendaPassword: string = '';
   errorMessage: string | null = null;
+  showPassword: boolean = false;
 
   setActiveTab(tab: string) {
     this.activeTab = tab;
@@ -102,5 +108,9 @@ export class LoginComponent implements OnInit {
     setTimeout(() => {
       this.errorMessage = null;
     }, 3000);
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }

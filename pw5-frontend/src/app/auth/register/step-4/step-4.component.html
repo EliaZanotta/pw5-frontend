@@ -48,25 +48,35 @@
       <form class="change-psw-host-form" (ngSubmit)="handleChangePswSubmit()">
         <div class="form-group">
           <label for="host-old-psw">Password temporanea</label>
-          <input
-            id="host-old-psw"
-            type="password"
-            placeholder="Password temporanea"
-            [(ngModel)]="oldPsw"
-            name="oldPsw"
-            required
-          />
+          <div class="password-input">
+            <input
+              id="host-old-psw"
+              [type]="showOldPassword ? 'text' : 'password'"
+              placeholder="Password temporanea"
+              [(ngModel)]="oldPsw"
+              name="oldPsw"
+              required
+            />
+            <button type="button" (click)="toggleOldPasswordVisibility()">
+              <fa-icon [icon]="showOldPassword ? faEye : faEyeSlash"></fa-icon>
+            </button>
+          </div>
         </div>
         <div class="form-group">
           <label for="host-new-psw">Nuova password</label>
-          <input
-            id="host-new-psw"
-            type="password"
-            placeholder="Nuova password"
-            [(ngModel)]="newPsw"
-            name="newPsw"
-            required
-          />
+          <div class="password-input">
+            <input
+              id="host-new-psw"
+              [type]="showNewPassword ? 'text' : 'password'"
+              placeholder="Nuova password"
+              [(ngModel)]="newPsw"
+              name="newPsw"
+              required
+            />
+            <button type="button" (click)="toggleNewPasswordVisibility()">
+              <fa-icon [icon]="showNewPassword ? faEye : faEyeSlash"></fa-icon>
+            </button>
+          </div>
         </div>
         <button type="submit" class="submit-button">
           Cambia password

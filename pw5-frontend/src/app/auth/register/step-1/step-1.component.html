@@ -71,13 +71,18 @@
         </div>
         <div class="form-group">
           <label for="utente-password">Password</label>
-          <input
-            id="utente-password"
-            type="password"
-            [(ngModel)]="userPassword"
-            name="utentePassword"
-            required
-          />
+          <div class="password-input">
+            <input
+              id="utente-password"
+              [type]="showPassword ? 'text' : 'password'"
+              [(ngModel)]="userPassword"
+              name="utentePassword"
+              required
+            />
+            <button type="button" (click)="togglePasswordVisibility()">
+              <fa-icon [icon]="showPassword ? faEye : faEyeSlash"></fa-icon>
+            </button>
+          </div>
         </div>
         <button type="submit" class="submit-button">
           Registrati

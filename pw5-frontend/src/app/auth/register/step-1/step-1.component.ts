@@ -4,6 +4,8 @@ import {FormsModule} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthService} from '../../auth.service';
 import {HttpErrorResponse} from '@angular/common/http';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-step-1',
@@ -11,12 +13,16 @@ import {HttpErrorResponse} from '@angular/common/http';
   imports: [
     NgIf,
     NgClass,
-    FormsModule
+    FormsModule,
+    FontAwesomeModule
   ],
   styleUrl: './step-1.component.css'
 })
 
 export class Step1Component implements OnInit {
+  protected readonly faEyeSlash = faEyeSlash;
+  protected readonly faEye = faEye;
+
   userChoice: string = '';
   currentStep: number = 1;
   userFirstName: string = '';
@@ -24,6 +30,7 @@ export class Step1Component implements OnInit {
   userEmail: string = '';
   userPassword: string = '';
   errorMessage: string | null = null;
+  showPassword: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) {
   }
@@ -86,5 +93,9 @@ export class Step1Component implements OnInit {
     setTimeout(() => {
       this.errorMessage = null;
     }, 3000);
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }
