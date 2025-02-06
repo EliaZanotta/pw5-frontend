@@ -23,7 +23,9 @@
       <button [class.active]="selectedTab === 'crea-evento'" (click)="setTab('crea-evento')">Crea Evento</button>
     </ng-container>
 
+    <ng-container *ngIf="isCompany">
     <button [class.active]="selectedTab === 'info'" (click)="setTab('info')">Info</button>
+  </ng-container>
   </div>
 
   <!-- Divider -->
@@ -76,7 +78,7 @@
       <div class="events-list2">
         <div class="event-card" *ngFor="let event of host?.pastEvents">
           <div class="event-image">
-            <img [src]="event.image" alt="{{ event.title }}">
+            <img src="https://reteinformaticalavoro.it/blog/wp-content/uploads/2023/01/eventi-tech-2023-reteinformaticalavoro-e1713386215177.jpg" alt="{{ event.title }}">
           </div>
           <div class="event-info">
             <h2>{{ event.title }}</h2>
@@ -103,10 +105,10 @@
     </ng-container>
 
     <!-- Info Tab -->
-    <ng-container *ngIf="selectedTab === 'info'">
+    <ng-container  *ngIf="selectedTab === 'info'">
       <!-- Logout section -->
       <div class="logout-section">
-        <button class="logout-button" *ngIf="isCompany" (click)="logout()">🔴 Logout</button>
+        <button class="logout-button" (click)="logout()">🔴 Logout</button>
       </div>
     </ng-container>
 
@@ -129,7 +131,10 @@
   </div>
 
   <!-- Back button -->
+  <ng-container *ngIf="!isCompany">
+
   <div class="back-section">
     <button class="back-button" (click)="goBack()">⬅ Torna alla lista</button>
   </div>
+  </ng-container>
 </div>

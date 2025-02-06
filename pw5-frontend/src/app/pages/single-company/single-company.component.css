@@ -128,7 +128,7 @@ html, body {
   transform: scale(1.02);
 }
 
-/* Card 2 evento (if needed elsewhere) */
+/* Card 2 evento */
 .event-card2 {
   display: flex;
   align-items: stretch;
