@@ -2,12 +2,12 @@
   <img class="background-image" src="/assets/registerImage.jpg" alt="Register Image"/>
 
   <!--wizard section-->
-  <section class="wizard-nav" >
+  <section class="wizard-nav" *ngIf="host">
     <div class="wizard-nav-container" [attr.data-user-choice]="userChoice">
       <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= 1}"
            *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(1))">
         <div class="wizard-nav-item-circle">1</div>
-        <p>Registrazione Utente</p>
+        <p>Crea Utente</p>
       </div>
       <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= 2}"
            *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(2))">
@@ -25,7 +25,7 @@
       <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= (userChoice === 'user' ? 3 : 5)}"
            *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(5))">
         <div class="wizard-nav-item-circle">{{ userChoice === 'user' ? 3 : 5 }}</div>
-        <p>Vai al Login</p>
+        <p>Registrazione Completata</p>
       </div>
     </div>
   </section>
@@ -40,51 +40,51 @@
   </section>
 
 
-    <!--Change Password Host section-->
-    <section class="change-psw-host-container" *ngIf="host?.hostStatus === 'APPROVED'">
-      <div class="change-psw-host-box">
-        <h1>Registra la tua attività</h1>
+  <!--Change Password Host section-->
+  <section class="change-psw-host-container" *ngIf="host?.hostStatus === 'APPROVED'">
+    <div class="change-psw-host-box">
+      <h1>Registra la tua attività - Cambio Password</h1>
 
-        <form class="change-psw-host-form" (ngSubmit)="handleChangePswSubmit()">
-          <div class="form-group">
-            <label for="host-old-psw">Password temporanea</label>
-            <input
-              id="host-old-psw"
-              type="password"
-              placeholder="Password temporanea"
-              [(ngModel)]="oldPsw"
-              name="oldPsw"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label for="host-new-psw">Nuova password</label>
-            <input
-              id="host-new-psw"
-              type="password"
-              placeholder="Nuova password"
-              [(ngModel)]="newPsw"
-              name="newPsw"
-              required
-            />
-          </div>
-          <button type="submit" class="submit-button">
-            Cambia password
-          </button>
-        </form>
-
-        <div class="change-psw-host-error" *ngIf="errorMessage">
-          {{ errorMessage }}
+      <form class="change-psw-host-form" (ngSubmit)="handleChangePswSubmit()">
+        <div class="form-group">
+          <label for="host-old-psw">Password temporanea</label>
+          <input
+            id="host-old-psw"
+            type="password"
+            placeholder="Password temporanea"
+            [(ngModel)]="oldPsw"
+            name="oldPsw"
+            required
+          />
         </div>
-      </div>
-    </section>
+        <div class="form-group">
+          <label for="host-new-psw">Nuova password</label>
+          <input
+            id="host-new-psw"
+            type="password"
+            placeholder="Nuova password"
+            [(ngModel)]="newPsw"
+            name="newPsw"
+            required
+          />
+        </div>
+        <button type="submit" class="submit-button">
+          Cambia password
+        </button>
+      </form>
 
-    <!--Error Unauthorized Section-->
-    <section class="unauthorized-container" *ngIf="host === null">
-      <div class="unauthorized-box">
-        <h1>Non sei autorizzato!</h1>
-        <p>Non hai i permessi per accedere a questa pagina.</p>
-        <p>Stai venendo reindirizzato...</p>
+      <div class="change-psw-host-error" *ngIf="errorMessage">
+        {{ errorMessage }}
       </div>
-    </section>
+    </div>
+  </section>
+
+  <!--Error Unauthorized Section-->
+  <section class="unauthorized-container" *ngIf="host === null">
+    <div class="unauthorized-box">
+      <h1>Non sei autorizzato!</h1>
+      <p>Non hai i permessi per accedere a questa pagina.</p>
+      <p>Stai venendo reindirizzato...</p>
+    </div>
+  </section>
 </div>

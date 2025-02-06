@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {NgClass, NgIf} from '@angular/common';
-import {WizardService} from '../wizard.service';
 import {FormsModule} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthService} from '../../auth.service';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-step-1',
@@ -25,32 +25,23 @@ export class Step1Component implements OnInit {
   userPassword: string = '';
   errorMessage: string | null = null;
 
-  constructor(public wizardService: WizardService, public authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router) {
   }
 
   async ngOnInit(): Promise<void> {
-    const userChoiceCookie = document.cookie.split('; ').find(row => row.startsWith('USER_CHOICE='));
-    if (userChoiceCookie) {
-      this.userChoice = this.wizardService.getUserChoice();
-    }
-
-    const loggedHost = (await this.authService.getLoggedHost()).host;
-    if (loggedHost) {
-      await this.router.navigate(['/auth/register/step-4']);
+    if (document.cookie.includes('SESSION_ID')) {
+      await this.router.navigate(['/']);
+    } else {
+      const userChoice = localStorage.getItem('userChoice');
+      if (userChoice) {
+        this.userChoice = userChoice;
+      } else {
+        await this.router.navigate(['/auth/register']);
+      }
     }
   }
 
   async handleUserSubmit() {
-    if ((this.userFirstName === '' || this.userLastName === '' || this.userEmail === '' || this.userPassword === '') || (this.userFirstName === null || this.userLastName === null || this.userEmail === null || this.userPassword === null)) {
-      this.showErrorMessage('Please fill out all fields');
-      return;
-    }
-
-    if (!this.userEmail.includes('@')) {
-      this.showErrorMessage('Please enter a valid email address');
-      return;
-    }
-
     // capitalize first letter of first and last name
     const payload = {
       firstName: this.userFirstName.charAt(0).toUpperCase() + this.userFirstName.slice(1),
@@ -65,12 +56,27 @@ export class Step1Component implements OnInit {
     }
 
     try {
-      await this.authService.register(payload);
-      await this.authService.login(loginPayload);
-      await this.router.navigate(['/auth/register/step-2']);
-    } catch (error) {
-      console.error('Error during registration:', error);
-      this.showErrorMessage('Error during registration');
+      let response = await this.authService.register(payload);
+      if (response.user) {
+        await this.authService.login(loginPayload);
+        await this.router.navigate(['/auth/register/step-2']);
+      }
+    } catch (errorResponse) {
+      if (errorResponse instanceof HttpErrorResponse) {
+        switch (errorResponse.status) {
+          case 400:
+            this.showErrorMessage('Email non valida o uno o più campi vuoti');
+            break;
+          case 409:
+            this.showErrorMessage('Email già registrata');
+            break;
+          case 500:
+            this.showErrorMessage('Errore interno del server');
+            break;
+          default:
+            this.showErrorMessage('Errore durante la registrazione');
+        }
+      }
     }
 
   }

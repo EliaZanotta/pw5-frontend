@@ -1,0 +1,39 @@
+.speaker-cta {
+    padding: 3rem;
+    background: radial-gradient(circle, rgba(58, 0, 30, 1) 0%, rgba(206, 36, 36, 1) 100%);
+    text-align: center;
+}
+
+.mat-card {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+h2 {
+    color: #ffffff;
+    font-size: 32px;
+}
+
+p {
+    color: #ffffff;
+    font-size: 19.2px;
+}
+
+button {
+    background: white;
+    color: #3a001e;
+    padding: 10px 20px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: transform 0.3s, background 0.3s;
+    text-align: center;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+mat-icon {
+    margin-right: 0.5rem;
+}

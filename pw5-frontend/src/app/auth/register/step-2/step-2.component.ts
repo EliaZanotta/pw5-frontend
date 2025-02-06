@@ -5,7 +5,6 @@ import {FormsModule} from '@angular/forms';
 import {Router} from '@angular/router';
 import {User} from '../../auth.service';
 import {HttpErrorResponse} from '@angular/common/http';
-import {WizardService} from '../wizard.service';
 
 @Component({
   selector: 'app-step-2',
@@ -24,38 +23,58 @@ export class Step2Component implements OnInit {
   errorMessage: string | null = null;
   newMailSent: boolean = false;
 
-  constructor(public authService: AuthService, private router: Router, private wizardService: WizardService) {
+  constructor(public authService: AuthService, private router: Router) {
   }
 
   async ngOnInit(): Promise<void> {
-    const userChoiceCookie = document.cookie.split('; ').find(row => row.startsWith('USER_CHOICE='));
-    if (userChoiceCookie) {
-      this.userChoice = this.wizardService.getUserChoice();
-    }
+    if (document.cookie.includes('SESSION_ID')) {
+      try {
+        let response = await this.authService.getLoggedHost();
+        if (response.host) {
+          await this.router.navigate(['/auth/register/step-4']);
+        }
+      } catch (errorResponse) {
+        if (errorResponse instanceof HttpErrorResponse) {
+          if (errorResponse.status === 404) {
+            const userChoice = localStorage.getItem('userChoice');
 
-    try {
-      this.user = (await this.authService.getLoggedUser()).user;
-    } catch (errorResponse) {
-      if (errorResponse instanceof HttpErrorResponse) {
-        if (errorResponse.status === 401) {
-          await this.router.navigate(['/auth/register']);
+            if (userChoice) {
+              console.log('User choice:', userChoice);
+              this.userChoice = userChoice;
+
+              try {
+                let response = await this.authService.getLoggedUser();
+                if (response.user) {
+                  this.user = response.user;
+                  if (this.user?.status === 'VERIFIED') {
+                    await this.router.navigate(['/auth/register/step-3']);
+                  } else {
+                    this.showErrorMessage('Email non ancora verificata');
+                  }
+                }
+              } catch (errorResponse) {
+                if (errorResponse instanceof HttpErrorResponse) {
+                  console.error('Error getting logged user:', errorResponse);
+                  await this.router.navigate(['/auth/login']);
+                }
+              }
+            } else {
+              console.log('User choice not found');
+              await this.router.navigate(['/auth/register']);
+            }
+          }
         }
       }
-    }
-
-    const loggedHost = (await this.authService.getLoggedHost()).host;
-    if (loggedHost) {
-      await this.router.navigate(['/auth/register/step-4']);
+    } else {
+      await this.router.navigate(['/auth/login']);
     }
   }
 
   async handleVerify() {
     try {
       if (this.user) {
-        if (this.user.status === 'VERIFIED') {
-          await this.router.navigate(['/auth/register/step-3']);
-        } else {
-          this.showErrorMessage('Email non ancora verificata');
+        if (this.user.status === 'UNVERIFIED') {
+          location.reload();
         }
       }
     } catch (error) {
@@ -66,19 +85,14 @@ export class Step2Component implements OnInit {
 
   async handleResend() {
     try {
-      if (!this.user) {
-        return;
-      }
-
-      if (this.user.status === 'VERIFIED') {
-        this.showErrorMessage('Email già verificata');
-        return;
-      } else {
-        await this.authService.sendConfirmationMail();
-        this.newMailSent = true;
-        setTimeout(() => {
-          this.newMailSent = false;
-        }, 3000);
+      if (this.user) {
+        if (this.user.status === 'UNVERIFIED') {
+          await this.authService.sendConfirmationMail();
+          this.newMailSent = true;
+          setTimeout(() => {
+            this.newMailSent = false;
+          }, 3000);
+        }
       }
     } catch (error) {
       console.error('Error resending email:', error);

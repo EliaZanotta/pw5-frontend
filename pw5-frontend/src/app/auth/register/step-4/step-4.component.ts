@@ -1,11 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {NgClass, NgIf} from '@angular/common';
 import {AuthService} from '../../auth.service';
-import {Router, RouterLink} from '@angular/router';
+import {Router} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Host, HostService} from '../../../host.service';
 import {HttpErrorResponse} from '@angular/common/http';
-import {WizardService} from '../wizard.service';
 
 @Component({
   selector: 'app-step-4',
@@ -26,60 +25,91 @@ export class Step4Component implements OnInit {
   oldPsw: string = '';
   newPsw: string = '';
 
-  constructor(public authService: AuthService, private router: Router, private hostService: HostService, private wizardService: WizardService) {
+  constructor(public authService: AuthService, private router: Router, private hostService: HostService) {
   }
 
   async ngOnInit(): Promise<void> {
-    console.log('Step ' + this.currentStep);
-    try {
-      this.host = (await this.authService.getLoggedHost()).host;
+    if (document.cookie.includes('SESSION_ID')) {
+      const userChoice = localStorage.getItem('userChoice');
+      if (userChoice) {
+        this.userChoice = userChoice;
+        if (this.userChoice === 'host') {
+          try {
+            let response = await this.authService.getLoggedHost();
+            if (response.host) {
+              this.host = response.host;
+              // Check if the password has already been set
+              if (this.host?.hashedPsw !== this.host?.provvisoryPsw) {
+                await this.router.navigate(['/auth/register/step-5']);
+              }
+            }
+          } catch (errorResponse) {
+            if (errorResponse instanceof HttpErrorResponse) {
+              if (errorResponse.status === 404) {
+                try {
+                  let response = await this.authService.getLoggedUser();
+                  if (response.user) {
+                    let user = response.user;
+                    if (user.status !== 'VERIFIED') {
+                      setTimeout(async () => {
+                        await this.router.navigate(['/auth/register/step-2']);
+                      }, 3000);
+                    }
+                  }
+                } catch (errorResponse) {
+                  if (errorResponse instanceof HttpErrorResponse) {
+                    console.error('Error getting logged user:', errorResponse);
+                    await this.router.navigate(['/auth/login']);
+                  }
+                }
+              }
+            }
+          }
+        }
 
-      if (this.host) {
-        this.userChoice = this.wizardService.getUserChoice();
-        console.log('User choice:', this.userChoice);
-        console.log('Host:', this.host);
-
-        // Check if the password has already been set
-        if (this.host.hashedPsw !== this.host.provvisoryPsw) {
-          await this.router.navigate(['/auth/register/step-5']);
+        if (this.userChoice === 'user') {
+          try {
+            let response = await this.authService.getLoggedUser();
+            if (response.user) {
+              setTimeout(async () => {
+                await this.router.navigate(['/']);
+              }, 2000);
+            }
+          } catch (errorResponse) {
+            if (errorResponse instanceof HttpErrorResponse) {
+              console.error('Error getting logged user:', errorResponse);
+              await this.router.navigate(['/auth/login']);
+            }
+          }
         }
       }
-    } catch (errorResponse) {
-      if (errorResponse instanceof HttpErrorResponse) {
-        if (errorResponse.status === 401) {
-          // Wait 3 seconds before redirecting to step 3
-          setTimeout(() => {
-            this.router.navigate(['/auth/register/step-3']);
-          }, 3000);
-        }
-      } else {
-        this.showErrorMessage('An unexpected error occurred');
-      }
-
+    } else {
+      await this.router.navigate(['/auth/login']);
     }
   }
 
   async handleChangePswSubmit() {
-    if (this.oldPsw === '' || this.newPsw === '') {
-      this.showErrorMessage('Please fill all fields');
-      return;
-    }
-
     const payload = {
       oldPsw: this.oldPsw,
       newPsw: this.newPsw
     }
 
     try {
-      await this.hostService.changePassword(payload);
-      await this.router.navigate(['/auth/register/step-5']);
+      let response = await this.hostService.changePassword(payload);
+      if (response.host) {
+        await this.router.navigate(['/auth/register/step-5']);
+      }
     } catch (errorResponse) {
       if (errorResponse instanceof HttpErrorResponse) {
-        this.showErrorMessage(errorResponse.error.message);
-      } else {
-        this.showErrorMessage('An unexpected error occurred');
+        switch (errorResponse.status) {
+          case 400:
+            this.showErrorMessage('Errore nella richiesta');
+            break;
+          case 500:
+            this.showErrorMessage('Errore interno del server');
+            break;
+        }
       }
-      console.error('Error changing password:', errorResponse);
     }
   }
 

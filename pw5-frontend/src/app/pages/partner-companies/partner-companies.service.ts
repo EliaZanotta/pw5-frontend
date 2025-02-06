@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { lastValueFrom } from 'rxjs';
 
 export interface Host {
   id: string;
   type: 'COMPANY' | 'PARTNER';
   name: string;
   email: string;
-  hashedPsw: string;
-  provvisoryPsw: string;
+  hashedPsw: string | null;
+  provvisoryPsw: string | null;
   description: string | null;
   pastEvents: string[] | null;
   programmedEvents: string[] | null;
@@ -21,29 +20,12 @@ export interface Host {
   providedIn: 'root'
 })
 export class PartnerCompaniesService {
-  private baseUrl = 'http://localhost:8080/';
-  private apiUrl = this.baseUrl + 'host/';
+  private apiUrl = 'https://backendpw5incom-eve7ged8dyagbyds.italynorth-01.azurewebsites.net/host/';
 
   constructor(private http: HttpClient) {}
 
-  // Fetch all hosts from the API
-  getAllHosts(): Observable<Host[]> {
-    return this.http.get<{ hosts: Host[], message: string }>(this.apiUrl).pipe(
-      map(response => response.hosts) // Extract the hosts array from the response
-    );
+  async getAllHosts(): Promise<{ hosts: Host[], message: string }> {
+    return await lastValueFrom(this.http.get<{ hosts: Host[], message: string }>(this.apiUrl));
   }
 
-  // Get only companies
-  getCompanies(): Observable<Host[]> {
-    return this.getAllHosts().pipe(
-      map(hosts => hosts.filter(host => host.type === 'COMPANY'))
-    );
-  }
-
-  // Get only partners
-  getPartners(): Observable<Host[]> {
-    return this.getAllHosts().pipe(
-      map(hosts => hosts.filter(host => host.type === 'PARTNER'))
-    );
-  }
 }

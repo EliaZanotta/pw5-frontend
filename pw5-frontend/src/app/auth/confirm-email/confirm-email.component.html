@@ -1,28 +1,19 @@
 <div class="container">
-    <div class="confirmation-box" *ngIf="userChoice === 'user'">
-        <h1>Email confermata con successo!</h1>
-        <p>La tua email è stata confermata con successo.<br> Accesso effettuato.</p>
-        <a routerLink="/">
-            <button class="btn-login">Home</button>
-        </a>
-    </div>
-    <div class="confirmation-box" *ngIf="userChoice === 'host'">
-        <h1>Email confermata con successo!</h1>
-        <p>La tua email è stata confermata con successo.<br> Per continuare,
-            <a routerLink="/auth/register/step-3">
-                clicca qui per completare la registrazione come azienda
-            </a>, oppure vai alla home
-        </p>
-        <a routerLink="/">
-            <button class="btn-login">Home</button>
-        </a>
-    </div>
+  <div class="confirmation-box" *ngIf="user?.status !== 'VERIFIED'">
+    <h1>Email confermata con successo</h1>
+    <p>Ora puoi chiudere questa pagina</p>
+  </div>
 
-    <div class="confirmation-box" *ngIf="user?.status === 'VERIFIED'">
-        <h1>Email già confermata</h1>
-        <a routerLink="/">
-            <button class="btn-login">Home</button>
-        </a>
-    </div>
+  <div class="confirmation-box" *ngIf="user?.status === 'VERIFIED'">
+    <h1>Email già confermata</h1>
+    <a routerLink="/">
+      <button class="btn-home">Home</button>
+    </a>
+  </div>
+
+  <div class="confirmation-box" *ngIf="errorMessage">
+    <h1>Errore</h1>
+    <p>Si è verificato un errore durante la conferma dell'email</p>
+  </div>
 </div>
 

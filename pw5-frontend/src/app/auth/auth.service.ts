@@ -1,6 +1,16 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {lastValueFrom} from 'rxjs';
+import {Event} from '../pages/events/events.service';
+import {Topic} from '../topic.service';
+
+class UserDetails {
+  archivedEvents: Event[] | undefined;
+  bookedEvents: Event[] | undefined;
+  favouriteTopics: Topic[] | undefined;
+  constructor() {
+  }
+}
 
 export class User {
     id: number | undefined;
@@ -9,6 +19,7 @@ export class User {
     email: string | undefined;
     status: string | undefined;
     role: string | undefined;
+    userDetails: UserDetails | undefined;
     constructor() {
     }
 }
@@ -27,15 +38,15 @@ export class AuthService {
   }
 
   async registerHost(payload: { type: string; name: string; email: string; }): Promise<any> {
-    return await lastValueFrom(this.http.post<any>(`${this.baseUrl}register-host`, payload, { withCredentials: true }));
+    return await lastValueFrom(this.http.post<any>(`${this.baseUrl}register-host`, payload, {withCredentials: true}));
   }
 
   async login(payload: { email: string; hashedPsw: string }): Promise<any> {
-    return await lastValueFrom(this.http.post<any>(`${this.baseUrl}login`, payload, { withCredentials: true }));
+    return await lastValueFrom(this.http.post<any>(`${this.baseUrl}login`, payload, {withCredentials: true}));
   }
 
   async loginHost(payload: { email: string; hashedPsw: string }): Promise<any> {
-    return await lastValueFrom(this.http.post<any>(`${this.baseUrl}login-host`, payload, { withCredentials: true }));
+    return await lastValueFrom(this.http.post<any>(`${this.baseUrl}login-host`, payload, {withCredentials: true}));
   }
 
   async confirmEmail(token: string): Promise<any> {
@@ -43,18 +54,18 @@ export class AuthService {
   }
 
   async sendConfirmationMail(): Promise<User> {
-    return await lastValueFrom(this.http.get<any>(`${this.baseUrl}send-confirmation-mail`, { withCredentials: true }));
+    return await lastValueFrom(this.http.get<any>(`${this.baseUrl}send-confirmation-mail`, {withCredentials: true}));
   }
 
   async logout(): Promise<any> {
-    return await lastValueFrom(this.http.delete<any>(`${this.baseUrl}logout`, { withCredentials: true }));
+    return await lastValueFrom(this.http.delete<any>(`${this.baseUrl}logout`, {withCredentials: true}));
   }
 
   async getLoggedUser(): Promise<any> {
-    return await lastValueFrom(this.http.get<any>(`${this.baseUrl}get-authenticated-user`, { withCredentials: true }));
+    return await lastValueFrom(this.http.get<any>(`${this.baseUrl}get-authenticated-user`, {withCredentials: true}));
   }
 
   async getLoggedHost(): Promise<any> {
-    return await lastValueFrom(this.http.get<any>(`${this.baseUrl}get-authenticated-host`, { withCredentials: true }));
+    return await lastValueFrom(this.http.get<any>(`${this.baseUrl}get-authenticated-host`, {withCredentials: true}));
   }
 }

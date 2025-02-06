@@ -7,7 +7,7 @@
       <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= 1}"
            *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(1))">
         <div class="wizard-nav-item-circle">1</div>
-        <p>Registrazione Utente</p>
+        <p>Crea Utente</p>
       </div>
       <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= 2}"
            *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(2))">
@@ -25,7 +25,7 @@
       <div class="wizard-nav-item" [ngClass]="{'active': currentStep >= (userChoice === 'user' ? 3 : 5)}"
            *ngIf="userChoice !== 'user' || (userChoice === 'user' && [1, 2, 5].includes(5))">
         <div class="wizard-nav-item-circle">{{ userChoice === 'user' ? 3 : 5 }}</div>
-        <p>Vai al Login</p>
+        <p>Registrazione Completata</p>
       </div>
     </div>
   </section>
@@ -37,9 +37,7 @@
       <p *ngIf="host?.type === 'COMPANY'">Il tuo account aziendale è stato creato con successo.</p>
       <p *ngIf="host?.type === 'PARTNER'">Il tuo account partner è stato creato con successo.</p>
       <p>Accesso effettuato come {{ host?.type === 'COMPANY' ? 'Azienda' : 'Partner' }}</p>
-      <a class="congratulation-button" routerLink="/" (click)="deleteUserChoiceCookie()">Torna alla Home</a>
+      <a routerLink="/" class="congratulation-button">Vai alla home</a>
     </div>
   </section>
-
-
 </div>
