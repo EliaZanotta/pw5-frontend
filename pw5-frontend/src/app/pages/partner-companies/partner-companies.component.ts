@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Host, PartnerCompaniesService } from './partner-companies.service';
+import { PartnerCompaniesService } from './partner-companies.service';
 import { faFilterCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import {FiltersModule} from '../../modules/filters.module';
+import {Host} from '../../host.service';
 
 @Component({
   selector: 'app-partner-companies',
@@ -14,7 +15,7 @@ import {FiltersModule} from '../../modules/filters.module';
 export class PartnerCompaniesComponent implements OnInit {
   partnerCompanies: Host[] = [];
   filteredCompanies: Host[] = [];
-  filteredNames: string[] = [];
+  filteredNames: (string | undefined)[] = [];
   faFilterCircleXmark = faFilterCircleXmark;
 
   isLoading = true;
@@ -49,14 +50,14 @@ export class PartnerCompaniesComponent implements OnInit {
     const { name, type } = this.filters;
 
     this.filteredCompanies = this.partnerCompanies.filter(company => {
-      const matchesName = company.name.toLowerCase().includes(name.toLowerCase());
+      const matchesName = company.name?.toLowerCase().includes(name.toLowerCase());
       const matchesType = type ? company.type === type : true;
       return matchesName && matchesType;
     });
 
     // Update name suggestions
     this.filteredNames = this.partnerCompanies
-      .filter(company => company.name.toLowerCase().includes(name.toLowerCase()))
+      .filter(company => company.name?.toLowerCase().includes(name.toLowerCase()))
       .map(company => company.name);
   }
 
@@ -65,12 +66,12 @@ export class PartnerCompaniesComponent implements OnInit {
     this.applyFilters();
   }
 
-  goToCompany(id: string): void {
+  goToCompany(id: number | undefined): void {
     this.router.navigate(['/partner-companies', id]);
     console.log('Navigating to partner with id:', id);
   }
 
-  trackById(index: number, item: Host): string {
+  trackById(index: number, item: Host): number | undefined {
     return item.id;
   }
 }

@@ -31,7 +31,7 @@
   </section>
 
   <!--Congratulation For Host section-->
-  <section class="congratulation-container" *ngIf="host?.hashedPsw !== host?.provvisoryPsw">
+  <section class="congratulation-container" *ngIf="host?.hashedPsw !== host?.provisoryPsw">
     <div class="congratulation-box">
       <h1>Congratulazioni!</h1>
       <p *ngIf="host?.type === 'COMPANY'">Il tuo account aziendale è stato creato con successo.</p>

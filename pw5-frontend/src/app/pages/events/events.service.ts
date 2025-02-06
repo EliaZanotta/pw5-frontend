@@ -23,14 +23,7 @@ export interface Event {
 }
 
 interface PendingSpeakerRequest {
-  id: string | null;
-  firstName: string | null;
-  lastName: string | null;
   email: string | null;
-  hashedPsw: string | null;
-  status: string | null;
-  role: string | null;
-  userDetails: UserDetails | null;
 }
 
 interface Speaker {
@@ -86,9 +79,9 @@ export class EventsService {
       this.http.delete(url, { responseType: 'text' })
     );
   }
-  async createEvent(event: Partial<Event>): Promise<any> {
+  async createEvent(payload: { startDate: string; endDate: string; place: string; pendingSpeakerRequests: { email: string }[]; topics: string[]; title: string; maxParticipants: number; eventSubscription: string; description: string }): Promise<any> {
     return await lastValueFrom(
-      this.http.post<any>(this.baseUrl, event, { withCredentials: true })
+      this.http.post<any>(this.baseUrl, payload, { withCredentials: true })
     );
   }
 }

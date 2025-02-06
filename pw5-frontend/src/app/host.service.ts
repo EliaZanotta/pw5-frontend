@@ -11,7 +11,7 @@ export class Host {
   type: string | undefined;
   description: string | undefined;
   hashedPsw: string | undefined;
-  provvisoryPsw: string | undefined;
+  provisoryPsw: string | undefined;
   pastEvents: Event[] | undefined;
   programmedEvents: Event[] | undefined;
   createdBy: string | undefined;

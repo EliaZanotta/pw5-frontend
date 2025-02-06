@@ -39,7 +39,7 @@
         <div>
           <label for="startDate">Data inizio:</label>
           <input
-            type="date"
+            type="datetime-local"
             id="startDate"
             required
             [(ngModel)]="event.startDate"
@@ -49,7 +49,7 @@
         <div>
           <label for="endDate">Data fine:</label>
           <input
-            type="date"
+            type="datetime-local"
             id="endDate"
             required
             [(ngModel)]="event.endDate"
@@ -59,7 +59,7 @@
       </div>
       <div class="email-topic-container">
         <div>
-          <label for="speakerEmail">Email speaker:</label>
+          <label for="speakerEmail">Email speaker (premi 'invio' per aggiungere):</label>
           <input
             type="email"
             id="speakerEmail"
@@ -80,7 +80,7 @@
         </div>
 
         <div>
-          <label for="topics">Topic:</label>
+          <label for="topics">Topic (premi 'invio' per aggiungere):</label>
           <input
             type="text"
             id="topics"
