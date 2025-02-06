@@ -76,7 +76,7 @@
           <div class="list-item">
             <h3>Speaker</h3>
             <ul>
-              <li *ngFor="let speaker of eventData.speakers || []">{{ speaker }}</li>
+              <li *ngFor="let speaker of eventData.speakers || []"><a [routerLink]="['/speaker/', speaker.id]">{{ speaker.email }}</a></li>
             </ul>
             <p *ngIf="!(eventData.speakers && eventData.speakers.length)">Ancora nessuno speaker</p>
           </div>
