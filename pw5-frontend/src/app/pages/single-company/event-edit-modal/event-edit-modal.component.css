@@ -1,158 +1,157 @@
-/* Form Container - Takes full modal width */
-form {
+/* Global body & background */
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: url('https://static.vecteezy.com/ti/vettori-gratis/p1/17023141-rosso-astratto-sfondo-rosso-sfondo-design-astratto-futuristico-sfondo-rosso-moderno-sfondo-rosso-astratto-sfondo-per-modelli-carte-e-siti-web-gratuito-vettoriale.jpg')
+  no-repeat center center/cover;
+}
+
+/* Container for the form */
+.container {
+  background: #f0f0f0;
+  padding: 2rem;
+  border-radius: 12px;
   width: 90%;
   max-width: 1200px;
-  margin: 2rem auto;
-  padding: 2rem 0;
+  margin: 80px auto;
+  border-left: 5px solid #ce2424;
+  box-sizing: border-box;
+}
+
+/* Title styling */
+h2 {
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+/* Form grid layout */
+form {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
-  align-items: start;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
 }
 
-/* Full-width sections */
-div[formArrayName="pendingSpeakerRequests"],
-.full-width,
-.button-row,
-.date-time-row {
-  grid-column: 1 / -1;
-}
-
-/* Grouping for vertically stacking related fields */
-.group {
+/* Group common form fields vertically */
+.form-group {
   display: flex;
   flex-direction: column;
-  gap: 1rem; /* Adjust spacing as needed */
-}
-
-/* Date and Time Row for Start & End Date/Time */
-.date-time-row {
-  display: flex;
-  gap: 2rem; /* Adjust this gap value for more or less spacing */
-}
-
-/* Form Group Styling */
-form > div {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
 }
 
 /* Labels */
-form label {
+.form-group label {
   font-weight: 500;
   color: #333;
-  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
 }
 
-/* Inputs, Textareas, and Selects */
-form input,
-form textarea,
-form select {
+/* Inputs & Textareas */
+input,
+textarea {
   width: 100%;
-  padding: 1rem;
+  padding: 0.75rem;
   border: 2px solid #e0e0e0;
   border-radius: 8px;
   font-size: 1rem;
   transition: all 0.3s ease;
-  background: white;
+  box-sizing: border-box;
+  background: #fff;
 }
 
-form input:focus,
-form textarea:focus,
-form select:focus {
+input:focus,
+textarea:focus {
   border-color: #ce2424;
   outline: none;
   box-shadow: 0 0 0 3px rgba(206, 36, 36, 0.1);
 }
 
-/* Textarea Specific */
-form textarea {
+/* Textarea specific */
+textarea {
   resize: vertical;
   min-height: 120px;
 }
 
-/* Speaker Requests Array */
-div[formArrayName="pendingSpeakerRequests"] {
-  padding: 1.5rem;
-  background: #f8f8f8;
-  border-radius: 8px;
+/* Date & Time Row */
+.date-time {
+  grid-column: 1 / -1;
   display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
-div[formArrayName="pendingSpeakerRequests"] > div {
+.date-time > div {
+  flex: 1;
+}
+
+/* Radio buttons row */
+.radio-group {
+  grid-column: 1 / -1;
   display: flex;
-  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+/* Button container for submit button */
+.button-container {
+  grid-column: 1 / -1;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* Button styling */
+button {
+  background: #ce2424;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+button:hover {
+  background: #a81e1e;
+}
+
+/* Bubble Tag (for emails & topics) styling */
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
 }
 
-/* Button Container */
-.button-row {
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-  margin-top: 1.5rem;
-}
-
-/* Buttons */
-form button {
-  padding: 1rem 2rem;
-  border: none;
-  border-radius: 8px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-button[type="button"] { /* Cancel */
-  background: #f0f0f0;
-  color: #333;
-}
-
-button[type="submit"] { /* Confirm */
+.tag {
   background: #ce2424;
-  color: white;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
 }
 
-form button:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
+.tag button {
+  background: transparent;
+  border: none;
+  color: #fff;
+  margin-left: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0;
 }
 
-/* Responsive Design */
+/* Responsive adjustments */
 @media (max-width: 768px) {
   form {
     grid-template-columns: 1fr;
-    width: 95%;
-    gap: 1.5rem;
   }
-
-  .button-row {
+  .date-time {
     flex-direction: column;
-  }
-
-  form button {
-    width: 100%;
-  }
-
-  /* Optionally, adjust the date-time row for mobile if needed */
-  .date-time-row {
-    flex-direction: column;
-    gap: 1rem;
-  }
-}
-
-@media (max-width: 480px) {
-  form {
-    padding: 1rem 0;
-    gap: 1rem;
-  }
-
-  form input,
-  form textarea,
-  form select {
-    padding: 0.8rem;
   }
 }

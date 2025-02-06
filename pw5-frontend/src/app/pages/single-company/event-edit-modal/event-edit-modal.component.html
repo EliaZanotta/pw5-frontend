@@ -1,63 +1,157 @@
-<form [formGroup]="eventForm" (ngSubmit)="onConfirm()">
-  <!-- Date and Time Row -->
-  <div class="date-time-row">
-    <div>
-      <label for="startDate">Start Date &amp; Time</label>
-      <input id="startDate" formControlName="startDate" type="datetime-local">
+<div class="container">
+  <h2>Modifica Evento</h2>
+  <form [formGroup]="eventForm" (ngSubmit)="onConfirm()">
+    <!-- Title -->
+    <div class="form-group">
+      <label for="title">Titolo:</label>
+      <input
+        type="text"
+        id="title"
+        formControlName="title"
+        placeholder="Inserisci il titolo"
+      />
     </div>
-    <div>
-      <label for="endDate">End Date &amp; Time</label>
-      <input id="endDate" formControlName="endDate" type="datetime-local">
-    </div>
-  </div>
 
-  <div>
-    <label for="place">Place</label>
-    <input id="place" formControlName="place" type="text">
-  </div>
-
-  <div formArrayName="pendingSpeakerRequests">
-    <div *ngFor="let request of pendingSpeakerRequests.controls; let i = index" [formGroupName]="i">
-      <label for="email-{{i}}">Speaker Email</label>
-      <input id="email-{{i}}" formControlName="email" type="email">
+    <!-- Description -->
+    <div class="form-group">
+      <label for="description">Descrizione:</label>
+      <textarea
+        id="description"
+        formControlName="description"
+        placeholder="Inserisci una descrizione"
+      ></textarea>
     </div>
-  </div>
 
-  <!-- Group Topics and Title Vertically -->
-  <div class="full-width group">
-    <div>
-      <label for="topics">Topics</label>
-      <input id="topics" formControlName="topics" type="text">
+    <!-- Place -->
+    <div class="form-group">
+      <label for="place">Luogo:</label>
+      <input
+        type="text"
+        id="place"
+        formControlName="place"
+        placeholder="Inserisci il luogo"
+      />
     </div>
-    <div>
-      <label for="title">Title</label>
-      <input id="title" formControlName="title" type="text">
-    </div>
-  </div>
 
-  <!-- Group Max Participants and Event Subscription Vertically -->
-  <div class="full-width group">
-    <div>
-      <label for="maxParticipants">Max Participants</label>
-      <input id="maxParticipants" formControlName="maxParticipants" type="number">
+    <!-- Date & Time Row (startDate and endDate are disabled) -->
+    <div class="form-group date-time">
+      <div>
+        <label for="startDate">Data inizio:</label>
+        <input
+          type="datetime-local"
+          id="startDate"
+          formControlName="startDate"
+          [disabled]="true"
+        />
+      </div>
+      <div>
+        <label for="endDate">Data fine:</label>
+        <input
+          type="datetime-local"
+          id="endDate"
+          formControlName="endDate"
+          [disabled]="true"
+        />
+      </div>
     </div>
-    <div>
-      <label for="eventSubscription">Event Subscription</label>
-      <select id="eventSubscription" formControlName="eventSubscription">
-        <option value="FREE">FREE</option>
-        <option value="PAID">PAID</option>
-      </select>
+
+    <!-- Speaker Email with Bubble Tags -->
+    <div class="form-group">
+      <label for="newSpeakerEmail">
+        Email speaker (premi Invio per aggiungere):
+      </label>
+      <input
+        type="email"
+        id="newSpeakerEmail"
+        placeholder="Inserisci email e premi Invio"
+        [ngModel]="newSpeakerEmail"
+        (ngModelChange)="newSpeakerEmail = $event"
+        [ngModelOptions]="{standalone: true}"
+        (keydown.enter)="$event.preventDefault(); addSpeakerEmail()"
+      />
+      <div class="tag-list">
+        <span
+          *ngFor="let ctrl of pendingSpeakerRequests.controls; let i = index"
+          class="tag"
+        >
+          {{ ctrl.get('email')?.value }}
+          <button
+            *ngIf="isDeletableEmail(i)"
+            type="button"
+            (click)="removeSpeakerEmail(i)"
+          >
+            ×
+          </button>
+        </span>
+      </div>
     </div>
-  </div>
 
-  <div>
-    <label for="description">Description</label>
-    <textarea id="description" formControlName="description"></textarea>
-  </div>
+    <!-- Topics with Bubble Tags -->
+    <div class="form-group">
+      <label for="newTopic">Topic (premi Invio per aggiungere):</label>
+      <input
+        type="text"
+        id="newTopic"
+        placeholder="Inserisci topic e premi Invio"
+        [ngModel]="newTopic"
+        (ngModelChange)="newTopic = $event"
+        [ngModelOptions]="{standalone: true}"
+        (keydown.enter)="$event.preventDefault(); addTopic()"
+      />
+      <div class="tag-list">
+        <span *ngFor="let topic of topics; let i = index" class="tag">
+          {{ topic.value }}
+          <button
+            *ngIf="topic.deletable"
+            type="button"
+            (click)="removeTopic(i)"
+          >
+            ×
+          </button>
+        </span>
+      </div>
+    </div>
 
-  <!-- Button Row -->
-  <div class="button-row">
-    <button type="button" (click)="onCancel()">Cancel</button>
-    <button type="submit">Confirm</button>
-  </div>
-</form>
+    <!-- Max Participants -->
+    <div class="form-group">
+      <label for="maxParticipants">Partecipanti max:</label>
+      <input
+        type="number"
+        id="maxParticipants"
+        formControlName="maxParticipants"
+        placeholder="0 per illimitato"
+        (focus)="handleFocus($event)"
+        (blur)="handleBlur($event)"
+      />
+    </div>
+
+    <!-- Event Subscription (Radio Buttons) -->
+    <div class="form-group radio-group">
+      <div>
+        <input
+          type="radio"
+          id="free"
+          formControlName="eventSubscription"
+          value="FREE"
+        />
+        <label for="free">Gratuito</label>
+      </div>
+      <div>
+        <input
+          type="radio"
+          id="paid"
+          formControlName="eventSubscription"
+          value="PAID"
+        />
+        <label for="paid">Pagamento</label>
+      </div>
+    </div>
+
+
+    <!-- Buttons -->
+    <div class="form-group button-container">
+      <button type="submit">Conferma</button>
+      <button type="button" (click)="onCancel()">Annulla</button>
+    </div>
+  </form>
+</div>
