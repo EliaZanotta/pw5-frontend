@@ -9,11 +9,8 @@ html, body {
   align-items: center;
   justify-content: center;
   font-family: 'Poppins', sans-serif;
-  background: url('https://static.vecteezy.com/ti/vettori-gratis/p1/17023141-rosso-astratto-sfondo-rosso-sfondo-design-astratto-futuristico-sfondo-rosso-moderno-sfondo-rosso-astratto-sfondo-per-modelli-carte-e-siti-web-gratuito-vettoriale.jpg') no-repeat center center/cover;
-}
-
-.topic {
-  margin-top: 20px;
+  background: url('https://static.vecteezy.com/ti/vettori-gratis/p1/17023141-rosso-astratto-sfondo-rosso-sfondo-design-astratto-futuristico-sfondo-rosso-moderno-sfondo-rosso-astratto-sfondo-per-modelli-carte-e-siti-web-gratuito-vettoriale.jpg') 
+    no-repeat center center/cover;
 }
 
 .header {
@@ -63,19 +60,38 @@ html, body {
   margin: auto;
 }
 
+/* Form con due colonne perfettamente allineate */
 form {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20px 30px;
+  gap: 20px;
+  width: 100%;
+  max-width: 1000px;
+  align-items: start;
+}
+
+/* Contenitore dei campi: forzato allineamento verticale */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
   width: 100%;
 }
 
+/* Etichette e input devono avere la stessa altezza */
 label {
   font-weight: 500;
   margin-bottom: 5px;
   color: #000000;
+  min-height: 20px; /* Imposta un'altezza minima uguale per tutte le label */
 }
 
+.title{
+  margin-top: 20px;
+}
+
+/* Stile uniforme per input e textarea */
 input,
 textarea {
   width: 100%;
@@ -83,36 +99,36 @@ textarea {
   border: none;
   border-radius: 8px;
   font-size: 16px;
-  background: #ffff;
+  background: #ffffff;
   color: #000000;
   outline: none;
   box-sizing: border-box;
   height: 50px;
 }
 
+/* Assicura che le textarea siano allineate agli input */
 textarea {
-  resize: vertical;
+  resize: none;
   height: 50px;
 }
 
+/* Sezione radio button con allineamento perfetto */
 .radio-group {
-  grid-column: span 2;
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin-top: 20px;
+  gap: 20px;
+  grid-column: span 2;
+  transform: scale(0.6);
 }
 
-.radio-group input[type="radio"] {
-  transform: scale(0.5);
-}
-
+/* Contenitore pulsante centrato */
 .button-container {
   grid-column: span 2;
   text-align: center;
   margin-top: 20px;
 }
 
+/* Stile del pulsante */
 button {
   background: #ce2424;
   color: white;
@@ -143,6 +159,7 @@ button:hover {
     padding: 1rem;
   }
 
+  /* Form a una sola colonna nei dispositivi più piccoli */
   form {
     grid-template-columns: 1fr;
   }

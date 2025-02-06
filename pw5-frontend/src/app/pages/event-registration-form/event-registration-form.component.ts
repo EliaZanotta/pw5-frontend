@@ -1,24 +1,20 @@
-import {CommonModule} from '@angular/common';
-import {Component, OnInit} from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {EventsService} from '../events/events.service';
-import {AuthService} from '../../auth/auth.service';
-import {HttpErrorResponse} from '@angular/common/http';
-import {Host} from '../../host.service';
-import {Router} from '@angular/router';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {MatDialog} from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
+import { EventsService } from '../events/events.service';
+import { AuthService } from '../../auth/auth.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-event-registration-form',
-  imports: [CommonModule, FormsModule],
+  standalone: true,
   templateUrl: './event-registration-form.component.html',
   styleUrls: ['./event-registration-form.component.css'],
-  standalone: true
+  imports: [CommonModule, FormsModule]
 })
 export class EventRegistrationFormComponent implements OnInit {
-  host: Host | null = null;
-
   event = {
     title: '',
     description: '',
@@ -28,34 +24,35 @@ export class EventRegistrationFormComponent implements OnInit {
     speakerEmails: [] as string[],
     topics: [] as string[],
     maxParticipants: 0,
-    eventType: 'free', // Default value
+    eventType: 'free', 
     price: 0,
   };
+
   newTopic: string = '';
   newSpeakerEmail: string = '';
 
-  constructor(private eventsService: EventsService, private authService: AuthService, private router: Router, private snackBar: MatSnackBar) {
-  }
+  constructor(
+    private eventsService: EventsService,
+    private authService: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
 
   async ngOnInit() {
-    if (document.cookie.includes('SESSION_ID')) {
-      try {
-        let response = await this.authService.getLoggedHost();
-        if (response.host) {
-          this.host = response.host;
-        }
-      } catch (error) {
-        if (error instanceof HttpErrorResponse && error.status === 401) {
-          await this.router.navigate(['/login']);
-        }
+    try {
+      const response = await this.authService.getLoggedHost();
+      if (response.host) {
+        console.log('Host autenticato:', response.host);
       }
-    } else {
-      await this.router.navigate(['/login']);
+    } catch (error) {
+      if (error instanceof HttpErrorResponse && error.status === 401) {
+        await this.router.navigate(['/login']);
+      }
     }
   }
 
   addTopic() {
-    if (this.newTopic.trim()) {
+    if (this.newTopic.trim() && !this.event.topics.includes(this.newTopic.trim())) {
       this.event.topics.push(this.newTopic.trim());
       this.newTopic = '';
     }
@@ -66,7 +63,7 @@ export class EventRegistrationFormComponent implements OnInit {
   }
 
   addSpeakerEmail() {
-    if (this.newSpeakerEmail.trim()) {
+    if (this.newSpeakerEmail.trim() && !this.event.speakerEmails.includes(this.newSpeakerEmail.trim())) {
       this.event.speakerEmails.push(this.newSpeakerEmail.trim());
       this.newSpeakerEmail = '';
     }
@@ -90,23 +87,31 @@ export class EventRegistrationFormComponent implements OnInit {
     }
   }
 
-  async onSubmit() {
+  async onSubmit(eventForm: NgForm) {
+    if (!eventForm.valid) {
+      this.snackBar.open('Compila tutti i campi richiesti!', 'Chiudi', {
+        duration: 2000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
+        panelClass: 'error-snackbar'
+      });
+      return;
+    }
+
     const formattedEvent = {
+      title: this.event.title,
+      description: this.event.description,
       startDate: this.event.startDate,
       endDate: this.event.endDate,
       place: this.event.place,
-      pendingSpeakerRequests: this.event.speakerEmails.map(email => ({
-        email: email,
-      })),
-      topics: [...this.event.topics],
-      title: this.event.title,
+      topics: this.event.topics,
+      speakerEmails: this.event.speakerEmails,
       maxParticipants: this.event.maxParticipants,
-      registeredParticipants: 0,
-      eventSubscription: this.event.eventType.toUpperCase() === 'FREE' ? 'FREE' : 'PAID',
-      description: this.event.description,
+      eventType: this.event.eventType,
+      price: this.event.eventType === 'paid' ? this.event.price : 0
     };
 
-    console.log('Formatted Event Data:', formattedEvent);
+    console.log('Dati inviati al backend:', formattedEvent);
 
     try {
       await this.eventsService.createEvent(formattedEvent);
@@ -116,45 +121,35 @@ export class EventRegistrationFormComponent implements OnInit {
         horizontalPosition: 'right',
         panelClass: 'success-snackbar'
       });
-      await this.router.navigate(['/partner-companies/' + this.host?.id]);
+      await this.router.navigate(['/dashboard']);
     } catch (errorResponse) {
       if (errorResponse instanceof HttpErrorResponse) {
-        console.error('Error creating event:', errorResponse);
-        switch (errorResponse.status) {
-          case 400:
-            this.snackBar.open('Errore nei dati inseriti', 'Chiudi', {
-              duration: 2000,
-              verticalPosition: 'top',
-              horizontalPosition: 'right',
-              panelClass: 'error-snackbar'
-            });
-            break;
-          case 401:
-            this.snackBar.open('Non autorizzato', 'Chiudi', {
-              duration: 2000,
-              verticalPosition: 'top',
-              horizontalPosition: 'right',
-              panelClass: 'error-snackbar'
-            });
-            break;
-          case 500:
-            this.snackBar.open('Errore interno del server', 'Chiudi', {
-              duration: 2000,
-              verticalPosition: 'top',
-              horizontalPosition: 'right',
-              panelClass: 'error-snackbar'
-            });
-            break;
-          default:
-            this.snackBar.open('Errore durante la creazione dell\'evento', 'Chiudi', {
-              duration: 2000,
-              verticalPosition: 'top',
-              horizontalPosition: 'right',
-              panelClass: 'error-snackbar'
-            });
-        }
+        this.handleHttpError(errorResponse);
       }
-
     }
+  }
+
+  private handleHttpError(error: HttpErrorResponse) {
+    console.error('Errore HTTP:', error);
+
+    let message = 'Errore durante la creazione dell\'evento';
+    switch (error.status) {
+      case 400:
+        message = 'Errore nei dati inseriti';
+        break;
+      case 401:
+        message = 'Non autorizzato';
+        break;
+      case 500:
+        message = 'Errore interno del server';
+        break;
+    }
+
+    this.snackBar.open(message, 'Chiudi', {
+      duration: 2000,
+      verticalPosition: 'top',
+      horizontalPosition: 'right',
+      panelClass: 'error-snackbar'
+    });
   }
 }
