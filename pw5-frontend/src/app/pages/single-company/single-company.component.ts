@@ -6,6 +6,7 @@ import { AuthService } from '../../auth/auth.service';
 import { Subscription } from 'rxjs';
 import {MatButton} from '@angular/material/button';
 import {ConfirmEventModalComponent} from './confirm-event-modal/confirm-event-modal.component';
+import {EventDeleteModalComponent} from './event-delete-modal/event-delete-modal.component';
 import {MatDialog} from '@angular/material/dialog';
 
 @Component({
@@ -130,6 +131,20 @@ export class SingleCompanyComponent implements OnInit, OnDestroy {
 
   openConfirmEventModal(id: string): void {
     const dialogRef = this.dialog.open(ConfirmEventModalComponent, {
+      width: '250px',
+      data: { eventId: id }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Handle the confirmation logic here
+        console.log('Event confirmed:', id);
+      }
+    });
+  }
+
+  openDeleteEventModal(id: string): void {
+    const dialogRef = this.dialog.open(EventDeleteModalComponent, {
       width: '250px',
       data: { eventId: id }
     });

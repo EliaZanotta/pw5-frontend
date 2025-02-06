@@ -1,0 +1,19 @@
+/* Component-specific styles */
+
+h1[mat-dialog-title] {
+  font-size: 20px;
+  margin: 0;
+}
+
+[mat-dialog-content] {
+  margin: 20px 0;
+}
+
+[mat-dialog-actions] {
+  display: flex;
+  justify-content: flex-end;
+}
+
+button[mat-button] {
+  margin-left: 10px;
+}

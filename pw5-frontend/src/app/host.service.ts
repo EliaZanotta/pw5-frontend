@@ -50,6 +50,4 @@ export class HostService {
       this.http.put<any>(`${this.baseUrl}confirm-event/${eventId}`, {}, { withCredentials: true })
     );
   }
-
-
 }

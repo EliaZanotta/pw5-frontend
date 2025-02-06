@@ -96,7 +96,7 @@ export class EventsManagementComponent implements OnInit {
   async confirmDelete(): Promise<void> {
     if (this.eventIdToDelete) {
       try {
-        await this.eventsService.deleteEvent(this.eventIdToDelete);
+        await this.eventsService.deleteEventAsAdmin(this.eventIdToDelete);
         // Remove the event from the list after successful deletion
         this.allEvents = this.allEvents.filter(event => event.id !== this.eventIdToDelete);
         this.dataSource.data = this.allEvents;
