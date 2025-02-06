@@ -20,8 +20,7 @@ export class AppComponent {
       this.showHeaderFooter =
         !this.router.url.includes('auth') &&
         !this.router.url.includes('register') &&
-        !this.router.url.includes('confirm-email') &&
-        !this.router.url.includes('event-registration-form');
+        !this.router.url.includes('confirm-email');
     });
   }
 }
