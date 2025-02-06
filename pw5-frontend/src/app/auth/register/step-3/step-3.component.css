@@ -208,6 +208,7 @@ input:focus {
 
 .congratulation-container {
   display: flex;
+  width: 80%;
   flex-direction: column;
   align-items: center;
   margin-bottom: 100px;
