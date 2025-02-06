@@ -10,6 +10,7 @@ import {EventDeleteModalComponent} from './event-delete-modal/event-delete-modal
 import {Event} from '../events/events.service';
 import {EventEditModalComponent} from './event-edit-modal/event-edit-modal.component';
 import {MatDialog} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-single-company',
@@ -19,7 +20,7 @@ import {MatDialog} from '@angular/material/dialog';
     NgForOf,
     DatePipe,
     RouterLink,
-    MatButton
+    MatButton,
   ],
   standalone: true,
   styleUrls: ['./single-company.component.css']
@@ -38,7 +39,8 @@ export class SingleCompanyComponent implements OnInit, OnDestroy {
     private router: Router,
     private hostService: HostService,
     private authService: AuthService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {
   }
 
@@ -132,6 +134,20 @@ export class SingleCompanyComponent implements OnInit, OnDestroy {
       height: '80%',
       data: {
         event: event
+      }
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // Refresh the page
+        window.location.reload();
+
+        // Show the snackbar after a short delay to ensure the page reloads first
+        setTimeout(() => {
+          this.snackBar.open('Eventi aggiornati con successo!', 'Chiudi', {
+            duration: 3000,
+            verticalPosition: 'top'
+          });
+        }, 100);
       }
     });
   }
