@@ -41,8 +41,4 @@ export class HostService {
       this.http.get<Host>(`${this.baseUrl}${hostId}`, { withCredentials: true })
     );
   }
-  async logout(): Promise<any> {
-    return await lastValueFrom(this.http.delete<any>(`${this.baseUrl}logout`, {withCredentials: true}));
-  }
-
 }

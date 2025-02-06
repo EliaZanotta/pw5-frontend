@@ -106,7 +106,7 @@ export class SingleCompanyComponent implements OnInit, OnDestroy {
 
   async logout() {
     try {
-      const response = await this.hostService.logout();
+      const response = await this.authService.logout();
       if (response) {
         // Redirect to home after logout.
         await this.router.navigate(['/']);
