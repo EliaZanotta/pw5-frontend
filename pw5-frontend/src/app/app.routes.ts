@@ -28,6 +28,7 @@ import { EventRegistrationFormComponent } from './pages/event-registration-form/
 
 
 
+
 export const routes: Routes = [
   {path: '', component: HomepageComponent},
   {path: 'events', component: EventsComponent},
