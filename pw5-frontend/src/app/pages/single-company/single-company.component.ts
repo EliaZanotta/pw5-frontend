@@ -5,6 +5,8 @@ import { DatePipe, NgForOf, NgIf } from '@angular/common';
 import { AuthService } from '../../auth/auth.service';
 import { Subscription } from 'rxjs';
 import {MatButton} from '@angular/material/button';
+import {ConfirmEventModalComponent} from './confirm-event-modal/confirm-event-modal.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-single-company',
@@ -28,8 +30,9 @@ export class SingleCompanyComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private hostService: HostService,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService,
+  private dialog: MatDialog
+) {}
 
   ngOnInit(): void {
     // Subscribe to route parameter changes.
@@ -123,5 +126,19 @@ export class SingleCompanyComponent implements OnInit, OnDestroy {
     if (this.paramSubscription) {
       this.paramSubscription.unsubscribe();
     }
+  }
+
+  openConfirmEventModal(id: string): void {
+    const dialogRef = this.dialog.open(ConfirmEventModalComponent, {
+      width: '250px',
+      data: { eventId: id }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Handle the confirmation logic here
+        console.log('Event confirmed:', id);
+      }
+    });
   }
 }

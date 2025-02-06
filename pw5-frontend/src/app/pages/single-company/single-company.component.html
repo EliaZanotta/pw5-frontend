@@ -63,6 +63,7 @@
             <p><strong>📍 Luogo:</strong> {{ event.place }}</p>
             <p class="description">{{ event.description }}</p>
             <button class="update-button" *ngIf="isCompany" (click)="updateEvent(event.id)">Aggiorna Evento</button>
+            <button class="update-button" *ngIf="isCompany" (click)="openConfirmEventModal(event.id)">Conferma Evento</button>
           </div>
         </div>
       </div>
