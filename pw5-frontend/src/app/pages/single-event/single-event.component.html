@@ -10,39 +10,39 @@
     <ng-container *ngIf="eventData">
 
       <div class="event-header">
+        <!-- Image Wrapper con overlay -->
         <div class="image-wrapper">
-          <img [src]="eventData.image || 'img/code_cheers.png'" class="event-image"  alt="eventImage"/>
-          <div class="event-overlay">
-            <h1 class="event-title">{{ eventData.title || 'Titolo non disponibile' }}</h1>
-            <div class="host-info">
-              <fa-icon [icon]="faUser" class="icon"></fa-icon>
-              <span>Ospitato da {{ eventData.host || 'Ospite non disponibile' }}</span>
-            </div>
-          </div>
+          <img [src]="eventData.image || 'img/code_cheers.png'" class="event-image" alt="eventImage" />
         </div>
-      </div>
 
-      <div class="details-container">
-        <div class="details">
-          <div class="detail-item">
-            <fa-icon [icon]="faCalendarDays" class="icon text-primary"></fa-icon>
-            <div>
-              <div>Inizio: {{ formatDate(eventData.startDate) }}</div>
-              <div>Fine: {{ formatDate(eventData.endDate) }}</div>
-            </div>
+        <!-- Details Container spostato accanto all'immagine -->
+        <div class="details-container">
+          <h1 class="event-title2">{{ eventData.title || 'Titolo non disponibile' }}</h1>
+          <div class="host-info2">
+            <fa-icon [icon]="faUser" class="icon"></fa-icon>
+            <span>Ospitato da {{ eventData.host || 'Ospite non disponibile' }}</span>
           </div>
-
-          <div class="detail-item">
-            <fa-icon [icon]="faMapPin" class="icon text-primary"></fa-icon>
-            <div>
-              <div>{{ eventData.place || 'Luogo non disponibile' }}</div>
+          <div class="details">
+            <div class="detail-item">
+              <fa-icon [icon]="faCalendarDays" class="icon text-primary"></fa-icon>
+              <div>
+                <div>{{ formatDateRange(eventData.startDate, eventData.endDate) }}</div>
+              </div>
             </div>
-          </div>
 
-          <div class="detail-item">
-            <fa-icon [icon]="faUsers" class="icon text-primary"></fa-icon>
-            <div>
-              <div>{{ eventData.registeredParticipants || '0' }} / {{ formatMaxParticipants(eventData.maxParticipants) }}</div>
+            <div class="detail-item">
+              <fa-icon [icon]="faMapPin" class="icon text-primary"></fa-icon>
+              <div>
+                <div>{{ eventData.place || 'Luogo non disponibile' }}</div>
+              </div>
+            </div>
+
+            <div class="detail-item">
+              <fa-icon [icon]="faUsers" class="icon text-primary"></fa-icon>
+              <div>
+                <div>{{ eventData.registeredParticipants }} / {{ formatMaxParticipants(eventData.maxParticipants)
+                  }}</div>
+              </div>
             </div>
           </div>
         </div>
@@ -65,7 +65,7 @@
         </div>
 
         <div class="list-container">
-          <div>
+          <div class="list-item">
             <h3>Argomenti</h3>
             <ul>
               <li *ngFor="let topic of eventData.topics || []">{{ topic }}</li>
@@ -73,7 +73,7 @@
             <p *ngIf="!(eventData.topics && eventData.topics.length)">Nessun argomento disponibile</p>
           </div>
 
-          <div>
+          <div class="list-item">
             <h3>Speaker</h3>
             <ul>
               <li *ngFor="let speaker of eventData.speakers || []">{{ speaker }}</li>

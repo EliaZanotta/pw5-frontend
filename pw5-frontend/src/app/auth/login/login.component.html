@@ -1,5 +1,5 @@
 <div class="login-container">
-  <img class="login-image" src="/assets/imageLogin.jpg" alt="Login Image" />
+  <img class="login-image" src="/assets/imageLogin.jpg" alt="Login Image"/>
   <div class="login-box">
     <h1>Login</h1>
 
@@ -26,13 +26,18 @@
       </div>
       <div class="form-group">
         <label for="utente-password">Password</label>
-        <input
-          id="utente-password"
-          type="password"
-          [(ngModel)]="utentePassword"
-          name="utentePassword"
-          required
-        />
+        <div class="password-input">
+          <input
+            id="utente-password"
+            [type]="showPassword ? 'text' : 'password'"
+            [(ngModel)]="utentePassword"
+            name="utentePassword"
+            required
+          />
+          <button type="button" (click)="togglePasswordVisibility()">
+            <fa-icon [icon]="showPassword ? faEye : faEyeSlash"></fa-icon>
+          </button>
+        </div>
       </div>
       <button type="submit" class="submit-button">
         Login
@@ -56,19 +61,25 @@
       </div>
       <div class="form-group">
         <label for="azienda-password">Password</label>
-        <input
-          id="azienda-password"
-          type="password"
-          [(ngModel)]="aziendaPassword"
-          name="aziendaPassword"
-          required
-        />
+        <div class="password-input">
+          <input
+            id="azienda-password"
+            [type]="showPassword ? 'text' : 'password'"
+            [(ngModel)]="aziendaPassword"
+            name="aziendaPassword"
+            required
+          />
+          <button type="button" (click)="togglePasswordVisibility()">
+            <fa-icon [icon]="showPassword ? faEye : faEyeSlash"></fa-icon>
+          </button>
+        </div>
       </div>
       <button type="submit" class="submit-button">
         Login
       </button>
       <p class="register-link">
-        Vuoi diventare partner? <a routerLink="/auth/register">Clicca qui per registrare la tua attività</a>, oppure <a routerLink="/">torna alla home</a>
+        Vuoi diventare partner? <a routerLink="/auth/register">Clicca qui per registrare la tua attività</a>, oppure <a
+        routerLink="/">torna alla home</a>
       </p>
     </form>
     <div class="login-error" *ngIf="errorMessage">

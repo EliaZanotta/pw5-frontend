@@ -5,6 +5,9 @@ import {Router} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Host, HostService} from '../../../host.service';
 import {HttpErrorResponse} from '@angular/common/http';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
+
 
 @Component({
   selector: 'app-step-4',
@@ -12,18 +15,24 @@ import {HttpErrorResponse} from '@angular/common/http';
     NgIf,
     NgClass,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FontAwesomeModule
   ],
   templateUrl: './step-4.component.html',
   styleUrl: './step-4.component.css'
 })
 export class Step4Component implements OnInit {
+  protected readonly faEyeSlash = faEyeSlash;
+  protected readonly faEye = faEye;
+
   currentStep: number = 4;
   host: Host | null = null;
   userChoice: string = '';
   errorMessage: string | null = null;
   oldPsw: string = '';
   newPsw: string = '';
+  showOldPassword: boolean = false;
+  showNewPassword: boolean = false;
 
   constructor(public authService: AuthService, private router: Router, private hostService: HostService) {
   }
@@ -118,5 +127,13 @@ export class Step4Component implements OnInit {
     setTimeout(() => {
       this.errorMessage = null;
     }, 3000);
+  }
+
+  toggleOldPasswordVisibility() {
+    this.showOldPassword = !this.showOldPassword;
+  }
+
+  toggleNewPasswordVisibility() {
+    this.showNewPassword = !this.showNewPassword;
   }
 }

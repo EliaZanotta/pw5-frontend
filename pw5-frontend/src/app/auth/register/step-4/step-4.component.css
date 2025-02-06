@@ -1,8 +1,9 @@
 .step-4-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .background-image {
@@ -18,8 +19,9 @@
 
 .wizard-nav {
   display: flex;
+  width: 100%;
   justify-content: center;
-  margin-top: 50px;
+  margin: 50px 0;
   position: relative;
 }
 
@@ -104,6 +106,7 @@
 
 .check-host-status-container {
   display: flex;
+  width: 80%;
   flex-direction: column;
   align-items: center;
   margin-bottom: 100px;
@@ -123,6 +126,7 @@
 
 .change-psw-host-container {
   display: flex;
+  width: 80%;
   align-items: center;
   justify-content: center;
   margin-bottom: 100px;
@@ -174,6 +178,30 @@ input:focus {
   outline: none;
   border-color: #ce2424;
   box-shadow: 0 0 4px #3a001e;
+}
+
+.password-input {
+  position: relative;
+}
+
+.password-input input {
+  width: calc(100% - 17px);
+}
+
+.password-input button {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.password-input button fa-icon {
+  font-size: 1.15rem;
+  color: #4b5563;
 }
 
 .submit-button {
