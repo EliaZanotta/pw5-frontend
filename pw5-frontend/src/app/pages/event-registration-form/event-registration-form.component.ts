@@ -97,22 +97,22 @@ export class EventRegistrationFormComponent implements OnInit {
       });
       return;
     }
-
+  
     const formattedEvent = {
       title: this.event.title,
       description: this.event.description,
       startDate: this.event.startDate,
       endDate: this.event.endDate,
       place: this.event.place,
-      topics: this.event.topics,
-      speakerEmails: this.event.speakerEmails,
+      topics: [...this.event.topics],
+      pendingSpeakerRequests: this.event.speakerEmails.map(email => ({ email })), // ✅ Converti in array di oggetti
       maxParticipants: this.event.maxParticipants,
-      eventType: this.event.eventType,
-      price: this.event.eventType === 'paid' ? this.event.price : 0
+      eventSubscription: this.event.eventType.toUpperCase() === 'FREE' ? 'FREE' : 'PAID', // ✅ Aggiunto per il backend
+      price: this.event.eventType === 'paid' ? this.event.price : 0, // ✅ Imposta il prezzo solo se a pagamento
     };
-
+  
     console.log('Dati inviati al backend:', formattedEvent);
-
+  
     try {
       await this.eventsService.createEvent(formattedEvent);
       this.snackBar.open('Evento creato con successo!', 'Chiudi', {
@@ -128,6 +128,7 @@ export class EventRegistrationFormComponent implements OnInit {
       }
     }
   }
+  
 
   private handleHttpError(error: HttpErrorResponse) {
     console.error('Errore HTTP:', error);
