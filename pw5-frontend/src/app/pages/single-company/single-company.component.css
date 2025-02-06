@@ -15,6 +15,7 @@ html, body {
   margin: 0 auto;
   padding: 0;
   text-align: center;
+  margin-bottom: 100px;
 }
 
 /* ============================================
@@ -172,7 +173,16 @@ html, body {
 
 /* Aggiungi qui lo stile per il pulsante "Aggiorna Evento"
    (se non esiste già, puoi ispirarti agli altri pulsanti come revoke-button) */
-.update-button {
+
+
+.button-container {
+  display: flex;
+  gap: 10px; /* Spazio tra i pulsanti */
+}
+
+.update-button,
+.confirm-button,
+.deleet-button {
   background: #2196f3;
   color: white;
   border: none;
@@ -185,8 +195,24 @@ html, body {
   margin-top: 10px;
 }
 
+.confirm-button{
+  background: #0ed328;
+}
+
+.deleet-button{
+  background: #eb2d2d;
+}
+
 .update-button:hover {
   background: #1976d2;
+}
+
+.confirm-button:hover{
+  background: #0bbc23;
+}
+
+.deleet-button:hover{
+  background: #ce2424;
 }
 
 /* ============================================
