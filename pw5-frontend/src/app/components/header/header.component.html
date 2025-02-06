@@ -24,7 +24,7 @@
           <span *ngIf="hasPendingRequests" class="notification-dot"></span>
         </a>
       </ng-container>
-  
+
       <!-- Admin inbox icon -->
       <ng-container *ngIf="isAdmin">
         <a (click)="openAdminModal()" class="profile-icon fa-2x inbox-icon-btn">
@@ -34,10 +34,10 @@
           <span *ngIf="hasUnreadNotifications" class="notification-dot"></span>
         </a>
       </ng-container>
-  
+
       <!-- User / Host icon -->
       <ng-container *ngIf="user; else loginBtn">
-        <a [routerLink]="isHost ? '/single-companies' : '/user-area'">
+        <a [routerLink]="isHost ? '/partner-companies/{{ user.id }}' : '/user-area'">
           <fa-icon [icon]="
             isHoveredUser
               ? (isHost ? faHandshakeSolid : faUserSolid)
@@ -48,18 +48,18 @@
         </a>
       </ng-container>
     </div>
-  
+
     <!-- Login button for non-logged-in users -->
     <ng-template #loginBtn>
       <button routerLink="/auth/login" class="login-btn">Accedi</button>
     </ng-template>
-  
+
     <!-- Hamburger Menu Toggle -->
     <button class="menu-toggle" (click)="toggleMenu()" aria-label="Toggle menu">
       ☰
     </button>
   </div>
-  
+
 
   <!-- Modal component for speaker requests -->
   <app-speaker-request-modal [show]="showSpeakerModal" (closeModal)="closeSpeakerModal()"></app-speaker-request-modal>
