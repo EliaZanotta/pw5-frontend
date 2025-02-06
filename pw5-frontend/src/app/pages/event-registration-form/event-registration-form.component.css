@@ -1,45 +1,41 @@
-/* Imposta il corpo della pagina per occupare tutta la viewport e prevenire lo scrolling orizzontale */
+/* Imposta il corpo della pagina */
 html, body {
   width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow-x: hidden; /* Evita lo scroll orizzontale */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-family: 'Poppins', sans-serif;
-  background-color: #1e1e2f;
+  background: url('https://static.vecteezy.com/ti/vettori-gratis/p1/17023141-rosso-astratto-sfondo-rosso-sfondo-design-astratto-futuristico-sfondo-rosso-moderno-sfondo-rosso-astratto-sfondo-per-modelli-carte-e-siti-web-gratuito-vettoriale.jpg') no-repeat center center/cover;
 }
 
-h2{
-  padding-top: 7  0px;
+.topic {
+  margin-top: 20px;
 }
 
-/* Stile dell'intestazione */
 .header {
   text-align: center;
   margin-bottom: 40px;
   color: #ffffff;
   margin-top: 80px;
-  padding: 0 15px; /* Aggiunto padding per evitare overflow */
-  max-width: 100%; /* Previene testi troppo larghi */
-  box-sizing: border-box;
+  padding: 0 15px;
+  max-width: 100%;
 }
 
 .header h2 {
-  font-size: 28px;
+  font-size: 38px;
   font-weight: 600;
-  color: #ce2424;
+  color: #ffffff;
 }
 
 .header p {
   font-size: 16px;
-  color: #cccccc;
+  color: #000000;
 }
 
-/* Contenitore principale per il form */
 .container2 {
   width: 100%;
   padding: 20px;
@@ -47,136 +43,72 @@ h2{
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  flex-grow: 1;
-  min-height: 80vh;
-  max-width: 100%; /* Evita overflow */
+  min-height: 50vh;
+  max-width: 100%;
+  margin-bottom: 100px;
 }
 
-/* Stile del form */
 .container {
-  background: #29293d;
+  background: #f0f0f0;
   padding: 2rem;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(206, 36, 36, 0.4);
   width: 90%;
-  max-width: 500px;
-  min-height: 60vh;
-  height: auto;
+  min-width: 800px;
+  max-width: 1200px;
   border-left: 5px solid #ce2424;
-  margin: auto;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  overflow: hidden; /* Previene contenuti che escono fuori */
+  align-items: center;
   box-sizing: border-box;
-  margin-bottom: 60px;
+  margin: auto;
 }
 
-/* Stile per il form e i suoi elementi */
 form {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px 30px;
   width: 100%;
-  max-width: 100%; /* Previene overflow */
 }
 
 label {
   font-weight: 500;
-  margin-top: 12px;
-  display: block;
-  color: #ffffff;
+  margin-bottom: 5px;
+  color: #000000;
 }
 
 input,
 textarea {
   width: 100%;
   padding: 12px;
-  margin-top: 5px;
   border: none;
   border-radius: 8px;
   font-size: 16px;
-  background: #3a3a52;
-  color: #ffffff;
+  background: #ffff;
+  color: #000000;
   outline: none;
   box-sizing: border-box;
+  height: 50px;
 }
 
 textarea {
   resize: vertical;
+  height: 50px;
 }
 
-/* Contenitore delle date */
-.date-container {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  flex-wrap: wrap; /* Permette di andare a capo su schermi piccoli */
-}
-
-.date-container div {
-  width: 48%; /* Assicura che non escano dallo schermo */
-}
-
-@media (max-width: 480px) {
-  .date-container {
-    flex-direction: column; /* Le date vanno una sotto l’altra */
-    gap: 5px;
-  }
-  .date-container div {
-    width: 100%;
-  }
-}
-
-/* Stili per email e topic */
-.email-topic-container {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin-top: 15px;
-}
-
-.emails-list, .topics-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 10px;
-}
-
-.email-tag, .topic-tag {
-  background: #ce2424;
-  color: white;
-  padding: 6px 12px;
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  white-space: nowrap; /* Evita che il testo si spezzi */
-}
-
-.delete-email, .delete-topic {
-  background: none;
-  border: none;
-  color: white;
-  font-weight: bold;
-  margin-left: 8px;
-  cursor: pointer;
-}
-
-/* Radio button */
 .radio-group {
+  grid-column: span 2;
   display: flex;
-  justify-content: space-between;
-  margin-top: 15px;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
 }
 
-.radio-group div {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  color: #ffffff;
+.radio-group input[type="radio"] {
+  transform: scale(0.5);
 }
 
-/* Bottone */
 .button-container {
+  grid-column: span 2;
   text-align: center;
   margin-top: 20px;
 }
@@ -197,90 +129,25 @@ button:hover {
   background: #a81e1e;
 }
 
-
-/*Mobile (fino a 480px) */
-@media (max-width: 430px) {
-  html, body {
-    overflow-x: hidden; /* Previene scroll orizzontale */
-  }
-
+/* Responsive Design */
+@media (max-width: 1024px) {
   .container {
-    width: 95%;
-    padding: 1.5rem;
-    min-height: auto;
+    min-width: auto;
+    width: 90%;
   }
-  
-  .header {
-    margin-top: 40px;
-    margin-bottom: 20px;
-    padding: 0 10px; /* Evita testo troppo largo */
-  }
+}
 
-  .header h2 {
-    font-size: 22px;
-  }
-
-  .header p {
-    font-size: 14px;
-  }
-
-  input, textarea {
-    font-size: 14px;
-    padding: 10px;
-  }
-
-  button {
-    font-size: 16px;
-    padding: 10px 15px;
-  }
-
-  .date-container {
-    flex-direction: column;
-    gap: 5px;
-  }
-
-  .date-container div {
+@media (max-width: 768px) {
+  .container {
     width: 100%;
-  }
-}
-
-/*Tablet (481px - 768px) */
-@media (min-width: 481px) and (max-width: 768px) {
-  .container {
-    width: 80%;
-    max-width: 450px;
-    padding: 2rem;
-  }
-  
-  .header {
-    margin-top: 60px;
+    padding: 1rem;
   }
 
-  .header h2 {
-    font-size: 26px;
+  form {
+    grid-template-columns: 1fr;
   }
-  
-  .header p {
-    font-size: 15px;
-  }
-}
 
-/*Laptop (769px - 1024px) */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .container {
-    width: 60%;
-    max-width: 500px;
-  }
-  
-  .header {
-    margin-top: 80px;
-  }
-}
-
-/*Desktop (oltre 1024px) */
-@media (min-width: 1025px) {
-  .container {
-    width: 50%;
-    max-width: 500px;
+  .radio-group, .button-container {
+    grid-column: span 1;
   }
 }
