@@ -1,7 +1,7 @@
-import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {CommonModule, NgIf, NgForOf} from '@angular/common';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { CommonModule, NgIf, NgForOf } from '@angular/common';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
   faCalendarDays,
   faMapPin,
@@ -11,10 +11,10 @@ import {
   faLaptopCode,
   faMicrophoneAlt
 } from '@fortawesome/free-solid-svg-icons';
-import {EventsService, Event} from '../events/events.service';
-import {BookingComponent} from '../../components/booking/booking.component';
-import {MatDialog} from '@angular/material/dialog';
-import {HttpErrorResponse} from '@angular/common/http';
+import { EventsService, Event } from '../events/events.service';
+import { BookingComponent } from '../../components/booking/booking.component';
+import { MatDialog } from '@angular/material/dialog';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-single-event',
@@ -60,28 +60,30 @@ export class SingleEventComponent implements OnInit {
   }
 
 
-  formatDate(dateString: string): string {
-    if (!dateString) {
+  formatDateRange(startDate: string, endDate: string): string {
+    if (!startDate || !endDate) {
       return 'Data non disponibile';
     }
 
-    const date = new Date(dateString);
-    if (isNaN(date.getTime())) {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    if (isNaN(start.getTime()) || isNaN(end.getTime())) {
       return 'Data non valida';
     }
 
-    const options: Intl.DateTimeFormatOptions = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-    };
-    return date.toLocaleDateString(undefined, options);
+    const optionsDate: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+    const optionsTime: Intl.DateTimeFormatOptions = { hour: 'numeric', minute: 'numeric' };
+
+    const formattedDate = start.toLocaleDateString(undefined, optionsDate);
+    const formattedStartTime = start.toLocaleTimeString(undefined, optionsTime);
+    const formattedEndTime = end.toLocaleTimeString(undefined, optionsTime);
+
+    return `${formattedDate} dalle ore ${formattedStartTime} alle ${formattedEndTime}`;
   }
 
   formatMaxParticipants(maxParticipants: number | null): string {
-    return maxParticipants === 0 ? 'Infinity' : (maxParticipants || 'Illimitati').toString();
+    return maxParticipants === 0 ? 'Illimitati' : (maxParticipants || 'Illimitati').toString();
   }
 
   formatEventSubscription(eventSubscription: string | null): string {
