@@ -6,7 +6,7 @@
         </p>
 
         <!-- Mostra il pulsante solo se l'utente è un USER -->
-        <button mat-raised-button routerLink="/user-area">
+        <button mat-raised-button routerLink="/user-area" (click)="localStorage.setItem('selectedTab', 'settings')">
             <mat-icon>mic</mat-icon>
             Vai!
         </button>

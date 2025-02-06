@@ -1,3 +1,8 @@
+<div class="header">
+  <h2>Crea il tuo evento</h2>
+  <p>Compila i campi qui sotto per creare un evento personalizzato e condividerlo con il tuo pubblico.</p>
+</div>
+
 <div class="container2">
   <div class="container">
     <form (ngSubmit)="onSubmit()" #eventForm="ngForm">
@@ -127,7 +132,7 @@
             [(ngModel)]="event.eventType"
             value="paid"
           />
-          <label for="paid">A pagamento</label>
+          <label for="paid">Pagamento</label>
         </div>
       </div>
       <div *ngIf="event.eventType === 'paid'">
