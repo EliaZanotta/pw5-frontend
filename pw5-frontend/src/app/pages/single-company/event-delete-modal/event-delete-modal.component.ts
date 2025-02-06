@@ -1,12 +1,12 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { MatButton } from '@angular/material/button';
-import {HostService} from '../../../host.service';
+import {EventsService} from '../../events/events.service';
 
 @Component({
-  selector: 'app-confirm-event-modal',
-  templateUrl: './confirm-event-modal.component.html',
-  styleUrls: ['./confirm-event-modal.component.css'],
+  selector: 'app-event-delete-modal',
+  templateUrl: './event-delete-modal.component.html',
+  styleUrls: ['./event-delete-modal.component.css'],
   imports: [
     MatButton,
     MatDialogActions,
@@ -14,11 +14,11 @@ import {HostService} from '../../../host.service';
     MatDialogTitle
   ]
 })
-export class ConfirmEventModalComponent {
+export class EventDeleteModalComponent {
   constructor(
-    public dialogRef: MatDialogRef<ConfirmEventModalComponent>,
+    public dialogRef: MatDialogRef<EventDeleteModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private hostSevice: HostService
+    private eventsService: EventsService
   ) {}
 
   onCancel(): void {
@@ -28,7 +28,7 @@ export class ConfirmEventModalComponent {
   async onConfirm(): Promise<void> {
     try {
       // Call the confirmEvent method using the eventId from the modal's data.
-      const response = await this.hostSevice.confirmEvent(this.data.eventId);
+      const response = await this.eventsService.deleteEventAsHost(this.data.eventId);
       // Close the dialog passing the response (could be true or an object).
       this.dialogRef.close(response);
     } catch (error) {

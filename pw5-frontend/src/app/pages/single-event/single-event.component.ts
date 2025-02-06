@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, RouterLink} from '@angular/router';
 import { CommonModule, NgIf, NgForOf } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
@@ -20,7 +20,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   selector: 'app-single-event',
   templateUrl: './single-event.component.html',
   styleUrls: ['./single-event.component.css'],
-  imports: [CommonModule, NgIf, NgForOf, FontAwesomeModule],
+  imports: [CommonModule, NgIf, NgForOf, FontAwesomeModule, RouterLink],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.Default,
 })

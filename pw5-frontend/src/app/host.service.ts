@@ -45,4 +45,9 @@ export class HostService {
     return await lastValueFrom(this.http.delete<any>(`${this.baseUrl}logout`, {withCredentials: true}));
   }
 
+  async confirmEvent(eventId: string): Promise<any> {
+    return await lastValueFrom(
+      this.http.put<any>(`${this.baseUrl}confirm-event/${eventId}`, {}, { withCredentials: true })
+    );
+  }
 }

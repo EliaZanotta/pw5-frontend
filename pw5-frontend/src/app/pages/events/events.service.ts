@@ -69,19 +69,32 @@ export class EventsService {
     return await lastValueFrom(this.http.put<any>(`${this.baseUrl}/book`, payload, {withCredentials: true}));
   }
 
-  async revokeEvent(payload: { id: string }): Promise<any> {
+  async revokeEvent(payload: { id: string | undefined }): Promise<any> {
     return await lastValueFrom(this.http.put<any>(`${this.baseUrl}/revoke`, payload, {withCredentials: true}));
   }
 
-  async deleteEvent(eventId: string): Promise<void> {
+  async deleteEventAsHost(eventId: string): Promise<void> {
+    const url = `${this.baseUrl}/${eventId}`;
+    await lastValueFrom(
+      this.http.delete(url, { responseType: 'text', withCredentials: true })
+    );
+  }
+
+  async deleteEventAsAdmin(eventId: string): Promise<void> {
     const url = `${this.baseUrl}/admin/${eventId}`;
     await lastValueFrom(
-      this.http.delete(url, { responseType: 'text' })
+      this.http.delete(url, { responseType: 'text', withCredentials: true })
     );
   }
   async createEvent(payload: { startDate: string; endDate: string; place: string; pendingSpeakerRequests: { email: string }[]; topics: string[]; title: string; maxParticipants: number; eventSubscription: string; description: string }): Promise<any> {
     return await lastValueFrom(
       this.http.post<any>(this.baseUrl, payload, { withCredentials: true })
+    );
+  }
+
+  async updateEvent(eventId: string, payload: { place: string; pendingSpeakerRequests: { email: string }[]; topics: string[]; title: string; maxParticipants: number; eventSubscription: string; description: string }): Promise<any> {
+    return await lastValueFrom(
+      this.http.put<any>(`${this.baseUrl}/${eventId}`, payload, { withCredentials: true })
     );
   }
 }

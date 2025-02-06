@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Speaker, SpeakerService } from './all-speaker.service';
 import { NgForOf, NgIf } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-all-speaker',
@@ -10,6 +11,7 @@ import { NgForOf, NgIf } from '@angular/common';
   imports: [
     NgForOf,
     NgIf,
+    RouterLink
   ]
 })
 export class AllSpeakerComponent implements OnInit {

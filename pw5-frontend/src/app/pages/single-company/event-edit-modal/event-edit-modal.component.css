@@ -1,0 +1,167 @@
+/* Global body & background */
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: url('https://static.vecteezy.com/ti/vettori-gratis/p1/17023141-rosso-astratto-sfondo-rosso-sfondo-design-astratto-futuristico-sfondo-rosso-moderno-sfondo-rosso-astratto-sfondo-per-modelli-carte-e-siti-web-gratuito-vettoriale.jpg')
+  no-repeat center center/cover;
+}
+
+/* Container for the form */
+.container {
+  background: #f0f0f0;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 1200px;
+  margin: 80px auto;
+  border-left: 5px solid #ce2424;
+  box-sizing: border-box;
+}
+
+/* Title styling */
+h2 {
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+/* Form grid layout */
+form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+/* Group common form fields vertically */
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Labels */
+.form-group label {
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+/* Inputs & Textareas */
+input,
+textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #ce2424;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(206, 36, 36, 0.1);
+}
+
+/* Textarea specific */
+textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* Date & Time Row */
+.date-time {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 1rem;
+}
+
+.date-time > div {
+  flex: 1;
+}
+
+/* Radio buttons row */
+.radio-group {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+/* Button container for submit button */
+.button-container {
+  grid-column: 1 / -1;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* Button styling */
+button {
+  background: #ce2424;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+button:hover {
+  background: #a81e1e;
+}
+
+/* Bubble Tag (for emails & topics) styling */
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  background: #ce2424;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+}
+
+.tag button {
+  background: transparent;
+  border: none;
+  color: #fff;
+  margin-left: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  form {
+    grid-template-columns: 1fr;
+  }
+  .date-time {
+    flex-direction: column;
+  }
+}
+.error-message {
+  color: #dc3545;
+  font-size: 0.875em;
+  margin-top: 0.25rem;
+}
+
+.tag.invalid {
+  border-color: #dc3545;
+  background-color: #f8d7da;
+}
