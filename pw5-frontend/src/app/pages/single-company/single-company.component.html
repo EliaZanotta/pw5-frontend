@@ -64,9 +64,12 @@
             <p><strong>📅 Data:</strong> {{ event.startDate | date:'dd/MM/yyyy HH:mm' }}</p>
             <p><strong>📍 Luogo:</strong> {{ event.place }}</p>
             <p class="description">{{ event.description }}</p>
-            <button class="update-button" *ngIf="isCompany" (click)="openDeleteEventModal(event.id)">Elimina Evento</button>
-            <button class="update-button" *ngIf="isCompany" (click)="openConfirmEventModal(event.id)">Conferma Evento</button>
-            <button class="update-button" *ngIf="isCompany" (click)="openUpdateEventModal(event)">Aggiorna Evento</button>
+            <div class="button-group">
+              <button class="update-button" *ngIf="isCompany" color="warn" mat-raised-button (click)="openDeleteEventModal(event.id)">Elimina Evento</button>
+              <button class="update-button" *ngIf="isCompany" mat-raised-button (click)="openConfirmEventModal(event.id)">Conferma Evento</button>
+              <button class="update-button" *ngIf="isCompany" mat-raised-button (click)="openUpdateEventModal(event)">Aggiorna Evento</button>
+            </div>
+
           </div>
         </div>
       </div>
