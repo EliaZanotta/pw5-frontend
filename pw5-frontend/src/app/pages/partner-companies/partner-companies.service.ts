@@ -1,20 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
-
-export interface Host {
-  id: string;
-  type: 'COMPANY' | 'PARTNER';
-  name: string;
-  email: string;
-  hashedPsw: string | null;
-  provvisoryPsw: string | null;
-  description: string | null;
-  pastEvents: string[] | null;
-  programmedEvents: string[] | null;
-  createdBy: string;
-  hostStatus: 'APPROVED' | 'PENDING' | 'REJECTED';
-}
+import {Host} from '../../host.service';
 
 @Injectable({
   providedIn: 'root'

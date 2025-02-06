@@ -56,7 +56,7 @@
 
   <ng-container matColumnDef="maxParticipants">
     <th mat-header-cell *matHeaderCellDef> Partecipanti Massimi </th>
-    <td mat-cell *matCellDef="let event"> {{ event.maxPartecipants === 0 ? 'Infiniti' : event.maxPartecipants }} </td>
+    <td mat-cell *matCellDef="let event"> {{ event.maxParticipants === 0 ? 'Infiniti' : event.maxParticipants }} </td>
   </ng-container>
 
   <ng-container matColumnDef="host">

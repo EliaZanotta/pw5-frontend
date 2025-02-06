@@ -1,55 +1,59 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Host, HostService } from '../../host.service';
+import { DatePipe, NgForOf, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-single-company',
   templateUrl: './single-company.component.html',
+  imports: [
+    NgIf,
+    NgForOf,
+    DatePipe
+  ],
   styleUrls: ['./single-company.component.css']
 })
 export class SingleCompanyComponent implements OnInit {
-  companyId: number | undefined;
-  company: any = {}; // Dati dell'azienda visualizzata
-  selectedTab: string = 'about';
+  companyId: string | undefined;
+  host: Host | any = {}; // Will be populated from the backend.
+  // Change the default tab to "events" so that events are displayed immediately.
+  selectedTab: string = 'events';
   userRole: string = '';
-  userCompanyId: number | null = null; // ID dell'azienda dell'utente loggato
+  userCompanyId: number | null = null; // Logged-in user's Host ID
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private hostService: HostService
+  ) {}
 
   ngOnInit(): void {
-    // Recupera l'id dell'azienda dall'URL
-    this.companyId = Number(this.route.snapshot.paramMap.get('id'));
+    // Get the Host ID from the route parameters.
+    this.companyId = this.route.snapshot.paramMap.get('id') || undefined;
 
-    // Simula il login dell'azienda
-    localStorage.setItem('userRole', 'company');
-    localStorage.setItem('userCompanyId', '1'); 
+    // Simulate login for demonstration purposes.
+    localStorage.setItem('userRole', 'Host');
+    localStorage.setItem('userCompanyId', '1');
 
-    // Recuperiamo ruolo e ID azienda dal localStorage
+    // Retrieve the user data from localStorage.
     this.userRole = localStorage.getItem('userRole') || '';
-    this.userCompanyId = localStorage.getItem('userCompanyId') 
-      ? Number(localStorage.getItem('userCompanyId')) 
+    this.userCompanyId = localStorage.getItem('userCompanyId')
+      ? Number(localStorage.getItem('userCompanyId'))
       : null;
 
-    // Simula il recupero dell'azienda visualizzata
-    this.company = {
-      id: 2,
-      name: 'Azienda Test',
-      description: 'Descrizione dell’azienda test',
-      address: 'Via Test, 123, Milano',
-      website: 'https://www.testcompany.com',
-      email: 'info@testcompany.com',
-      about: 'Siamo un’azienda di test...',
-      social: {
-        facebook: 'https://www.facebook.com/testcompany',
-        instagram: 'https://www.instagram.com/testcompany',
-        linkedin: 'https://www.linkedin.com/company/testcompany'
-      },
-      events: [{ name: 'Evento Test', date: '20 Febbraio 2024' }]
-    };
+    // Fetch the Host data asynchronously.
+    this.fetchCompany();
+  }
 
-    // Debug in console
-    console.log('Ruolo attuale:', this.userRole);
-    console.log('ID Azienda loggata:', this.userCompanyId);
-    console.log('ID Azienda visualizzata:', this.company.id);
+  async fetchCompany(): Promise<void> {
+    if (this.companyId) {
+      try {
+        this.host = await this.hostService.getHostById(this.companyId);
+        console.log('Fetched Host:', this.host);
+      } catch (error) {
+        console.error('Error fetching Host:', error);
+      }
+    }
   }
 
   setTab(tab: string): void {
@@ -65,14 +69,21 @@ export class SingleCompanyComponent implements OnInit {
   }
 
   isCompany(): boolean {
-    return this.userRole === 'company' && this.userCompanyId === this.company.id;
+    // Compare by converting host.id to a number if needed
+    return this.userRole === 'Host' && Number(this.userCompanyId) === Number(this.host.id);
   }
 
-  logout(): void {
-    localStorage.removeItem('userRole');
-    localStorage.removeItem('userCompanyId');
-    this.router.navigate(['/events']); 
-    console.log(localStorage.getItem('userRole'));
-    console.log(localStorage.getItem('userCompanyId'));
+  async logout() {
+    let response = await this.hostService.logout();
+    if (response) {
+      await this.router.navigate(['/']);
+      window.location.reload();
+    }
+  }
+
+  // This method is called when the update button is clicked on an event card.
+  // For now, it just logs the event id.
+  updateEvent(eventId: string): void {
+    console.log('Update event:', eventId);
   }
 }

@@ -4,10 +4,10 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { AdminTableModule } from '../../../../modules/admin-table.module';
-import { Host, PartnerCompaniesService } from '../../../partner-companies/partner-companies.service';
+import { PartnerCompaniesService } from '../../../partner-companies/partner-companies.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { HostService } from '../../../../host.service';
+import {Host, HostService} from '../../../../host.service';
 import {MatPaginator} from '@angular/material/paginator';
 
 @Component({

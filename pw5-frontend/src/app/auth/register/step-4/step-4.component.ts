@@ -39,7 +39,7 @@ export class Step4Component implements OnInit {
             if (response.host) {
               this.host = response.host;
               // Check if the password has already been set
-              if (this.host?.hashedPsw !== this.host?.provvisoryPsw) {
+              if (this.host?.hashedPsw !== this.host?.provisoryPsw) {
                 await this.router.navigate(['/auth/register/step-5']);
               }
             }

@@ -30,6 +30,7 @@ export class HeaderComponent implements OnInit {
   isHost: boolean = false;
   isSpeaker: boolean = false;
   isAdmin: boolean = false;
+  isUser: boolean = false;
   showSpeakerModal: boolean = false;
   showAdminModal: boolean = false;
 
@@ -72,6 +73,7 @@ export class HeaderComponent implements OnInit {
         this.user = userResult;
         this.isSpeaker = userResult.role?.toUpperCase() === 'SPEAKER';
         this.isAdmin = userResult.role?.toUpperCase() === 'ADMIN';
+        this.isUser = userResult.role?.toUpperCase() === 'USER';
         this.isHost = false;
         return;
       }
@@ -87,6 +89,7 @@ export class HeaderComponent implements OnInit {
         this.isHost = true;
         this.isSpeaker = false;
         this.isAdmin = false;
+        this.isUser = false;
       } else {
         this.user = null;
       }

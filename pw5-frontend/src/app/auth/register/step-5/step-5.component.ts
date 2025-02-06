@@ -33,7 +33,7 @@ export class Step5Component implements OnInit {
             let response = await this.authService.getLoggedHost();
             if (response.host) {
               this.host = response.host;
-              if (this.host?.hashedPsw === this.host?.provvisoryPsw) {
+              if (this.host?.hashedPsw === this.host?.provisoryPsw) {
                 await this.router.navigate(['/auth/register/step-4']);
               }
             }
