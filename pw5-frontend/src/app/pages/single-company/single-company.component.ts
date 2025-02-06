@@ -1,12 +1,14 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute, Router, ParamMap, RouterLink} from '@angular/router';
-import { Host, HostService } from '../../host.service';
-import { DatePipe, NgForOf, NgIf } from '@angular/common';
-import { AuthService } from '../../auth/auth.service';
-import { Subscription } from 'rxjs';
+import {Host, HostService} from '../../host.service';
+import {DatePipe, NgForOf, NgIf} from '@angular/common';
+import {AuthService} from '../../auth/auth.service';
+import {Subscription} from 'rxjs';
 import {MatButton} from '@angular/material/button';
 import {ConfirmEventModalComponent} from './confirm-event-modal/confirm-event-modal.component';
 import {EventDeleteModalComponent} from './event-delete-modal/event-delete-modal.component';
+import {Event} from '../events/events.service';
+import {EventEditModalComponent} from './event-edit-modal/event-edit-modal.component';
 import {MatDialog} from '@angular/material/dialog';
 
 @Component({
@@ -19,6 +21,7 @@ import {MatDialog} from '@angular/material/dialog';
     RouterLink,
     MatButton
   ],
+  standalone: true,
   styleUrls: ['./single-company.component.css']
 })
 export class SingleCompanyComponent implements OnInit, OnDestroy {
@@ -27,13 +30,17 @@ export class SingleCompanyComponent implements OnInit, OnDestroy {
   isCompany: boolean = false;
   paramSubscription: Subscription | null = null;
 
+  isUpdateEventModalOpen: boolean = false;
+  selectedEvent: Event | null = null;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private hostService: HostService,
     private authService: AuthService,
-  private dialog: MatDialog
-) {}
+    private dialog: MatDialog
+  ) {
+  }
 
   ngOnInit(): void {
     // Subscribe to route parameter changes.
@@ -119,8 +126,19 @@ export class SingleCompanyComponent implements OnInit, OnDestroy {
   }
 
   // Called when the update button is clicked on an event card.
-  updateEvent(eventId: string): void {
-    console.log('Update event:', eventId);
+  openUpdateEventModal(event: Event) {
+    const dialogRef = this.dialog.open(EventEditModalComponent, {
+      width: '80%',
+      height: '80%',
+      data: {
+        event: event
+      }
+    });
+  }
+
+  closeModal(): void {
+    this.isUpdateEventModalOpen = false;
+    this.selectedEvent = null;
   }
 
   ngOnDestroy(): void {
@@ -156,4 +174,5 @@ export class SingleCompanyComponent implements OnInit, OnDestroy {
       }
     });
   }
+
 }

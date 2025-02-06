@@ -57,7 +57,7 @@
       <div class="events-list2">
         <div class="event-card" *ngFor="let event of host?.programmedEvents">
           <div class="event-image">
-            <img [src]="event.image" alt="{{ event.title }}">
+            <img src="https://reteinformaticalavoro.it/blog/wp-content/uploads/2023/01/eventi-tech-2023-reteinformaticalavoro-e1713386215177.jpg" alt="{{ event.title }}">
           </div>
           <div class="event-info">
             <h2>{{ event.title }}</h2>
@@ -66,7 +66,7 @@
             <p class="description">{{ event.description }}</p>
             <button class="update-button" *ngIf="isCompany" (click)="openDeleteEventModal(event.id)">Elimina Evento</button>
             <button class="update-button" *ngIf="isCompany" (click)="updateEvent(event.id)">Aggiorna Evento</button>
-            <button class="update-button" *ngIf="isCompany" (click)="openConfirmEventModal(event.id)">Conferma Evento</button>
+            <button class="update-button" *ngIf="isCompany" (click)="openUpdateEventModal(event)">Aggiorna Evento</button>
           </div>
         </div>
       </div>
