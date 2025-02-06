@@ -37,13 +37,13 @@
 
       <!-- User / Host icon -->
       <ng-container *ngIf="user; else loginBtn">
-        <a [routerLink]="isHost ? '/partner-companies/{{ user.id }}' : '/user-area'">
+        <a [routerLink]="isHost ? ['/partner-companies', user.id] : '/user-area'">
           <fa-icon [icon]="
-            isHoveredUser
-              ? (isHost ? faHandshakeSolid : faUserSolid)
-              : (isHost ? faHandshakeRegular : faUserRegular)"
-            (mouseenter)="isHoveredUser = true" (mouseleave)="isHoveredUser = false"
-            class="profile-icon fa-2x">
+    isHoveredUser
+      ? (isHost ? faHandshakeSolid : faUserSolid)
+      : (isHost ? faHandshakeRegular : faUserRegular)"
+                   (mouseenter)="isHoveredUser = true" (mouseleave)="isHoveredUser = false"
+                   class="profile-icon fa-2x">
           </fa-icon>
         </a>
       </ng-container>
