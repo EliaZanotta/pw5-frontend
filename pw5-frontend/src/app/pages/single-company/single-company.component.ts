@@ -126,6 +126,7 @@ export class SingleCompanyComponent implements OnInit, OnDestroy {
   openUpdateEventModal(event: Event) {
     const dialogRef = this.dialog.open(EventEditModalComponent, {
       width: '80%',
+      height: '80%',
       data: {
         event: event
       }

@@ -1,42 +1,63 @@
 <form [formGroup]="eventForm" (ngSubmit)="onConfirm()">
-  <div>
-    <label for="startDate">Start Date</label>
-    <input id="startDate" formControlName="startDate" type="date">
+  <!-- Date and Time Row -->
+  <div class="date-time-row">
+    <div>
+      <label for="startDate">Start Date &amp; Time</label>
+      <input id="startDate" formControlName="startDate" type="datetime-local">
+    </div>
+    <div>
+      <label for="endDate">End Date &amp; Time</label>
+      <input id="endDate" formControlName="endDate" type="datetime-local">
+    </div>
   </div>
-  <div>
-    <label for="endDate">End Date</label>
-    <input id="endDate" formControlName="endDate" type="date">
-  </div>
+
   <div>
     <label for="place">Place</label>
     <input id="place" formControlName="place" type="text">
   </div>
+
   <div formArrayName="pendingSpeakerRequests">
     <div *ngFor="let request of pendingSpeakerRequests.controls; let i = index" [formGroupName]="i">
       <label for="email-{{i}}">Speaker Email</label>
       <input id="email-{{i}}" formControlName="email" type="email">
     </div>
   </div>
-  <div>
-    <label for="topics">Topics</label>
-    <input id="topics" formControlName="topics" type="text">
+
+  <!-- Group Topics and Title Vertically -->
+  <div class="full-width group">
+    <div>
+      <label for="topics">Topics</label>
+      <input id="topics" formControlName="topics" type="text">
+    </div>
+    <div>
+      <label for="title">Title</label>
+      <input id="title" formControlName="title" type="text">
+    </div>
   </div>
-  <div>
-    <label for="title">Title</label>
-    <input id="title" formControlName="title" type="text">
+
+  <!-- Group Max Participants and Event Subscription Vertically -->
+  <div class="full-width group">
+    <div>
+      <label for="maxParticipants">Max Participants</label>
+      <input id="maxParticipants" formControlName="maxParticipants" type="number">
+    </div>
+    <div>
+      <label for="eventSubscription">Event Subscription</label>
+      <select id="eventSubscription" formControlName="eventSubscription">
+        <option value="FREE">FREE</option>
+        <option value="PAID">PAID</option>
+      </select>
+    </div>
   </div>
-  <div>
-    <label for="maxParticipants">Max Participants</label>
-    <input id="maxParticipants" formControlName="maxParticipants" type="number">
-  </div>
-  <div>
-    <label for="eventSubscription">Event Subscription</label>
-    <input id="eventSubscription" formControlName="eventSubscription" type="text">
-  </div>
+
   <div>
     <label for="description">Description</label>
     <textarea id="description" formControlName="description"></textarea>
   </div>
-  <button type="button" (click)="onCancel()">Cancel</button>
-  <button type="submit">Confirm</button>
+
+  <!-- Button Row -->
+  <div class="button-row">
+    <button type="button" (click)="onCancel()">Cancel</button>
+    <button type="submit">Confirm</button>
+  </div>
 </form>
