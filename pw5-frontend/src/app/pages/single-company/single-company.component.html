@@ -1,4 +1,5 @@
 <div class="host-container">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <!-- Full-width banner image -->
   <div class="host-banner">
     <img class="banner-image" src="https://www.supero.com.mt/wp-content/uploads/2015/05/azienda-1024x682.jpg" alt="Cover Image">
@@ -31,24 +32,29 @@
   <!-- Divider -->
   <div class="divider"></div>
 
-  <!-- Dynamic content -->
-  <div class="host-content">
-    <!-- Social Tab -->
-    <ng-container *ngIf="selectedTab === 'social'">
-      <h2>Social</h2>
-      <p>📌 Seguici sui social:</p>
-      <ul>
-        <li>
-          <a href="https://www.facebook.com/mockcompany" target="_blank">Facebook</a>
-        </li>
-        <li>
-          <a href="https://www.instagram.com/mockcompany" target="_blank">Instagram</a>
-        </li>
-        <li>
-          <a href="https://www.linkedin.com/company/mockcompany" target="_blank">LinkedIn</a>
-        </li>
-      </ul>
-    </ng-container>
+<!-- Dynamic content -->
+<div class="host-content">
+  <ng-container *ngIf="selectedTab === 'social'">
+    <h2>Seguici sui Social</h2>
+    <p>📌 Rimani aggiornato con le ultime novità e offerte speciali!</p>
+    <ul>
+      <li>
+        <a href="https://www.facebook.com/mockcompany" target="_blank">
+          <i class="fab fa-facebook"></i> Facebook
+        </a>
+      </li>
+      <li>
+        <a href="https://www.instagram.com/mockcompany" target="_blank">
+          <i class="fab fa-instagram"></i> Instagram
+        </a>
+      </li>
+      <li>
+        <a href="https://www.linkedin.com/company/mockcompany" target="_blank">
+          <i class="fab fa-linkedin"></i> LinkedIn
+        </a>
+      </li>
+    </ul>
+  </ng-container>
 
     <!-- Upcoming (Programmed) Events Tab -->
     <ng-container *ngIf="selectedTab === 'events'">
@@ -94,19 +100,27 @@
       </div>
     </ng-container>
 
-    <!-- About Tab -->
     <ng-container *ngIf="selectedTab === 'about'">
-      <h2>About</h2>
-      <p><strong>📍 Indirizzo:</strong> Via Roma, 123, 00100 Varese, Italia</p>
-      <p>
-        <strong>🌐 Sito Web:</strong>
-        <a href="https://www.mockcompany.com" target="_blank">https://www.mockcompany.com</a>
-      </p>
-      <p>
-        <strong>📧 Email:</strong>
-        <a [href]="'mailto:' + host?.email">{{ host?.email }}</a>
-      </p>
+        <h2>Chi Siamo</h2>
+        
+        <p>
+          <i class="fas fa-map-marker-alt"></i>
+          <strong>Indirizzo:</strong> Via Roma, 123, 00100 Varese, Italia
+        </p>
+        
+        <p>
+          <i class="fas fa-globe"></i>
+          <strong>Sito Web:</strong>
+          <a class="link" href="https://www.mockcompany.com" target="_blank">www.mockcompany.com</a>
+        </p>
+        
+        <p>
+          <i class="fas fa-envelope"></i>
+          <strong>Email:</strong>
+          <a class="link" [href]="'mailto:' + host?.email">{{ host?.email }}</a>
+        </p>
     </ng-container>
+    
 
     <!-- Info Tab -->
     <ng-container  *ngIf="selectedTab === 'info'">

@@ -98,15 +98,61 @@ html, body {
 /* ============================================
    CONTENUTI PRINCIPALI
    ============================================ */
-.host-content {
-  width: 100%;
-  max-width: 1200px; /* Mantiene leggibilità su desktop */
-  margin: 0 auto;
-  padding: 20px;
-  background: #ffffff;
-  border-radius: 8px;
-  text-align: left;
-}
+   .host-content {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 25px;
+    background: linear-gradient(135deg, #f9f9f9, #ffffff);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .host-content h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .host-content p {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 15px;
+  }
+  
+  .host-content ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  .host-content li {
+    display: inline-block;
+  }
+  
+  .host-content a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    text-decoration: none;
+    color: #0077b6;
+    font-weight: bold;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .host-content a:hover {
+    color: #005082;
+  }
+  
+  .host-content a i {
+    font-size: 22px;
+  }
+  
 
 /* ============================================
    EVENT CARD STYLES (COPIED FROM USER-AREA)
@@ -214,6 +260,28 @@ html, body {
 .deleet-button:hover{
   background: #ce2424;
 }
+
+.about-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 25px;
+  background: linear-gradient(135deg, #f9f9f9, #ffffff);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+}
+
+
+
+.link{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
 
 /* ============================================
    LOGOUT & BACK BUTTON STYLES
