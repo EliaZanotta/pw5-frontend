@@ -7,36 +7,31 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./single-company.component.css']
 })
 export class SingleCompanyComponent implements OnInit {
-<<<<<<< HEAD
   companyId: number | undefined;
-  company: any| null = null;
-  constructor(private route: ActivatedRoute, private router: Router) { }
- 
-  ngOnInit(): void {
-    // Recupera l'id del relatore dall'URL
-    this.companyId = Number(this.route.snapshot.paramMap.get('id'));
-    this.company = this.company.find((sp: { id: number | undefined; }) => sp.id === this.companyId);
-  }
-=======
   company: any = {}; // Dati dell'azienda visualizzata
   selectedTab: string = 'about';
   userRole: string = '';
   userCompanyId: number | null = null; // ID dell'azienda dell'utente loggato
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
-    // Simula l'ID dell'azienda che l'utente ha dopo il login
-    localStorage.setItem('userRole', 'company'); // Simula che l'utente sia un'azienda
-    localStorage.setItem('userCompanyId', '1'); // Simula che l'azienda loggata abbia ID 1
+    // Recupera l'id dell'azienda dall'URL
+    this.companyId = Number(this.route.snapshot.paramMap.get('id'));
 
-    // Recuperiamo il ruolo e l'ID dell'azienda dell'utente autenticato
+    // Simula il login dell'azienda
+    localStorage.setItem('userRole', 'company');
+    localStorage.setItem('userCompanyId', '1'); 
+
+    // Recuperiamo ruolo e ID azienda dal localStorage
     this.userRole = localStorage.getItem('userRole') || '';
-    this.userCompanyId = localStorage.getItem('userCompanyId') ? Number(localStorage.getItem('userCompanyId')) : null;
+    this.userCompanyId = localStorage.getItem('userCompanyId') 
+      ? Number(localStorage.getItem('userCompanyId')) 
+      : null;
 
     // Simula il recupero dell'azienda visualizzata
     this.company = {
-      id: 1, // 🔹 METTI QUESTO UGUALE A userCompanyId PER VEDERE "Crea Evento"
+      id: 2,
       name: 'Azienda Test',
       description: 'Descrizione dell’azienda test',
       address: 'Via Test, 123, Milano',
@@ -48,12 +43,10 @@ export class SingleCompanyComponent implements OnInit {
         instagram: 'https://www.instagram.com/testcompany',
         linkedin: 'https://www.linkedin.com/company/testcompany'
       },
-      events: [
-        { name: 'Evento Test', date: '20 Febbraio 2024' }
-      ]
+      events: [{ name: 'Evento Test', date: '20 Febbraio 2024' }]
     };
 
-    // Debug: Verifica ID e ruolo in console
+    // Debug in console
     console.log('Ruolo attuale:', this.userRole);
     console.log('ID Azienda loggata:', this.userCompanyId);
     console.log('ID Azienda visualizzata:', this.company.id);
@@ -76,17 +69,10 @@ export class SingleCompanyComponent implements OnInit {
   }
 
   logout(): void {
-    // Rimuove i dati dell'utente dal localStorage
     localStorage.removeItem('userRole');
     localStorage.removeItem('userCompanyId');
-  
-    // Reindirizza alla pagina di login o homepage
-    this.router.navigate(['/events']); // Cambia con la tua pagina di destinazione
+    this.router.navigate(['/events']); 
     console.log(localStorage.getItem('userRole'));
     console.log(localStorage.getItem('userCompanyId'));
-
   }
-
-  
->>>>>>> feature/single-companies
 }
