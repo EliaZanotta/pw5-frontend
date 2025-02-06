@@ -1,3 +1,4 @@
+<!-- event-edit-modal.component.html -->
 <div class="container">
   <h2>Modifica Evento</h2>
   <form [formGroup]="eventForm" (ngSubmit)="onConfirm()">
@@ -10,6 +11,10 @@
         formControlName="title"
         placeholder="Inserisci il titolo"
       />
+      <div *ngIf="eventForm.get('title')?.invalid && eventForm.get('title')?.touched"
+           class="error-message">
+        Title is required
+      </div>
     </div>
 
     <!-- Description -->
@@ -31,9 +36,13 @@
         formControlName="place"
         placeholder="Inserisci il luogo"
       />
+      <div *ngIf="eventForm.get('place')?.invalid && eventForm.get('place')?.touched"
+           class="error-message">
+        Place is required
+      </div>
     </div>
 
-    <!-- Date & Time Row (startDate and endDate are disabled) -->
+    <!-- Date & Time Row -->
     <div class="form-group date-time">
       <div>
         <label for="startDate">Data inizio:</label>
@@ -55,7 +64,7 @@
       </div>
     </div>
 
-    <!-- Speaker Email with Bubble Tags -->
+    <!-- Speaker Email -->
     <div class="form-group">
       <label for="newSpeakerEmail">
         Email speaker (premi Invio per aggiungere):
@@ -73,6 +82,7 @@
         <span
           *ngFor="let ctrl of pendingSpeakerRequests.controls; let i = index"
           class="tag"
+          [class.invalid]="ctrl.invalid"
         >
           {{ ctrl.get('email')?.value }}
           <button
@@ -84,9 +94,12 @@
           </button>
         </span>
       </div>
+      <div *ngIf="pendingSpeakerRequests.invalid" class="error-message">
+        Invalid email addresses
+      </div>
     </div>
 
-    <!-- Topics with Bubble Tags -->
+    <!-- Topics -->
     <div class="form-group">
       <label for="newTopic">Topic (premi Invio per aggiungere):</label>
       <input
@@ -123,9 +136,17 @@
         (focus)="handleFocus($event)"
         (blur)="handleBlur($event)"
       />
+      <div *ngIf="eventForm.get('maxParticipants')?.errors?.['min']"
+           class="error-message">
+        Minimum value is 0
+      </div>
+      <div *ngIf="eventForm.get('maxParticipants')?.errors?.['required']"
+           class="error-message">
+        Required field
+      </div>
     </div>
 
-    <!-- Event Subscription (Radio Buttons) -->
+    <!-- Event Subscription -->
     <div class="form-group radio-group">
       <div>
         <input
@@ -145,12 +166,15 @@
         />
         <label for="paid">Pagamento</label>
       </div>
+      <div *ngIf="eventForm.get('eventSubscription')?.invalid"
+           class="error-message">
+        Subscription type is required
+      </div>
     </div>
-
 
     <!-- Buttons -->
     <div class="form-group button-container">
-      <button type="submit">Conferma</button>
+      <button type="submit" [disabled]="eventForm.invalid">Conferma</button>
       <button type="button" (click)="onCancel()">Annulla</button>
     </div>
   </form>
