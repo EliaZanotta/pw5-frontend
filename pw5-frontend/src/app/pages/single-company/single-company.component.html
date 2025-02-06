@@ -5,7 +5,7 @@
   </div>
 
   <!-- Host profile section -->
-  <div class="host-profile">
+  <div class="host-profile" *ngIf="host">
     <img class="host-logo" src="https://www.supero.com.mt/wp-content/uploads/2015/05/azienda-1024x682.jpg" alt="{{ host.name }}">
     <h1 class="host-name">{{ host.name }}</h1>
     <p class="host-description">{{ host.description }}</p>
@@ -14,13 +14,12 @@
   <!-- Navigation menu -->
   <div class="host-menu">
     <button [class.active]="selectedTab === 'social'" (click)="setTab('social')">Social</button>
-    <!-- Two events tabs: upcoming events and past events -->
     <button [class.active]="selectedTab === 'events'" (click)="setTab('events')">Eventi Ospitati</button>
     <button [class.active]="selectedTab === 'pastEvents'" (click)="setTab('pastEvents')">Eventi Passati</button>
     <button [class.active]="selectedTab === 'about'" (click)="setTab('about')">About</button>
 
     <!-- Show "Crea Evento" button only if the logged user is the host owner -->
-    <ng-container *ngIf="isCompany()">
+    <ng-container *ngIf="isCompany">
       <button [class.active]="selectedTab === 'crea-evento'" (click)="setTab('crea-evento')">Crea Evento</button>
     </ng-container>
 
@@ -52,7 +51,7 @@
     <!-- Upcoming (Programmed) Events Tab -->
     <ng-container *ngIf="selectedTab === 'events'">
       <h2>Eventi Ospitati</h2>
-      <p>📅 Eventi futuri organizzati da {{ host.name }}:</p>
+      <p>📅 Eventi futuri organizzati da {{ host?.name }}:</p>
       <div class="events-list2">
         <div class="event-card" *ngFor="let event of host?.programmedEvents">
           <div class="event-image">
@@ -60,10 +59,10 @@
           </div>
           <div class="event-info">
             <h2>{{ event.title }}</h2>
-            <p><strong>📅 Data:</strong> {{ event.startDate | date: 'dd/MM/yyyy HH:mm' }}</p>
+            <p><strong>📅 Data:</strong> {{ event.startDate | date:'dd/MM/yyyy HH:mm' }}</p>
             <p><strong>📍 Luogo:</strong> {{ event.place }}</p>
             <p class="description">{{ event.description }}</p>
-            <button class="update-button" (click)="updateEvent(event.id)">Aggiorna Evento</button>
+            <button class="update-button" *ngIf="isCompany" (click)="updateEvent(event.id)">Aggiorna Evento</button>
           </div>
         </div>
       </div>
@@ -72,7 +71,7 @@
     <!-- Past Events Tab -->
     <ng-container *ngIf="selectedTab === 'pastEvents'">
       <h2>Eventi Passati</h2>
-      <p>📅 Eventi già tenuti da {{ host.name }}:</p>
+      <p>📅 Eventi già tenuti da {{ host?.name }}:</p>
       <div class="events-list2">
         <div class="event-card" *ngFor="let event of host?.pastEvents">
           <div class="event-image">
@@ -80,7 +79,7 @@
           </div>
           <div class="event-info">
             <h2>{{ event.title }}</h2>
-            <p><strong>📅 Data:</strong> {{ event.startDate | date: 'dd/MM/yyyy HH:mm' }}</p>
+            <p><strong>📅 Data:</strong> {{ event.startDate | date:'dd/MM/yyyy HH:mm' }}</p>
             <p><strong>📍 Luogo:</strong> {{ event.place }}</p>
             <p class="description">{{ event.description }}</p>
           </div>
@@ -91,7 +90,6 @@
     <!-- About Tab -->
     <ng-container *ngIf="selectedTab === 'about'">
       <h2>About</h2>
-      <p>{{ host.about }}</p>
       <p><strong>📍 Indirizzo:</strong> Via Roma, 123, 00100 Varese, Italia</p>
       <p>
         <strong>🌐 Sito Web:</strong>
@@ -99,7 +97,7 @@
       </p>
       <p>
         <strong>📧 Email:</strong>
-        <a [href]="'mailto:' + host.email">{{ host.email }}</a>
+        <a [href]="'mailto:' + host?.email">{{ host?.email }}</a>
       </p>
     </ng-container>
 
@@ -107,12 +105,12 @@
     <ng-container *ngIf="selectedTab === 'info'">
       <!-- Logout section -->
       <div class="logout-section">
-        <button class="logout-button" (click)="logout()">🔴 Logout</button>
+        <button class="logout-button" *ngIf="isCompany" (click)="logout()">🔴 Logout</button>
       </div>
     </ng-container>
 
     <!-- Crea Evento Tab (only for the host owner) -->
-    <ng-container *ngIf="selectedTab === 'crea-evento' && isCompany()">
+    <ng-container *ngIf="selectedTab === 'crea-evento'">
       <h2>Crea un Nuovo Evento</h2>
       <p>
         Questa sezione ti permette di creare e gestire eventi per la tua azienda. Puoi specificare dettagli come
@@ -122,8 +120,9 @@
         Assicurati di fornire tutte le informazioni necessarie affinché gli utenti possano trovare e partecipare
         ai tuoi eventi con facilità.
       </p>
-      <div class="back-section">
-        <button class="back-button" (click)="goEvents()">Crea Evento</button>
+      <div class="create-event-section">
+        <!-- Here you might want to include a form or additional UI for event creation -->
+        <button mat-button class="create-event-button" [routerLink]="['/event-registration-form']">Crea Evento</button>
       </div>
     </ng-container>
   </div>
