@@ -8,7 +8,7 @@ export interface Host {
   name: string;
   email: string;
   hashedPsw: string | null;
-  provvisoryPsw: string | null;
+  provisoryPsw: string | null;
   description: string | null;
   pastEvents: string[] | null;
   programmedEvents: string[] | null;
