@@ -12,8 +12,8 @@ export class Host {
   description: string | undefined;
   hashedPsw: string | undefined;
   provisoryPsw: string | undefined;
-  pastEvents: Event[] | undefined;
-  programmedEvents: Event[] | undefined;
+  pastEvents: Event[] = [];
+  programmedEvents: Event[] = [];
   createdBy: string | undefined;
   constructor() {
   }
@@ -35,4 +35,14 @@ export class HostService {
   async deleteHost(hostId: string): Promise<void> {
     return await lastValueFrom(this.http.delete<any>(`${this.baseUrl}${hostId}`, { withCredentials: true }));
   }
+
+  async getHostById(hostId: string): Promise<Host> {
+    return await lastValueFrom(
+      this.http.get<Host>(`${this.baseUrl}${hostId}`, { withCredentials: true })
+    );
+  }
+  async logout(): Promise<any> {
+    return await lastValueFrom(this.http.delete<any>(`${this.baseUrl}logout`, {withCredentials: true}));
+  }
+
 }
