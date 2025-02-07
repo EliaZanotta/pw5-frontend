@@ -362,7 +362,7 @@ export class UserAreaComponent implements OnInit, AfterViewInit {
       const qrCodeImage = await QRCode.toDataURL(newQrCodeUrl);
 
       // Add ticket details to the PDF
-      doc.text('🎫 Ticket Information', 10, 10);
+      doc.text('Ticket Information', 10, 10);
       doc.text(`Event ID: ${ticket.eventId}`, 10, 20);
       doc.text(`Ticket Code: ${ticketCode}`, 10, 30);
 
