@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {Event} from './pages/events/events.service';
 import {lastValueFrom} from 'rxjs';
+import { environment } from '../environment/environment';
 
 export class Host {
   id: number | undefined;
@@ -23,11 +24,12 @@ export class Host {
   providedIn: 'root'
 })
 export class HostService {
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {
   }
 
-  private baseUrl = 'http://localhost:8080/host/';
+  private baseUrl = `${this.apiUrl}/host/`;
 
   async changePassword(payload:{ oldPsw: string, newPsw: string }): Promise<any> {
     return await lastValueFrom(this.http.put<any>(`${this.baseUrl}change-password`, payload, { withCredentials: true }));

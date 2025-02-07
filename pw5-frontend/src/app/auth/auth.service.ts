@@ -3,6 +3,7 @@ import {Injectable} from '@angular/core';
 import {lastValueFrom} from 'rxjs';
 import {Event} from '../pages/events/events.service';
 import {Topic} from '../topic.service';
+import {environment} from '../../environment/environment';
 
 class UserDetails {
   archivedEvents: Event[] | undefined;
@@ -28,7 +29,8 @@ export class User {
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:8080/auth/';
+  private apiUrl = environment.apiUrl;
+  private baseUrl = `${this.apiUrl}/auth/`;
 
   constructor(private http: HttpClient) {
   }

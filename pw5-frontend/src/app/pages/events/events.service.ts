@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {lastValueFrom, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {environment} from '../../../environment/environment';
 
 export interface Event {
   id: string;
@@ -53,7 +54,8 @@ export interface CategorizedEvents {
   providedIn: 'root'
 })
 export class EventsService {
-  private baseUrl = 'http://localhost:8080/event';
+  private apiUrl = environment.apiUrl;
+  private baseUrl = `${this.apiUrl}/event/`;
 
   constructor(private http: HttpClient) {
   }

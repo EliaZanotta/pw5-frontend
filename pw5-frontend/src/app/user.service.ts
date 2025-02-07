@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {lastValueFrom} from 'rxjs';
+import {environment} from '../environment/environment';
 
 export interface UserDetails {
   bookedEvents: EventSummary[];
@@ -47,7 +48,8 @@ export interface Topic {
   providedIn: 'root'
 })
 export class UserService {
-  private baseUrl = 'http://localhost:8080/user/';
+  private apiUrl = environment.apiUrl;
+  private baseUrl = `${this.apiUrl}/user/`;
 
   constructor(private http: HttpClient) {
   }

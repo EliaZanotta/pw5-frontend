@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {lastValueFrom} from 'rxjs';
+import {environment} from '../environment/environment';
 
 export class Topic {
   id: string | undefined;
@@ -13,7 +14,8 @@ export class Topic {
   providedIn: 'root'
 })
 export class TopicService {
-  private baseUrl = 'http://localhost:8080/topic/';
+  private apiUrl = environment.apiUrl;
+  private baseUrl = `${this.apiUrl}/topic/`;
   constructor(private http: HttpClient) {
   }
 

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
+import {environment} from '../../../environment/environment';
 
 export interface Speaker {
     id: string;
@@ -24,7 +25,8 @@ interface UserDetails {
     providedIn: 'root'
 })
 export class SpeakerService {
-    private baseUrl = 'http://localhost:8080/user';  // URL del tuo backend
+  private apiUrl = environment.apiUrl;
+  private baseUrl = `${this.apiUrl}/user/`;
 
     constructor(private http: HttpClient) { }
 

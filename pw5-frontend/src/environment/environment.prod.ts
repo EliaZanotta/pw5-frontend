@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://api.tuodominio.com'
+    apiUrl: 'https://backendpw5incom-eve7ged8dyagbyds.italynorth-01.azurewebsites.net'
   };
