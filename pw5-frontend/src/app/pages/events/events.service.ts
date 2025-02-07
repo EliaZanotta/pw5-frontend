@@ -99,4 +99,17 @@ export class EventsService {
       this.http.put<any>(`${this.baseUrl}/${eventId}`, payload, { withCredentials: true })
     );
   }
+  async getUserBookedTickets(): Promise<any> {
+    try {
+      // Fetch booked events and tickets from the endpoint
+      const response = await lastValueFrom(
+        this.http.get<any>(`${this.baseUrl}/booked`, { withCredentials: true })
+      );
+      return response?.bookedTickets ?? [];
+    } catch (error) {
+      console.error('Error fetching booked tickets:', error);
+      throw error;
+    }
+  }
+
 }
