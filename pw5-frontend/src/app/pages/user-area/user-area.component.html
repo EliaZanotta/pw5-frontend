@@ -127,7 +127,7 @@
             <p><strong>📅 Data:</strong> {{ eventTicket.startDate | date: 'dd/MM/yyyy HH:mm' }}</p>
             <p><strong>📍 Luogo:</strong> {{ eventTicket.place }}</p>
             <p class="description">{{ eventTicket.description }}</p>
-            <button class="download-button" (click)="openConfirmTicketModal(eventTicket)">🎟 Vai all'attivazione</button>
+            <button class="download-button" (click)="downloadTicketPDF(eventTicket)">🎟 Scarica Ticket</button>
           </div>
         </div>
       </div>

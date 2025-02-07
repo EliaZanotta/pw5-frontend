@@ -1,0 +1,16 @@
+<div class="qr-code-container">
+  <!-- Success Message -->
+  <div *ngIf="ticketConfirmed" class="confirmation-card">
+    <h1>🎉 Ticket Confirmed Successfully!</h1>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="!ticketConfirmed && errorMessage" class="error-card">
+    <h1>❌ {{ errorMessage }}</h1>
+  </div>
+
+  <!-- Processing Message -->
+  <div *ngIf="!ticketConfirmed && !errorMessage">
+    <p>Processing your ticket... Please wait.</p>
+  </div>
+</div>

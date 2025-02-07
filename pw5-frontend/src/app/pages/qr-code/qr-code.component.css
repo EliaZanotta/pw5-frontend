@@ -1,0 +1,22 @@
+.qr-code-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding-bottom: 50px; /* Add padding to bring footer down */
+}
+
+.confirmation-card, .error-card {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  text-align: center;
+  background-color: #f9f9f9;
+  width: 80%;
+  max-width: 500px;
+}
+
+h1 {
+  font-size: 24px;
+  color: #333;
+}

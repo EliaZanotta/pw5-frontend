@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {lastValueFrom, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {environment} from '../../../environment/environment';
 
 export interface Event {
   id: string;
@@ -53,7 +54,8 @@ export interface CategorizedEvents {
   providedIn: 'root'
 })
 export class EventsService {
-  private baseUrl = 'http://localhost:8080/event';
+  private apiUrl = environment.apiUrl;
+  private baseUrl = `${this.apiUrl}/event/`;
 
   constructor(private http: HttpClient) {
   }
@@ -97,4 +99,17 @@ export class EventsService {
       this.http.put<any>(`${this.baseUrl}/${eventId}`, payload, { withCredentials: true })
     );
   }
+  async getUserBookedTickets(): Promise<any> {
+    try {
+      // Fetch booked events and tickets from the endpoint
+      const response = await lastValueFrom(
+        this.http.get<any>(`${this.baseUrl}/booked`, { withCredentials: true })
+      );
+      return response?.bookedTickets ?? [];
+    } catch (error) {
+      console.error('Error fetching booked tickets:', error);
+      throw error;
+    }
+  }
+
 }

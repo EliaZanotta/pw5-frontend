@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {catchError, firstValueFrom, from, Observable, Subject} from 'rxjs';
-import {switchMap, map} from 'rxjs/operators';
-import {EventsService, Event} from '../../pages/events/events.service';
+import { switchMap, map } from 'rxjs/operators';
+import { EventsService, Event } from '../../pages/events/events.service';
+import {environment} from '../../../environment/environment';
 
 
 export interface AdminNotification {
@@ -34,7 +35,8 @@ export interface SpeakerRequest {
   providedIn: 'root'
 })
 export class InboxService {
-  private baseUrl = 'http://localhost:8080/';
+  private apiUrl = environment.apiUrl;
+  private baseUrl = this.apiUrl;
   private adminNotificationsUrl = this.baseUrl + 'user/notification/all';
   private speakerRequestsUrl = this.baseUrl + 'speaker-inbox';
 
@@ -132,6 +134,7 @@ export class InboxService {
         })
       );
   }
+
 
   getSpeakerRequestsWithEventInfo(): Observable<SpeakerRequestWithEvent[]> {
     return this.getSpeakerRequests().pipe(
