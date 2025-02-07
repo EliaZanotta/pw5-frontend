@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import {catchError, firstValueFrom, from, Observable, Subject} from 'rxjs';
-import { switchMap, map } from 'rxjs/operators';
-import { EventsService, Event } from '../../pages/events/events.service';
+import {switchMap, map} from 'rxjs/operators';
+import {EventsService, Event} from '../../pages/events/events.service';
 
 
 export interface AdminNotification {
@@ -36,9 +36,10 @@ export interface SpeakerRequest {
 export class InboxService {
   private baseUrl = 'http://localhost:8080/';
   private adminNotificationsUrl = this.baseUrl + 'user/notification/all';
-  private speakerRequestsUrl = this.baseUrl + 'speaker-inbox/my-requests';
+  private speakerRequestsUrl = this.baseUrl + 'speaker-inbox';
 
-  constructor(private http: HttpClient, private eventsService: EventsService) {}
+  constructor(private http: HttpClient, private eventsService: EventsService) {
+  }
 
 // PUT request to confirm a notification
   async acceptNotification(notificationId: string): Promise<void> {
@@ -46,7 +47,7 @@ export class InboxService {
     try {
       await firstValueFrom(
         this.http
-          .put(url, {}, { withCredentials: true, responseType: 'text' as 'json' })
+          .put(url, {}, {withCredentials: true, responseType: 'text' as 'json'})
           .pipe(
             map(() => undefined)
           )
@@ -67,7 +68,7 @@ export class InboxService {
     try {
       await firstValueFrom(
         this.http
-          .put(url, {}, { withCredentials: true, responseType: 'text' as 'json' })
+          .put(url, {}, {withCredentials: true, responseType: 'text' as 'json'})
           .pipe(
             map(() => undefined)
           )
@@ -84,19 +85,32 @@ export class InboxService {
 
   // Private methods to perform HTTP requests
   getAdminNotifications(): Observable<AdminNotification[]> {
-    return this.http.get<{ message: string; notifications: AdminNotification[] }>(this.adminNotificationsUrl, { withCredentials: true })
-        .pipe(map(response => response.notifications));
+    return this.http.get<{
+      message: string;
+      notifications: AdminNotification[]
+    }>(this.adminNotificationsUrl, {withCredentials: true})
+      .pipe(map(response => response.notifications));
   }
 
   getSpeakerRequests(): Observable<SpeakerRequest[]> {
     return this.http
-      .get<{ message: string; requests: SpeakerRequest[] }>(this.speakerRequestsUrl, { withCredentials: true })
+      .get<{
+        message: string;
+        requests: SpeakerRequest[]
+      }>(`${this.speakerRequestsUrl}/my-requests`, {withCredentials: true})
       .pipe(map(response => response.requests));
   }
+
+  getSpeakerConfirmedRequests(speakerId: string): Observable<SpeakerRequest[]> {
+    return this.http
+      .get<{ message: string; requests: SpeakerRequest[] }>(`${this.speakerRequestsUrl}/${speakerId}/requests`)
+      .pipe(map(response => response.requests));
+  }
+
   // PUT request to confirm a speaker request
   confirmSpeakerRequest(requestId: string): Observable<void> {
     const url = `${this.baseUrl}speaker-inbox/${requestId}/confirm`;
-    return this.http.put(url, {}, { withCredentials: true, responseType: 'text' as 'json' })
+    return this.http.put(url, {}, {withCredentials: true, responseType: 'text' as 'json'})
       .pipe(
         map(() => undefined),
         catchError((error) => {
@@ -109,7 +123,7 @@ export class InboxService {
   // PUT request to reject a speaker request
   rejectSpeakerRequest(requestId: string): Observable<void> {
     const url = `${this.baseUrl}speaker-inbox/${requestId}/reject`;
-    return this.http.put(url, {}, { withCredentials: true, responseType: 'text' as 'json' })
+    return this.http.put(url, {}, {withCredentials: true, responseType: 'text' as 'json'})
       .pipe(
         map(() => undefined),
         catchError((error) => {
@@ -119,9 +133,32 @@ export class InboxService {
       );
   }
 
-
   getSpeakerRequestsWithEventInfo(): Observable<SpeakerRequestWithEvent[]> {
     return this.getSpeakerRequests().pipe(
+      switchMap((speakerRequests: SpeakerRequest[]) =>
+        from(this.eventsService.getEvents()).pipe(
+          map((allEventsResponse: any) => {
+            // Ensure that we have an array of events.
+            const allEvents: Event[] = Array.isArray(allEventsResponse)
+              ? allEventsResponse
+              : allEventsResponse.events;
+            return speakerRequests.map(request => {
+              const matchingEvent = allEvents.find(event => event.id === request.eventId);
+              return {
+                id: request.id,
+                speakerEmail: request.speakerEmail,
+                event: matchingEvent,
+                status: request.status
+              } as SpeakerRequestWithEvent;
+            });
+          })
+        )
+      )
+    );
+  }
+
+  getSpeakerConfirmedRequestsWithEventInfo(speakerId: string): Observable<SpeakerRequestWithEvent[]> {
+    return this.getSpeakerConfirmedRequests(speakerId).pipe(
       switchMap((speakerRequests: SpeakerRequest[]) =>
         from(this.eventsService.getEvents()).pipe(
           map((allEventsResponse: any) => {

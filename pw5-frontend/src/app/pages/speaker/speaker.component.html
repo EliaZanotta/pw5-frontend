@@ -1,34 +1,34 @@
-<div *ngIf="speaker; else notFound">
-    <div class="speaker-page">
-        <div class="speaker-info">
-            <div class="speaker-details">
-                <h2>{{ speaker.firstName }} {{ speaker.lastName }}</h2>
-                <h4 class="subtitle">{{ speaker.role }}</h4>
-                <p class="email">Email: {{ speaker.email }}</p>
-                <button class="btn" (click)="goBack()">Torna indietro</button>
-            </div>
-            <img src="img/speaker.jpg" alt="{{ speaker.firstName }}" class="speaker-image" />
+<div class="speaker-container" *ngIf="speaker; else notFound">
+  <div class="speaker-card">
+    <h1 class="speaker-card-title">{{ speaker.firstName }} {{ speaker.lastName }}</h1>
+    <div class="speaker-card-content">
+      <div class="speaker-card-contacts">
+        <h2 class="section-title">Contatti</h2>
+        <p class="contact-email">Email: {{ speaker.email }}</p>
+        <div class="social-icons">
+          <fa-icon [icon]="faLinkedin" size="2xl" class="social-icon"></fa-icon>
+          <fa-icon [icon]="faInstagram" size="2xl" class="social-icon"></fa-icon>
+          <fa-icon [icon]="faFacebook" size="2xl" class="social-icon"></fa-icon>
         </div>
+      </div>
     </div>
-</div>
+    <img src="img/speaker.jpg" alt="{{ speaker.firstName }}" class="speaker-image"/>
+  </div>
 
-<!-- Prossimi Eventi in cui Partecipo -->
-<h2>Prossimi Eventi in cui Partecipo</h2>
-<div class="events-list">
-    <div class="event-card2" *ngFor="let event of eventsAsSpeaker">
-        <div class="event-image">
-            <img [src]="image" alt="{{ event.title }}">
-        </div>
-        <div class="event-info">
-            <h2>{{ event.title }}</h2>
-            <!-- Formattazione della data -->
-            <p><strong>📅 Data:</strong> {{ event.startDate | date: 'dd/MM/yyyy HH:mm' }}</p>
-            <p><strong>📍 Luogo:</strong> {{ event.place }}</p>
-            <p class="description">{{ event.description }}</p>
-        </div>
+  <h2 class="event-section-title">Dove e quando trovarmi</h2>
+  <div class="speaker-event-grid">
+    <div class="speaker-event-card" *ngFor="let event of eventsAsSpeaker">
+      <img [src]="image" alt="{{ event.title }}" class="event-image">
+      <div class="event-card-content">
+        <h3 class="card-title">{{ event.title }}</h3>
+        <p class="event-date">{{ event.startDate | date: 'dd/MM/yyyy HH:mm' }}</p>
+        <p class="event-place">{{ event.place }}</p>
+        <p class="event-description">{{ event.description }}</p>
+      </div>
     </div>
+  </div>
 </div>
 
 <ng-template #notFound>
-    <p>Relatore non trovato.</p>
+  <p>Relatore non trovato.</p>
 </ng-template>
