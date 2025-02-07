@@ -22,6 +22,7 @@ import {UserEventParticipationsComponent} from './pages/user-event-participation
 import {UserEventsBookingComponent} from './pages/user-events-booking/user-events-booking.component';
 import { AllSpeakerComponent } from './pages/all-speaker/all-speaker.component';
 import { EventRegistrationFormComponent } from './pages/event-registration-form/event-registration-form.component';
+import {QrCodeComponent} from './pages/qr-code/qr-code.component';
 
 
 
@@ -55,5 +56,7 @@ export const routes: Routes = [
   { path: 'all-speaker', component: AllSpeakerComponent },
   {path: 'user-events-booking', component: UserEventsBookingComponent},
   {path: 'user-event-participations', component: UserEventParticipationsComponent},
+  {path: 'qr-code', component: QrCodeComponent},
+
   {path: '**', component: NotFoundComponent}
 ];

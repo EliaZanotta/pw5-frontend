@@ -22,6 +22,8 @@ import {UserManagementComponent} from './admin dashboards/user-management/user-m
 import {InboxService} from '../../components/header/inbox.service';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {AdminTableModule} from '../../modules/admin-table.module';
+import jsPDF from 'jspdf';
+import QRCode from 'qrcode';
 
 
 @Component({
@@ -314,4 +316,69 @@ export class UserAreaComponent implements OnInit, AfterViewInit {
   }
 
   protected readonly async = async;
+
+  async downloadTicketPDF(eventTicket: Event) {
+    try {
+      // Get all booked tickets for the logged user
+      const bookedTickets = await this.eventsService.getUserBookedTickets();
+
+      // Find the ticket that matches the event ID
+      const matchingTicket = bookedTickets.find((ticket: { eventId: string; }) => ticket.eventId === eventTicket.id);
+
+      if (matchingTicket) {
+        const qrCodeUrl = matchingTicket.qrCodeUrl;
+        alert(`🎫 Ticket QR Code URL: ${qrCodeUrl}`);
+        this.generatePDF(matchingTicket, qrCodeUrl);
+      } else {
+        this.snackBar.open('Nessun ticket trovato per questo evento!', 'Chiudi', {
+          duration: 2000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+          panelClass: 'error-snackbar'
+        });
+      }
+    } catch (error) {
+      console.error('Error during ticket download:', error);
+      this.snackBar.open('Errore durante il download del ticket!', 'Chiudi', {
+        duration: 2000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
+        panelClass: 'error-snackbar'
+      });
+    }
+  }
+
+  async generatePDF(ticket: any, qrCodeUrl: string) {
+    const doc = new jsPDF();
+
+    try {
+      // Extract the ticket code from the URL (split by `/`)
+      const ticketCode = qrCodeUrl.split('/').slice(-2, -1)[0];
+
+      // Construct the new URL using ticketCode
+      const newQrCodeUrl = `http://localhost:4200/qr-code?ticketCode=${ticketCode}`;
+
+      // Generate the QR code for the new URL
+      const qrCodeImage = await QRCode.toDataURL(newQrCodeUrl);
+
+      // Add ticket details to the PDF
+      doc.text('🎫 Ticket Information', 10, 10);
+      doc.text(`Event ID: ${ticket.eventId}`, 10, 20);
+      doc.text(`Ticket Code: ${ticketCode}`, 10, 30);
+
+      // Add the new QR code to the PDF
+      doc.addImage(qrCodeImage, 'PNG', 10, 40, 50, 50);
+
+      // Save the PDF
+      doc.save('ticket.pdf');
+    } catch (error) {
+      console.error('Error generating QR code:', error);
+      this.snackBar.open('Errore durante la generazione del PDF!', 'Chiudi', {
+        duration: 2000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
+        panelClass: 'error-snackbar'
+      });
+    }
+  }
 }
