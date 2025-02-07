@@ -37,15 +37,15 @@ export interface SpeakerRequest {
 export class InboxService {
   private apiUrl = environment.apiUrl;
   private baseUrl = this.apiUrl;
-  private adminNotificationsUrl = this.baseUrl + 'user/notification/all';
-  private speakerRequestsUrl = this.baseUrl + 'speaker-inbox';
+  private adminNotificationsUrl = this.baseUrl + '/user/notification/all';
+  private speakerRequestsUrl = this.baseUrl + '/speaker-inbox';
 
   constructor(private http: HttpClient, private eventsService: EventsService) {
   }
 
 // PUT request to confirm a notification
   async acceptNotification(notificationId: string): Promise<void> {
-    const url = `${this.baseUrl}user/notification/${notificationId}/confirm`;
+    const url = `${this.baseUrl}/user/notification/${notificationId}/confirm`;
     try {
       await firstValueFrom(
         this.http
@@ -66,7 +66,7 @@ export class InboxService {
 
 // PUT request to reject a notification
   async rejectNotification(notificationId: string): Promise<void> {
-    const url = `${this.baseUrl}user/notification/${notificationId}/reject`;
+    const url = `${this.baseUrl}/user/notification/${notificationId}/reject`;
     try {
       await firstValueFrom(
         this.http
@@ -111,7 +111,7 @@ export class InboxService {
 
   // PUT request to confirm a speaker request
   confirmSpeakerRequest(requestId: string): Observable<void> {
-    const url = `${this.baseUrl}speaker-inbox/${requestId}/confirm`;
+    const url = `${this.baseUrl}/speaker-inbox/${requestId}/confirm`;
     return this.http.put(url, {}, {withCredentials: true, responseType: 'text' as 'json'})
       .pipe(
         map(() => undefined),
@@ -124,7 +124,7 @@ export class InboxService {
 
   // PUT request to reject a speaker request
   rejectSpeakerRequest(requestId: string): Observable<void> {
-    const url = `${this.baseUrl}speaker-inbox/${requestId}/reject`;
+    const url = `${this.baseUrl}/speaker-inbox/${requestId}/reject`;
     return this.http.put(url, {}, {withCredentials: true, responseType: 'text' as 'json'})
       .pipe(
         map(() => undefined),
