@@ -96,7 +96,7 @@ export class EventsService {
 
   async updateEvent(eventId: string, payload: { place: string; pendingSpeakerRequests: { email: string }[]; topics: string[]; title: string; maxParticipants: number; eventSubscription: string; description: string }): Promise<any> {
     return await lastValueFrom(
-      this.http.put<any>(`${this.baseUrl}/${eventId}`, payload, { withCredentials: true })
+      this.http.put<any>(`${this.baseUrl}${eventId}`, payload, { withCredentials: true })
     );
   }
   async getUserBookedTickets(): Promise<any> {
