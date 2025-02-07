@@ -1,4 +1,4 @@
-<div class="speaker-container" *ngIf="speaker; else notFound">
+<div class="speaker-container" *ngIf="speaker; else speakerNotFound">
   <div class="speaker-card">
     <h1 class="speaker-card-title">{{ speaker.firstName }} {{ speaker.lastName }}</h1>
     <div class="speaker-card-content">
@@ -15,7 +15,7 @@
     <img src="img/speaker.jpg" alt="{{ speaker.firstName }}" class="speaker-image"/>
   </div>
 
-  <h2 class="event-section-title">Dove e quando trovarmi</h2>
+  <h2 class="event-section-title" *ngIf="eventsAsSpeaker.length > 0; else speakerEventsNotFound">Dove e quando trovarmi</h2>
   <div class="speaker-event-grid">
     <div class="speaker-event-card" *ngFor="let event of eventsAsSpeaker">
       <img [src]="image" alt="{{ event.title }}" class="event-image">
@@ -27,8 +27,12 @@
       </div>
     </div>
   </div>
+  <ng-template #speakerEventsNotFound>
+    <p>Non ci sono eventi in programma.</p>
+  </ng-template>
+
 </div>
 
-<ng-template #notFound>
+<ng-template #speakerNotFound>
   <p>Relatore non trovato.</p>
 </ng-template>
