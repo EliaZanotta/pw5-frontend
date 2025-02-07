@@ -92,7 +92,7 @@
         </div>
 
         <div class="button-container">
-          <button type="submit">Crea evento</button>
+          <button type="submit" [disabled]="isLoading">{{ isLoading ? 'Creazione...' : 'Crea evento' }}</button>
         </div>
 
       </form>

@@ -30,6 +30,8 @@ export class EventRegistrationFormComponent implements OnInit {
 
   newTopic: string = '';
   newSpeakerEmail: string = '';
+  isLoading: boolean = false;
+  hostId: string = '';
 
   constructor(
     private eventsService: EventsService,
@@ -98,6 +100,8 @@ export class EventRegistrationFormComponent implements OnInit {
       return;
     }
 
+    this.isLoading = true;
+
     const formattedEvent = {
       title: this.event.title,
       description: this.event.description,
@@ -121,7 +125,13 @@ export class EventRegistrationFormComponent implements OnInit {
         horizontalPosition: 'right',
         panelClass: 'success-snackbar'
       });
-      await this.router.navigate(['/events']);
+
+      this.isLoading = false;
+      setTimeout(() => {
+        this.router.navigate(['/partner-companies/', this.hostId]);
+      }, 5000)
+
+
     } catch (errorResponse) {
       if (errorResponse instanceof HttpErrorResponse) {
         this.handleHttpError(errorResponse);

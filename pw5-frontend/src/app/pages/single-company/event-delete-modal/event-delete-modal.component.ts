@@ -31,6 +31,7 @@ export class EventDeleteModalComponent {
       const response = await this.eventsService.deleteEventAsHost(this.data.eventId);
       // Close the dialog passing the response (could be true or an object).
       this.dialogRef.close(response);
+      location.reload();
     } catch (error) {
       console.error('Error confirming event:', error);
       // Optionally, you could pass an error flag or message to the calling component.

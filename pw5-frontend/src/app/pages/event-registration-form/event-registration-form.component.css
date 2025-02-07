@@ -9,7 +9,7 @@ html, body {
   align-items: center;
   justify-content: center;
   font-family: 'Poppins', sans-serif;
-  background: url('https://static.vecteezy.com/ti/vettori-gratis/p1/17023141-rosso-astratto-sfondo-rosso-sfondo-design-astratto-futuristico-sfondo-rosso-moderno-sfondo-rosso-astratto-sfondo-per-modelli-carte-e-siti-web-gratuito-vettoriale.jpg') 
+  background: url('https://static.vecteezy.com/ti/vettori-gratis/p1/17023141-rosso-astratto-sfondo-rosso-sfondo-design-astratto-futuristico-sfondo-rosso-moderno-sfondo-rosso-astratto-sfondo-per-modelli-carte-e-siti-web-gratuito-vettoriale.jpg')
     no-repeat center center/cover;
 }
 
@@ -143,6 +143,11 @@ button {
 
 button:hover {
   background: #a81e1e;
+}
+
+button:disabled {
+  background: #c1c1c1;
+  cursor: default;
 }
 
 /* Responsive Design */
