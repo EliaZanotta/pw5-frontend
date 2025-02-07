@@ -24,7 +24,7 @@ export class EventRegistrationFormComponent implements OnInit {
     speakerEmails: [] as string[],
     topics: [] as string[],
     maxParticipants: 0,
-    eventType: 'free', 
+    eventType: 'free',
     price: 0,
   };
 
@@ -97,7 +97,7 @@ export class EventRegistrationFormComponent implements OnInit {
       });
       return;
     }
-  
+
     const formattedEvent = {
       title: this.event.title,
       description: this.event.description,
@@ -110,9 +110,9 @@ export class EventRegistrationFormComponent implements OnInit {
       eventSubscription: this.event.eventType.toUpperCase() === 'FREE' ? 'FREE' : 'PAID', // ✅ Aggiunto per il backend
       price: this.event.eventType === 'paid' ? this.event.price : 0, // ✅ Imposta il prezzo solo se a pagamento
     };
-  
+
     console.log('Dati inviati al backend:', formattedEvent);
-  
+
     try {
       await this.eventsService.createEvent(formattedEvent);
       this.snackBar.open('Evento creato con successo!', 'Chiudi', {
@@ -121,14 +121,14 @@ export class EventRegistrationFormComponent implements OnInit {
         horizontalPosition: 'right',
         panelClass: 'success-snackbar'
       });
-      await this.router.navigate(['/dashboard']);
+      await this.router.navigate(['/events']);
     } catch (errorResponse) {
       if (errorResponse instanceof HttpErrorResponse) {
         this.handleHttpError(errorResponse);
       }
     }
   }
-  
+
 
   private handleHttpError(error: HttpErrorResponse) {
     console.error('Errore HTTP:', error);
