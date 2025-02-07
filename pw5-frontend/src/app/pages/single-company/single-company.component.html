@@ -70,7 +70,7 @@
             <p><strong>📅 Data:</strong> {{ event.startDate | date:'dd/MM/yyyy HH:mm' }}</p>
             <p><strong>📍 Luogo:</strong> {{ event.place }}</p>
             <p class="description">{{ event.description }}</p>
-            <div class="button-group">
+            <div class="button-group" *ngIf="event.status === 'PENDING'">
               <button class="update-button" *ngIf="isCompany" color="warn" mat-raised-button (click)="openDeleteEventModal(event.id)">Elimina Evento</button>
               <button class="update-button" *ngIf="isCompany" mat-raised-button (click)="openConfirmEventModal(event.id)">Conferma Evento</button>
               <button class="update-button" *ngIf="isCompany" mat-raised-button (click)="openUpdateEventModal(event)">Aggiorna Evento</button>
@@ -102,25 +102,25 @@
 
     <ng-container *ngIf="selectedTab === 'about'">
         <h2>Chi Siamo</h2>
-        
+
         <p>
           <i class="fas fa-map-marker-alt"></i>
           <strong>Indirizzo:</strong> Via Roma, 123, 00100 Varese, Italia
         </p>
-        
+
         <p>
           <i class="fas fa-globe"></i>
           <strong>Sito Web:</strong>
           <a class="link" href="https://www.mockcompany.com" target="_blank">www.mockcompany.com</a>
         </p>
-        
+
         <p>
           <i class="fas fa-envelope"></i>
           <strong>Email:</strong>
           <a class="link" [href]="'mailto:' + host?.email">{{ host?.email }}</a>
         </p>
     </ng-container>
-    
+
 
     <!-- Info Tab -->
     <ng-container  *ngIf="selectedTab === 'info'">
