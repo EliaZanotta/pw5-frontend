@@ -1,4 +1,4 @@
 export const environment = {
-    production: false,
-    apiUrl: 'http://localhost:8080'
-};
+    production: true,
+    apiUrl: 'https://backendpw5incom-eve7ged8dyagbyds.italynorth-01.azurewebsites.net'
+  };
